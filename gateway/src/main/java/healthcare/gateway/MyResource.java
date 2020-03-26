@@ -1,11 +1,9 @@
 package healthcare.gateway;
-
-
-
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -22,12 +20,12 @@ public class MyResource {
      * @return String that will be returned as a text/plain response.
      */
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public String getIt() { 
     	 try {
-			return mycall.GetData();
+			return mycall.GetData().toString();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			System.out.println(e);
 			return null;
 		}
     }
