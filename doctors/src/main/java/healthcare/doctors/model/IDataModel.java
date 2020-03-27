@@ -2,11 +2,12 @@ package healthcare.doctors.model;
 
 import java.util.List;
 
-import healthcare.doctors.DTO.SpecificationDTO;
+import healthcare.doctors.DTO.DoctorDTO;
+
 
 public interface IDataModel {
 	
 	public boolean connectionChecker();
-	public List<SpecificationDTO> getSepecificationAllData();
+	public List<DoctorDTO> getSepecificationAllData();
 	
 }

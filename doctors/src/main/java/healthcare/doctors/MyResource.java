@@ -4,7 +4,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import healthcare.doctors.DTO.SpecificationDTO;
+
+import healthcare.doctors.DTO.DoctorDTO;
 import healthcare.doctors.model.DoctorModel;
 import healthcare.doctors.model.IDataModel;
 
@@ -23,9 +24,10 @@ public class MyResource {
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<SpecificationDTO> getItem() {
+    public List<DoctorDTO> getSpecications() {
     	
     	return dm.getSepecificationAllData();
         
     }
 }
+ 

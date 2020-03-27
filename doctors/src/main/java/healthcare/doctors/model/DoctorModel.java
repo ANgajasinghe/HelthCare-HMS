@@ -5,6 +5,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import healthcare.doctors.DTO.DoctorDTO;
 import healthcare.doctors.DTO.SpecificationDTO;
 import utility.ConnectionBuilder;
 import utility.Messages;
@@ -12,8 +14,8 @@ import utility.Messages;
 
 public class DoctorModel implements IDataModel {
 	
-	private final static ConnectionBuilder cBuilder = new ConnectionBuilder();
-	private final static Connection MYSQLcon  = cBuilder.MYSQLConnection();
+	private final  ConnectionBuilder cBuilder = new ConnectionBuilder();
+	private final  Connection MYSQLcon  = cBuilder.MYSQLConnection();
 	
 	@Override
 	public boolean connectionChecker() {
@@ -25,10 +27,10 @@ public class DoctorModel implements IDataModel {
 	}
 	
 	@Override
-	public List<SpecificationDTO> getSepecificationAllData() 
+	public List<DoctorDTO> getSepecificationAllData() 
 	{
 		
-		List<SpecificationDTO> specificationDTOliList = new ArrayList<SpecificationDTO>();
+		List<DoctorDTO> specificationDTOliList = new ArrayList<DoctorDTO>();
 		
 		if (this.connectionChecker()) {
 			StringBuilder sBuilder = new StringBuilder();
@@ -42,20 +44,20 @@ public class DoctorModel implements IDataModel {
 			String qurtString = sBuilder.toString();
 			
 			try {
-				Statement stmt = MYSQLcon.createStatement();
+				Statement stmt = this.MYSQLcon.createStatement();
 				ResultSet rs = stmt.executeQuery(qurtString);
 				
 				while (rs.next()) {
-					SpecificationDTO dto = new SpecificationDTO();
-					
-					dto.setSPECIFICATION_ID(rs.getInt(SpecificationDTO.specification_id));
-					dto.setSPECIFICATION_NAME(rs.getString(SpecificationDTO.specification_name));
-					dto.setSPECIFICATION_DIS((rs.getString(SpecificationDTO.specification_dis) != null) ? 
+					DoctorDTO dto = new DoctorDTO();
+					dto.setSpecification_id(rs.getInt(SpecificationDTO.specification_id));
+					dto.setSpecification_name(rs.getString(SpecificationDTO.specification_name));
+					dto.setSpecification_dis((rs.getString(SpecificationDTO.specification_dis) != null) ? 
 							rs.getString(SpecificationDTO.specification_dis) : Messages.NODATA);
 					specificationDTOliList.add(dto);	
 				}
-				
+				this.MYSQLcon.close();
 				return specificationDTOliList;
+				
 			} catch (SQLException e) {
 				System.out.println(e);
 				e.printStackTrace();
