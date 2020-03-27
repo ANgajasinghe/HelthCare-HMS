@@ -1,11 +1,11 @@
 <?xml version="1.0"?>  
 <class>  
     <ip>  
-        <doctor>http://192.168.1.100:8080</doctor> 
-		<room>http://192.168.1.100:8080</room>
-		<patient>http://192.168.1.100:8080</patient>
-		<payment>http://192.168.1.100:8080</payment>
-		<hospital>http://192.168.1.100:8080</hospital>
-		<appoiment>http://192.168.1.100:8080</appoiment>			
+        <doctor>http://localhost:8080</doctor> 
+		<room>http://localhost:8080</room>
+		<patient>http://localhost:8080</patient>
+		<payment>http://localhost:8080</payment>
+		<hospital>http://localhost:8080</hospital>
+		<appoiment>http://localhost:8080</appoiment>			
     </ip>  
 </class>
