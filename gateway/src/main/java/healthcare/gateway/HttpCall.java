@@ -1,20 +1,33 @@
 package healthcare.gateway;
 import java.io.IOException;
+
+import healthcare.gatewayDTO.IpMapperDTO;
+import healthcare.gatewayDTO.IpMapperModel;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 public class HttpCall {
 	
+	IpMapperDTO iMapperDTO;
+
+	public HttpCall() {
+		IpMapperModel iModel = new IpMapperModel();
+		iMapperDTO = iModel.getIpMapperDTO();
+		
+	}
+
+	
+
 	// one instance, reuse
     private final OkHttpClient httpClient = new OkHttpClient();
 	
 
-	public String GetData() throws Exception {
+	public String GetSpecdata() throws Exception {
 		Request request = new Request.Builder()
-                .url("http://192.168.1.100:8080/doctors/webapi/myresource")
-                .addHeader("custom-key", "mkyong")  // add request headers
-                .addHeader("User-Agent", "OkHttp Bot")
+                .url(iMapperDTO.getDocIP()+"/doctors/webapi/myresource")
+                .addHeader("custom-key", "PAF")  // add request headers
+                .addHeader("User-Agent", "Nayanajith")
                 .build();
 		
 		try (Response response = httpClient.newCall(request).execute()) {
