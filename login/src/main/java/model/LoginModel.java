@@ -1,6 +1,7 @@
-package healthcare.login;
+package model;
 
 public class LoginModel {
 
+	
 	
 }

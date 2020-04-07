@@ -9,13 +9,15 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import loginDTO.LoginDTO;
+
 @Path("login")
 public class LoginService {
 	
 	
 	@POST
-	@Path("add")
 	public void name(LoginDTO loginDTO) {
+		
 		System.out.println(loginDTO.getUser_id());
 	}
 	
