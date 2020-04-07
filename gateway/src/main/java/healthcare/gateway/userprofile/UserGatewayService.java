@@ -1,20 +1,16 @@
-package healthcare.gateway;
+package healthcare.gateway.userprofile;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-
-/**
- * Root resource (exposed at "api" path)
- */
-@Path("api")
-public class MyResource {
+@Path("api/user")
+public class UserGatewayService {
 	
-	 HttpCall mycall = new HttpCall();
-	 
-    @GET
-    @Path("doc")
+	UserHttpCall mycall = new UserHttpCall();
+	
+	@GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getDocSpecification() { 
     	 try {
@@ -25,6 +21,4 @@ public class MyResource {
 			return null;
 		}
     }
-    
-   
 }

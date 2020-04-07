@@ -9,6 +9,7 @@ public class IpMapperDTO {
 	private String paymentIP;
 	private String hospitalIP;
 	private String appoimentIP;
+	private String userIP;
 	
 	public String getDocIP() {
 		return docIP;
@@ -46,6 +47,13 @@ public class IpMapperDTO {
 	public void setAppoimentIP(String appoimentIP) {
 		this.appoimentIP = appoimentIP;
 	}
+	public String getUserIP() {
+		return userIP;
+	}
+	public void setUserIP(String userIP) {
+		this.userIP = userIP;
+	}
+	
 	
 	
 	

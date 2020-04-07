@@ -1,4 +1,5 @@
-package healthcare.gateway;
+package healthcare.gateway.userprofile;
+
 import java.io.IOException;
 
 import healthcare.gatewayDTO.IpMapperDTO;
@@ -7,25 +8,20 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class HttpCall {
+public class UserHttpCall {
 	
 	IpMapperDTO iMapperDTO;
+	private final OkHttpClient httpClient = new OkHttpClient();
 
-	public HttpCall() {
+	public UserHttpCall() {
+		super();
 		IpMapperModel iModel = new IpMapperModel();
 		iMapperDTO = iModel.getIpMapperDTO();
-		
 	}
-
 	
-
-	// one instance, reuse
-    private final OkHttpClient httpClient = new OkHttpClient();
-	
-
 	public String GetSpecdata() throws Exception {
 		Request request = new Request.Builder()
-                .url(iMapperDTO.getDocIP()+"/doctors/webapi/myresource")
+                .url(iMapperDTO.getUserIP()+"/login/webapi/user")
                 .addHeader("custom-key", "PAF")  // add request headers
                 .addHeader("User-Agent", "Nayanajith")
                 .build();
@@ -33,23 +29,13 @@ public class HttpCall {
 		try (Response response = httpClient.newCall(request).execute()) {
 
             if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-            //JSONObject 
-            
-            // Get response body
-            //JsonReader rdJsonReader = Json.
-            //JSONArray abcArray  = new JsonArray(response.body().toString());
-            //System.out.println(response.body().string());
             String responseData = response.body().string();
             return responseData;
-            // jsonParser = new JsonParser();
-            //JsonArray arrayFromString = jsonParser.parse(responseData).getAsJsonArray();
-            //return arrayFromString;
-			
         }
 		
 		
 	}
+	
 	
 	
 
