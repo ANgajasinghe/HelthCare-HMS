@@ -1,4 +1,4 @@
-package loginDTO;
+package dto;
 
 public class UserDTO {
 	private Integer user_id;

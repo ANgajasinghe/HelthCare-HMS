@@ -1,4 +1,4 @@
-package loginDTO;
+package dto;
 
 public class LoginDTO {
 
