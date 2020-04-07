@@ -1,4 +1,4 @@
-package healthcare.login;
+package loginDTO;
 
 public class LoginDTO {
 

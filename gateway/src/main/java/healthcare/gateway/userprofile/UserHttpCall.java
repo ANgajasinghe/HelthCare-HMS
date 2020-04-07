@@ -21,7 +21,7 @@ public class UserHttpCall {
 	
 	public String GetSpecdata() throws Exception {
 		Request request = new Request.Builder()
-                .url(iMapperDTO.getUserIP()+"/login/webapi/user")
+                .url(iMapperDTO.getUserIP()+"/login/webapi/login/get")
                 .addHeader("custom-key", "PAF")  // add request headers
                 .addHeader("User-Agent", "Nayanajith")
                 .build();
