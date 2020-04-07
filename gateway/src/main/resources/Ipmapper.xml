@@ -1,7 +1,7 @@
 <?xml version="1.0"?>  
 <class>  
     <ip>  
-        <doctor>http://localhost:8080</doctor> 
+    <doctor>http://localhost:8080</doctor> 
 		<room>http://localhost:8080</room>
 		<patient>http://localhost:8080</patient>
 		<payment>http://localhost:8080</payment>
