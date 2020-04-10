@@ -5,4 +5,9 @@ public class ABC {
 	public String A;
 	public String B;
 	public int C;
+	
+	public void name() {
+		
+	}
+
 }

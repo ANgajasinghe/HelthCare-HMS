@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import com.ConnectionBuilder;
+
+
+
+import auth.AuthToken;
 import dto.UserDTO;
 
 public class LoginModel {
@@ -25,8 +28,14 @@ public class LoginModel {
 	public boolean checkUser(String username,String user_password) {
 		
 		UserDTO userDTO = this.getUserBYPassword(username, user_password);
+
 		
 		if(userDTO != null) {
+
+			this.InsertIntoLogin(
+					userDTO.getUsername(),
+					userDTO.getUser_password(),
+					userDTO.getUser_role());
 			return true;
 		}
 		else {
@@ -44,7 +53,9 @@ public class LoginModel {
 			StringBuilder sBuilder = new StringBuilder();
 			sBuilder.append("SELECT\n");
 			sBuilder.append("user_id,");
+			sBuilder.append("username,");
 			sBuilder.append("user_email,");
+			sBuilder.append("user_password,");
 			sBuilder.append("user_role\n");
 			sBuilder.append("FROM\n");
 			sBuilder.append("userprofile\n");
@@ -63,14 +74,16 @@ public class LoginModel {
 				
 				ResultSet rs =  pStatement.executeQuery();
 				
-				if (rs.next()) {
-					while (rs.next()) {
-						userDTO.setUser_id(rs.getInt("user_id"));
-						userDTO.setUser_email(rs.getString("user_email"));
-						userDTO.setUser_password("user_role");
-						break;
-					}
+			
+				while (rs.next()) {
+					userDTO.setUser_id(rs.getInt("user_id"));
+					userDTO.setUsername(rs.getString("username"));
+					userDTO.setUser_email(rs.getString("user_email"));
+					userDTO.setUser_password("user_password");
+					userDTO.setUser_role(rs.getString("user_role"));
+					break;
 				}
+				
 				return userDTO;	
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -81,10 +94,13 @@ public class LoginModel {
 		return userDTO; 
 	}
 	
-//	private void insertToLoginTable() {
-//		
-//	}
+	private void InsertIntoLogin(String userName ,String password ,String role) {
+		System.out.println("Calling");
+		String string= AuthToken.getToken(userName, password, role);
+		System.out.println(AuthToken.VerifyToken(string));
+	}
 	
+
 	
 	
 
