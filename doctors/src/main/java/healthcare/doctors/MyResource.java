@@ -1,9 +1,13 @@
 package healthcare.doctors;
-
+import java.util.List;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+
+import healthcare.doctors.DTO.DoctorDTO;
+import healthcare.doctors.model.DoctorModel;
+import healthcare.doctors.model.IDataModel;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -11,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 @Path("myresource")
 public class MyResource {
 
+	private IDataModel dm = new DoctorModel(); 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "text/plain" media type.
@@ -18,8 +23,11 @@ public class MyResource {
      * @return String that will be returned as a text/plain response.
      */
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getIt() {
-        return "Got it!";
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<DoctorDTO> getSpecications() {
+    	
+    	return dm.getSepecificationAllData();
+        
     }
 }
+ 

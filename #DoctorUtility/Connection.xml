@@ -1,0 +1,8 @@
+<?xml version="1.0"?>  
+<class>  
+    <connection>  
+        <url>jdbc:mysql://127.0.0.1:3306/healthcare?serverTimezone=UTC</url>  
+        <username>root</username>  
+        <password></password>   
+    </connection>  
+</class>
