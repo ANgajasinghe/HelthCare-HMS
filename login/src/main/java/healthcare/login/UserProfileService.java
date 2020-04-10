@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import loginDTO.UserDTO;
+import dto.UserDTO;
 
 @Path("user")
 public class UserProfileService {
@@ -41,7 +41,7 @@ public class UserProfileService {
 	 	
 	 	@POST
 	 	@Path("register")
-	 	@Produces(MediaType.APPLICATION_JSON)
+	 	//@Produces(MediaType.APPLICATION_JSON)
 	 	public void RegisterUser(UserDTO userDTO) {
 	 		System.out.println(userDTO.getUser_email());
 	 	}
