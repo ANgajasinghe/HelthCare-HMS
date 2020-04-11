@@ -3,7 +3,6 @@ package auth;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Base64;
@@ -24,13 +23,13 @@ public class AuthToken {
  
     
     
-    public static String getToken(String userName,String password,String role) {
+    public  String getToken(String userName,String password,String role) {
     
     	TokenAuthDTO tDto = new TokenAuthDTO();
-//    	tDto.setUserName(encrypt(userName,MYKEY));
-//    	tDto.setPassword(encrypt(password,MYKEY));
-//    	tDto.setRole(encrypt(role,MYKEY));
-//    	tDto.setValidDate(encrypt(GetValideTime(),MYKEY));
+    	tDto.setUserName(encrypt(userName,MYKEY));
+    	tDto.setPassword(encrypt(password,MYKEY));
+    	tDto.setRole(encrypt(role,MYKEY));
+    	tDto.setValidDate(encrypt(GetValideTime(),MYKEY));
     	
     	tDto.setUserName(userName);
     	tDto.setPassword(password);
@@ -42,7 +41,7 @@ public class AuthToken {
     	 	
     }
     
-    public static String VerifyToken(String token) {
+    public  String VerifyToken(String token) {
     	return decrypt(token, MYKEY);
     }
     
@@ -50,7 +49,7 @@ public class AuthToken {
     
     
     
-    private static void setKey(String myKey) 
+    private  void setKey(String myKey) 
     {
         MessageDigest sha = null;
         try {
@@ -68,7 +67,7 @@ public class AuthToken {
         }
     }
     
-    private static String encrypt(String strToEncrypt, String secret) 
+    private  String encrypt(String strToEncrypt, String secret) 
     {
         try
         {
@@ -84,7 +83,7 @@ public class AuthToken {
         return null;
     }
     
-    private static String decrypt(String strToDecrypt, String secret) 
+    private  String decrypt(String strToDecrypt, String secret) 
     {
         try
         {
@@ -100,33 +99,22 @@ public class AuthToken {
         return null;
     }
     
-    private static String GetValideTime() {
+    private  String GetValideTime() {
+    	
     	 Date currentDate = new Date();
+    	 
     	 Calendar cal = Calendar.getInstance(); // creates calendar
     	 cal.setTime(new Date()); // sets calendar time/date
     	 cal.add(Calendar.HOUR_OF_DAY, 3); // adds one hour
     	 currentDate.compareTo(cal.getTime());
     	 SimpleDateFormat sdf = new SimpleDateFormat( "HH:mm:ss" );
     	 
+    	 
     	 Calendar calendar = Calendar.getInstance(); 
     	 calendar.setTime(new Date());
     	 
-    	 try {
-			Date curDate = sdf.parse(sdf.format(cal.getTime()));
-			
-			Date afterDate = sdf.parse(sdf.format(calendar.getTime()));
-			
-			if (curDate.after(afterDate)) {
-				
-				 return sdf.format(cal.getTime());
-			}
-			
-		} catch (ParseException e) {
-			
-			e.printStackTrace();
-		}
-    	 
-    	 return "Inavalid";
+		 return sdf.format(cal.getTime());
+		
 //    	 return Integer.toString(currentDate.compareTo(cal.getTime()));
     	
     	 

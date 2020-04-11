@@ -112,7 +112,9 @@ public class LoginModel {
 
 	private String InsertIntoLogin(int userId, String userName, String password, String role) {
 
-		String token = AuthToken.getToken(userName, password, role);
+		AuthToken aToken = new AuthToken();
+		
+		String token = aToken.getToken(userName, password, role);
 
 		InetAddress hostname = null;
 		String ipAddress = null;
@@ -189,5 +191,18 @@ public class LoginModel {
 		return "false";
 
 	}
+	
+//	public String UpdateLogin(String tokString) {
+//		
+//		if (connectionChecker()) {
+//			StringBuilder sBuilder = new StringBuilder();
+//			sBuilder.append("UPDATE u.user_role \n");
+//			sBuilder.append("FROM login l \n");
+//			sBuilder.append("INNER JOIN userprofile u \n");
+//			sBuilder.append("ON l.user_id = u.user_id \n");
+//			sBuilder.append("WHERE l.Token = ? \n");
+//			sBuilder.append("AND 1=1");
+//		}
+//	}
 
 }

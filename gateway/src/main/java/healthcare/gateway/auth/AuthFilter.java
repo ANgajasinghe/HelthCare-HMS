@@ -2,6 +2,7 @@ package healthcare.gateway.auth;
 
 import java.io.IOException;
 
+
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
 import javax.ws.rs.core.Context;
@@ -28,14 +29,19 @@ public class AuthFilter implements ContainerRequestFilter {
 	public void filter(ContainerRequestContext requestContext) throws IOException {
 		//update tablename set LASTTOUCH=CURRENT_TIMESTAMP;
 		UriInfo info = requestContext.getUriInfo();
-		System.out.println(info.getAbsolutePath());
+		//System.out.println(info.getAbsolutePath());
 		//System.out.println("Request Filters");
 		//System.out.println("Headers " + requestContext.getHeaders());
-		
-		
+		String reqPath = info.getAbsolutePath().toString().trim();
+		System.out.println(reqPath);
 //		if (true) {
 //			return;
 //		}
+		
+		if (ggString.equals(reqPath)) {
+			return;
+		}
+		
 		String authorizationHeader =
                 requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
@@ -55,7 +61,6 @@ public class AuthFilter implements ContainerRequestFilter {
 		
 		if (!mode.equals("false")) {
 			CurrentAuth = mode;
-			System.out.println(CurrentAuth);
 			return;
 		}
 		else {
