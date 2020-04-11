@@ -25,13 +25,9 @@ public class LoginService {
 	
 	@GET
 	@Path("{user}/{pwd}")
-	public void name(@PathParam("user") String username, 
+	public String name(@PathParam("user") String username, 
 			@PathParam("pwd") String password) {
-		 boolean v = lg.checkUser(username,password);
-		 if (v) {
-			 System.out.println(username);
-		}
-		 
+		 return lg.checkUser(username,password);	 
 	}
 	
 	@POST

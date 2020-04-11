@@ -1,20 +1,45 @@
 package model;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import auth.AuthToken;
 import dto.UserDTO;
+import utility.LMessage;
 
 public class LoginModel {
 
+	Logger logger = Logger.getLogger("MyLog");
+	FileHandler fh;
+	
 	private final  ConnectionBuilder cBuilder = new ConnectionBuilder();
 	private final  Connection MYSQLcon  = cBuilder.MYSQLConnection();
 	
+	
+	
+	public LoginModel() {
+		super();
+		try {
+			fh = new FileHandler("C:/PAF/log/MyLogFile.log");
+			logger.addHandler(fh);
+			SimpleFormatter formatter = new SimpleFormatter(); 
+			fh.setFormatter(formatter); 
+		} catch (SecurityException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
+
 	public boolean connectionChecker() {
 		
 		if (MYSQLcon == null) {
@@ -25,21 +50,22 @@ public class LoginModel {
 	
 	
 	
-	public boolean checkUser(String username,String user_password) {
+	public String checkUser(String username,String user_password) {
 		
 		UserDTO userDTO = this.getUserBYPassword(username, user_password);
 
 		
 		if(userDTO != null) {
 
-			this.InsertIntoLogin(
+			return this.InsertIntoLogin(
+					userDTO.getUser_id(),
 					userDTO.getUsername(),
 					userDTO.getUser_password(),
 					userDTO.getUser_role());
-			return true;
+			
 		}
 		else {
-			return false;
+			return LMessage.wrongUser;
 		}
 		
 	}
@@ -94,10 +120,55 @@ public class LoginModel {
 		return userDTO; 
 	}
 	
-	private void InsertIntoLogin(String userName ,String password ,String role) {
-		System.out.println("Calling");
-		String string= AuthToken.getToken(userName, password, role);
-		System.out.println(AuthToken.VerifyToken(string));
+	private String InsertIntoLogin(int userId,String userName ,String password ,String role) {
+	
+		String token = AuthToken.getToken(userName, password, role);
+		
+		InetAddress hostname = null;
+		String ipAddress = null;
+		
+		try {
+			hostname = InetAddress.getLocalHost();
+			ipAddress = hostname.getHostAddress();
+		} catch (UnknownHostException e1) {
+			
+			e1.printStackTrace();
+		}
+		
+		
+		if(connectionChecker()) {
+			StringBuilder sBuilder = new StringBuilder();
+			sBuilder.append("INSERT INTO \n");
+			sBuilder.append("login (user_id,Token,log_count,ipAddress,hostname) VALUES( \n");
+			sBuilder.append("?,?,?,?,? )");
+			
+			String queryString = sBuilder.toString();
+			
+			try {
+				PreparedStatement pStatement = this.MYSQLcon.prepareStatement(queryString);
+				pStatement.setInt(1, userId);
+				pStatement.setString(2, token);
+				pStatement.setInt(3, 1);
+				pStatement.setString(4, ipAddress);
+				pStatement.setString(5, hostname.toString());
+				
+				
+				pStatement.execute();
+				logger.info(token);
+				return token;
+				
+				
+			} catch (SQLException e) {
+				logger.info(e.toString());
+				e.printStackTrace();
+			}
+			
+			
+		}
+		
+		logger.info(LMessage.sqlInsertErr);
+		return LMessage.sqlInsertErr;
+		
 	}
 	
 
