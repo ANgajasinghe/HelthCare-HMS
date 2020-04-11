@@ -25,7 +25,7 @@ public class HttpCall {
 
 	public String GetSpecdata() throws Exception {
 		Request request = new Request.Builder()
-                .url(iMapperDTO.getDocIP()+"/doctors/webapi/myresource")
+                .url(iMapperDTO.getDocIP())
                 .addHeader("custom-key", "PAF")  // add request headers
                 .addHeader("User-Agent", "Nayanajith")
                 .build();

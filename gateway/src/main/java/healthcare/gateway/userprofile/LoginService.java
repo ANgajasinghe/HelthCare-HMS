@@ -6,6 +6,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import healthcare.gateway.auth.SucurityFilter;
+
 @Path("login")
 public class LoginService {
 	
@@ -15,6 +17,7 @@ public class LoginService {
     @Produces(MediaType.TEXT_PLAIN)
     public String getDocSpecification(@QueryParam("user") String username, 
 			@QueryParam("pwd") String password) { 
+		System.out.println(SucurityFilter.abc);
     	 try {
 			return cLoginClient.loginTokenApiCaller(username,password);
 		} catch (Exception e) {
