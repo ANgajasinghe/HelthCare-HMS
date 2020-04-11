@@ -4,14 +4,55 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
+import healthcare.gateway.auth.AuthFilter;
+import healthcare.gateway.doctor.auth.DoctorAuth;
+import healthcare.gateway.doctor.auth.DoctorAuthAdmin;
+import healthcare.gateway.doctor.auth.DoctorAuthDefult;
+import healthcare.gateway.doctor.auth.DoctorAuthDoctor;
+import healthcare.gateway.doctor.auth.DoctorAuthPatient;
+import javassist.tools.reflect.CannotCreateException;
+
 @Path("doc")
-public class DoctorService {
+public class DoctorService  {
 	
-	DoctorClient client = new DoctorClient();
+	
+	
+	String currentUser;
+	DoctorAuth doctorService;
+	
+
+
+	private DoctorService() {
+		super();
+		
+	}
+	
 	
 	@GET
 	public Response getDocSpec() {
+		setInterfaces();
+		currentUser = AuthFilter.CurrentAuth;
+		System.out.println(currentUser);
 		System.out.println("calling");
-		return client.getDocSpecData();
+		return doctorService.getDocSpecData();
+	}
+	
+	private void setInterfaces() {
+		currentUser = AuthFilter.CurrentAuth;
+		switch (currentUser) {
+		case "admin":
+			doctorService = new DoctorAuthAdmin();
+			break;
+		case "doctor":
+			doctorService = new DoctorAuthDoctor();
+			break;	
+		case "patient":
+			doctorService = new DoctorAuthPatient();
+			break;
+		default:
+			doctorService = new DoctorAuthDefult();
+			break;
+		}
+		
 	}
 }

@@ -1,4 +1,4 @@
-package healthcare.gateway.doctor;
+package healthcare.gateway.doctor.auth;
 
 
 

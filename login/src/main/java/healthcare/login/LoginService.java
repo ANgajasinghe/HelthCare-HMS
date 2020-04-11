@@ -10,6 +10,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import com.google.gson.Gson;
@@ -25,11 +26,18 @@ public class LoginService {
 	
 	@GET
 	@Path("{user}/{pwd}")
-	public String name(@PathParam("user") String username, 
+	public String getToken(@PathParam("user") String username, 
 			@PathParam("pwd") String password) {
 		 return lg.checkUser(username,password);	 
 	}
 	
+	@GET
+	@Path("check")
+	public String getLoginUser(@QueryParam("token") String encriptString) {
+		//System.out.println(lg.CheckLogin(encriptString));
+		return lg.CheckLogin(encriptString);
+	}
+//	
 	@POST
 	@Path("abc")
 	public void ABC(String X) {
