@@ -11,6 +11,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
+
+
+import healthcare.gatewayDTO.IpMapperDTO;
+import healthcare.gatewayDTO.IpMapperModel;
+import utility.GMessage;
+
 @Provider
 public class AuthFilter implements ContainerRequestFilter {
 
@@ -18,9 +24,14 @@ public class AuthFilter implements ContainerRequestFilter {
 
 	private static final String REALM = "example";
 	private static final String AUTHENTICATION_SCHEME  = "Bearer ";
-	String ggString = "http://192.168.1.100:8080/gateway/webapi/login";
+	
+	private String[] urlSkipper = new String[3]; 
 	AuthClient client = new AuthClient();
 	public static String CurrentAuth = "defult";
+	
+	
+	
+
 	@Context
     private UriInfo info;
 	
@@ -32,26 +43,32 @@ public class AuthFilter implements ContainerRequestFilter {
 		//System.out.println(info.getAbsolutePath());
 		//System.out.println("Request Filters");
 		//System.out.println("Headers " + requestContext.getHeaders());
-		String reqPath = info.getAbsolutePath().toString().trim();
-		System.out.println(reqPath);
-//		if (true) {
-//			return;
-//		}
 		
-		if (ggString.equals(reqPath)) {
+		String reqPath = info.getAbsolutePath().toString().trim();
+		
+		Init();
+		
+		if (urlSkipper[0].equals(reqPath)) {
 			return;
 		}
+	
 		
 		String authorizationHeader =
                 requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
-		String token = authorizationHeader
-                .substring(AUTHENTICATION_SCHEME.length()).trim();
 		
-		System.out.println(token);
-		this.authChecker(token,requestContext);
+		if (authorizationHeader == null) {
+			abortWithUnauthorized(requestContext,GMessage.addToken);
+		}
+		else {
+			String token = authorizationHeader
+	                .substring(AUTHENTICATION_SCHEME.length()).trim();
+			
+			System.out.println(token);
+			this.authChecker(token,requestContext);
+		}
 		
-		
+			
 	}
 	
 	private void authChecker (String tokenString,ContainerRequestContext requestContext) {
@@ -64,11 +81,11 @@ public class AuthFilter implements ContainerRequestFilter {
 			return;
 		}
 		else {
-			abortWithUnauthorized(requestContext);
+			abortWithUnauthorized(requestContext,GMessage.Unauthorize);
 		}
 	}
 	
-	private void abortWithUnauthorized(ContainerRequestContext requestContext) {
+	private void abortWithUnauthorized(ContainerRequestContext requestContext,String message) {
 
         // Abort the filter chain with a 401 status code response
         // The WWW-Authenticate header is sent along with the response
@@ -76,8 +93,19 @@ public class AuthFilter implements ContainerRequestFilter {
                 Response.status(Response.Status.UNAUTHORIZED)
                         .header(HttpHeaders.WWW_AUTHENTICATE, 
                                 AUTHENTICATION_SCHEME + " realm=\"" + REALM + "\"")
-                        .entity("User Cannot Access the resource")
+                        .entity(message)
                         .build());
     }
+	
+	private void Init() {
+		IpMapperModel iModel = new IpMapperModel();
+		IpMapperDTO iMapperDTO = iModel.getIpMapperDTO();
+		urlSkipper[0] = iMapperDTO.getGatewayIP()+GMessage.path("login");
+		
+	}
+	
+	
+	
+	
 
 }

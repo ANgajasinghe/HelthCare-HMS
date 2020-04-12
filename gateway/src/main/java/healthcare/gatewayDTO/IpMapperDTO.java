@@ -10,7 +10,15 @@ public class IpMapperDTO {
 	private String hospitalIP;
 	private String appoimentIP;
 	private String userIP;
+	private String gatewayIP;
 	
+	
+	public String getGatewayIP() {
+		return gatewayIP;
+	}
+	public void setGatewayIP(String gatewayIP) {
+		this.gatewayIP = gatewayIP;
+	}
 	public String getDocIP() {
 		return docIP;
 	}

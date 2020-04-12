@@ -68,6 +68,7 @@ public class IpMapperModel {
 						ipMapperDTO.setHospitalIP(eElement.getElementsByTagName("hospital").item(0).getTextContent());
 						ipMapperDTO.setAppoimentIP(eElement.getElementsByTagName("appoiment").item(0).getTextContent());
 						ipMapperDTO.setUserIP(eElement.getElementsByTagName("user").item(0).getTextContent());
+						ipMapperDTO.setGatewayIP(eElement.getElementsByTagName("gateway").item(0).getTextContent());
 						return ipMapperDTO;
 					}
 				}
