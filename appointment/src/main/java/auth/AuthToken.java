@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 import dto.TokenAuthDTO;
 
 
@@ -23,23 +23,23 @@ public class AuthToken {
  
     
     
-    public  String getToken(String userName,String password,String role) {
-    
-    	TokenAuthDTO tDto = new TokenAuthDTO();
-    	tDto.setUserName(encrypt(userName,MYKEY));
-    	tDto.setPassword(encrypt(password,MYKEY));
-    	tDto.setRole(encrypt(role,MYKEY));
-    	tDto.setValidDate(encrypt(GetValideTime(),MYKEY));
-    	
-    	tDto.setUserName(userName);
-    	tDto.setPassword(password);
-    	tDto.setRole(role);
-    	tDto.setValidDate(GetValideTime());
-    	
-    	Gson gson = new Gson();
-    	return encrypt(gson.toJson(tDto),MYKEY);
-    	 	
-    }
+//    public  String getToken(String userName,String password,String role) {
+//    
+////    	TokenAuthDTO tDto = new TokenAuthDTO();
+////    	tDto.setUserName(encrypt(userName,MYKEY));
+////    	tDto.setPassword(encrypt(password,MYKEY));
+////    	tDto.setRole(encrypt(role,MYKEY));
+////    	tDto.setValidDate(encrypt(GetValideTime(),MYKEY));
+////    	
+////    	tDto.setUserName(userName);
+////    	tDto.setPassword(password);
+////    	tDto.setRole(role);
+////    	tDto.setValidDate(GetValideTime());
+////    	
+////    	Gson gson = new Gson();
+////    	return encrypt(gson.toJson(tDto),MYKEY);
+//    	 	
+//    }
     
     public  String VerifyToken(String token) {
     	return decrypt(token, MYKEY);
