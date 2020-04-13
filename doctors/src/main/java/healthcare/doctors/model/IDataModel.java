@@ -2,8 +2,7 @@ package healthcare.doctors.model;
 
 import java.util.List;
 
-
-import healthcare.doctors.DTO.DoctorDTO;
+import dto.DoctorDTO;
 
 
 public interface IDataModel {

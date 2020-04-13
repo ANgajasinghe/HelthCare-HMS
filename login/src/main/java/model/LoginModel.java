@@ -21,7 +21,7 @@ public class LoginModel {
 	FileHandler fh;
 
 	private final ConnectionBuilder cBuilder = new ConnectionBuilder();
-	private final Connection MYSQLcon = cBuilder.MYSQLConnection();
+	// private Connection MYSQLcon = cBuilder.MYSQLConnection();
 
 	public LoginModel() {
 		super();
@@ -36,22 +36,23 @@ public class LoginModel {
 		}
 	}
 
-	public boolean connectionChecker() {
-
-		if (MYSQLcon == null) {
-			return false;
-		}
-		return true;
-	}
-
 	public String checkUser(String username, String user_password) {
 
 		UserDTO userDTO = this.getUserBYPassword(username, user_password);
 
 		if (userDTO != null) {
 
-			return this.InsertIntoLogin(userDTO.getUser_id(), userDTO.getUsername(), userDTO.getUser_password(),
-					userDTO.getUser_role());
+			String valString = this.InsertIntoLogin(userDTO.getUser_id(), userDTO.getUsername(),
+					userDTO.getUser_password(), userDTO.getUser_role());
+//			if (MYSQLcon != null) { try {
+//				
+//				MYSQLcon.close();
+//				System.out.println("connection is called ");
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}}
+//		
+			return valString;
 
 		} else {
 			return LMessage.wrongUser;
@@ -63,57 +64,62 @@ public class LoginModel {
 
 		UserDTO userDTO = new UserDTO();
 
-		if (connectionChecker()) {
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
 
-			StringBuilder sBuilder = new StringBuilder();
-			sBuilder.append("SELECT\n");
-			sBuilder.append("user_id,");
-			sBuilder.append("username,");
-			sBuilder.append("user_email,");
-			sBuilder.append("user_password,");
-			sBuilder.append("user_role\n");
-			sBuilder.append("FROM\n");
-			sBuilder.append("userprofile\n");
-			sBuilder.append("WHERE\n");
-			sBuilder.append("(username = ? OR user_email = ?)\n");
-			sBuilder.append("AND\n");
-			sBuilder.append("(user_password = ?)\n");
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append("SELECT\n");
+		sBuilder.append("user_id,");
+		sBuilder.append("username,");
+		sBuilder.append("user_email,");
+		sBuilder.append("user_password,");
+		sBuilder.append("user_role\n");
+		sBuilder.append("FROM\n");
+		sBuilder.append("userprofile\n");
+		sBuilder.append("WHERE\n");
+		sBuilder.append("(username = ? OR user_email = ?)\n");
+		sBuilder.append("AND\n");
+		sBuilder.append("(user_password = ?)\n");
 
-			String queryString = sBuilder.toString();
+		String queryString = sBuilder.toString();
+		PreparedStatement pStatement = null;
+		ResultSet rs = null;
+		try {
+			pStatement = MYSQLcon.prepareStatement(queryString);
+			pStatement.setString(1, username);
+			pStatement.setString(2, username);
+			pStatement.setString(3, user_password);
 
-			try {
-				PreparedStatement pStatement = this.MYSQLcon.prepareStatement(queryString);
-				pStatement.setString(1, username);
-				pStatement.setString(2, username);
-				pStatement.setString(3, user_password);
+			rs = pStatement.executeQuery();
 
-				ResultSet rs = pStatement.executeQuery();
-
-				while (rs.next()) {
-					userDTO.setUser_id(rs.getInt("user_id"));
-					userDTO.setUsername(rs.getString("username"));
-					userDTO.setUser_email(rs.getString("user_email"));
-					userDTO.setUser_password("user_password");
-					userDTO.setUser_role(rs.getString("user_role"));
-					break;
-				}
-
-				return userDTO;
-			} catch (SQLException e) {
-				System.out.println("calling");
-				e.printStackTrace();
-				return userDTO;
+			while (rs.next()) {
+				userDTO.setUser_id(rs.getInt("user_id"));
+				userDTO.setUsername(rs.getString("username"));
+				userDTO.setUser_email(rs.getString("user_email"));
+				userDTO.setUser_password("user_password");
+				userDTO.setUser_role(rs.getString("user_role"));
+				break;
 			}
-
+			return userDTO;
+		} catch (SQLException e) {
+			System.out.println("calling");
+			e.printStackTrace();
+			return userDTO;
+		} finally {
+			try {
+				MYSQLcon.close();
+				pStatement.close();
+				rs.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		System.out.println("calling 03 ");
-		return userDTO;
+
 	}
 
 	private String InsertIntoLogin(int userId, String userName, String password, String role) {
 
 		AuthToken aToken = new AuthToken();
-		
+
 		String token = aToken.getToken(userName, password, role);
 
 		InetAddress hostname = null;
@@ -127,32 +133,35 @@ public class LoginModel {
 			e1.printStackTrace();
 		}
 
-		if (connectionChecker()) {
-			StringBuilder sBuilder = new StringBuilder();
-			sBuilder.append("INSERT INTO \n");
-			sBuilder.append("login (user_id,Token,log_count,ipAddress,hostname) VALUES( \n");
-			sBuilder.append("?,?,?,?,? )");
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append("INSERT INTO \n");
+		sBuilder.append("login (user_id,Token,log_count,ipAddress,hostname) VALUES( \n");
+		sBuilder.append("?,?,?,?,? )");
 
-			String queryString = sBuilder.toString();
+		String queryString = sBuilder.toString();
 
+		try {
+			PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
+			pStatement.setInt(1, userId);
+			pStatement.setString(2, token);
+			pStatement.setInt(3, 1);
+			pStatement.setString(4, ipAddress);
+			pStatement.setString(5, hostname.toString());
+
+			pStatement.execute();
+			logger.info(token);
+			return token;
+		} catch (SQLException e) {
+			logger.info(e.toString());
+			e.printStackTrace();
+		} finally {
 			try {
-				PreparedStatement pStatement = this.MYSQLcon.prepareStatement(queryString);
-				pStatement.setInt(1, userId);
-				pStatement.setString(2, token);
-				pStatement.setInt(3, 1);
-				pStatement.setString(4, ipAddress);
-				pStatement.setString(5, hostname.toString());
-
-				pStatement.execute();
-				logger.info(token);
-				return token;
-
+				MYSQLcon.close();
 			} catch (SQLException e) {
-				logger.info(e.toString());
-				e.printStackTrace();
 			}
-
 		}
+
 		logger.info(LMessage.sqlInsertErr);
 		return LMessage.sqlInsertErr;
 
@@ -160,49 +169,81 @@ public class LoginModel {
 
 	public String CheckLogin(String tokenString) {
 
-		if (connectionChecker()) {
-			StringBuilder sBuilder = new StringBuilder();
-			sBuilder.append("SELECT u.user_role \n");
-			sBuilder.append("FROM login l \n");
-			sBuilder.append("INNER JOIN userprofile u \n");
-			sBuilder.append("ON l.user_id = u.user_id \n");
-			sBuilder.append("WHERE l.Token = ? \n");
-			sBuilder.append("AND 1=1");
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append("SELECT u.user_role \n");
+		sBuilder.append("FROM login l \n");
+		sBuilder.append("INNER JOIN userprofile u \n");
+		sBuilder.append("ON l.user_id = u.user_id \n");
+		sBuilder.append("WHERE l.Token = ? \n");
+		sBuilder.append("AND 1=1");
 
-			String queryString = sBuilder.toString();
+		String queryString = sBuilder.toString();
+		ResultSet rs = null;
+		PreparedStatement pStatement = null;
+		try {
+			pStatement = MYSQLcon.prepareStatement(queryString);
+			pStatement.setString(1, tokenString.trim());
 
-			try {
-				PreparedStatement pStatement = this.MYSQLcon.prepareStatement(queryString);
-				pStatement.setString(1, tokenString);
-				
-				ResultSet rs = pStatement.executeQuery();
-				
-				while (rs.next()) {
-					
-					return rs.getString("user_role");
-				}
-				
-			} catch (SQLException e) {
-				logger.info(e.toString());
-				e.printStackTrace();
+			rs = pStatement.executeQuery();
+
+			while (rs.next()) {
+				this.UpdateLoginTime(tokenString.trim());
+				return rs.getString("user_role");
 			}
 
+		} catch (SQLException e) {
+			logger.info(e.toString());
+			e.printStackTrace();
+		} finally {
+			try {
+				rs.close();
+			} catch (Exception e) {
+				/* ignored */ }
+			try {
+				pStatement.close();
+			} catch (Exception e) {
+				/* ignored */ }
+			try {
+				MYSQLcon.close();
+			} catch (Exception e) {
+				/* ignored */ }
 		}
+
 		return "false";
 
 	}
-	
-//	public String UpdateLogin(String tokString) {
-//		
-//		if (connectionChecker()) {
-//			StringBuilder sBuilder = new StringBuilder();
-//			sBuilder.append("UPDATE u.user_role \n");
-//			sBuilder.append("FROM login l \n");
-//			sBuilder.append("INNER JOIN userprofile u \n");
-//			sBuilder.append("ON l.user_id = u.user_id \n");
-//			sBuilder.append("WHERE l.Token = ? \n");
-//			sBuilder.append("AND 1=1");
-//		}
-//	}
+
+	private boolean UpdateLoginTime(String tokString) {
+		// update tablename set LASTTOUCH=CURRENT_TIMESTAMP;
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append("UPDATE login \n");
+		sBuilder.append("SET generate_date = CURRENT_TIMESTAMP \n");
+		sBuilder.append("WHERE Token = ? \n");
+		sBuilder.append("AND 1=1");
+
+		String queryString = sBuilder.toString();
+
+		PreparedStatement pStatement;
+		try {
+			pStatement = MYSQLcon.prepareStatement(queryString);
+			pStatement.setString(1, tokString);
+			boolean result = pStatement.execute();
+			if (!result) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				MYSQLcon.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return false;
+	}
 
 }

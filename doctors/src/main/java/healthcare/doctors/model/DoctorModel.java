@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import healthcare.doctors.DTO.DoctorDTO;
+
+import dto.DoctorDTO;
 import healthcare.doctors.DTO.SpecificationDTO;
 import utility.ConnectionBuilder;
 import utility.Messages;

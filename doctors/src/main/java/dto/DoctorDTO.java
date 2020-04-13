@@ -1,4 +1,4 @@
-package healthcare.doctors.DTO;
+package dto;
 
 import javax.xml.crypto.Data;
 
