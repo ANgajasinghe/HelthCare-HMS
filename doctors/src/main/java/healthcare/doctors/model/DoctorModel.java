@@ -1,4 +1,5 @@
 package healthcare.doctors.model;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,82 +13,87 @@ import healthcare.doctors.DTO.SpecificationDTO;
 import utility.ConnectionBuilder;
 import utility.Messages;
 
-
 public class DoctorModel implements IDataModel {
-	
-	private final  ConnectionBuilder cBuilder = new ConnectionBuilder();
-	private final  Connection MYSQLcon  = cBuilder.MYSQLConnection();
-	
+
+	private final ConnectionBuilder cBuilder = new ConnectionBuilder();
+	// private Connection MYSQLcon = cBuilder.MYSQLConnection();
+
 	@Override
-	public boolean connectionChecker() {
-		
+	public boolean connectionChecker(Connection MYSQLcon) {
+
 		if (MYSQLcon == null) {
 			return false;
 		}
 		return true;
 	}
-	
+
 	@Override
-	public List<DoctorDTO> getSepecificationAllData() 
-	{
-		
+	public List<DoctorDTO> getSepecificationAllData() {
+
 		List<DoctorDTO> specificationDTOliList = new ArrayList<DoctorDTO>();
-		
-		if (this.connectionChecker()) {
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		if (this.connectionChecker(MYSQLcon)) {
 			StringBuilder sBuilder = new StringBuilder();
 			sBuilder.append("SELECT\n");
-			sBuilder.append(SpecificationDTO.specification_id +",");
-			sBuilder.append(SpecificationDTO.specification_name +",");
-			sBuilder.append(SpecificationDTO.specification_dis+"\n");
+			sBuilder.append(SpecificationDTO.specification_id + ",");
+			sBuilder.append(SpecificationDTO.specification_name + ",");
+			sBuilder.append(SpecificationDTO.specification_dis + "\n");
 			sBuilder.append("FROM\n");
 			sBuilder.append(SpecificationDTO.TABE_NAME);
-			
+
 			String qurtString = sBuilder.toString();
-			
+
 			try {
-				Statement stmt = this.MYSQLcon.createStatement();
+				Statement stmt = MYSQLcon.createStatement();
 				ResultSet rs = stmt.executeQuery(qurtString);
-				
+
 				while (rs.next()) {
 					DoctorDTO dto = new DoctorDTO();
 					dto.setSpecification_id(rs.getInt(SpecificationDTO.specification_id));
 					dto.setSpecification_name(rs.getString(SpecificationDTO.specification_name));
-					dto.setSpecification_dis((rs.getString(SpecificationDTO.specification_dis) != null) ? 
-							rs.getString(SpecificationDTO.specification_dis) : Messages.NODATA);
-					specificationDTOliList.add(dto);	
+					dto.setSpecification_dis((rs.getString(SpecificationDTO.specification_dis) != null)
+							? rs.getString(SpecificationDTO.specification_dis)
+							: Messages.NODATA);
+					specificationDTOliList.add(dto);
 				}
-				this.MYSQLcon.close();
+
 				return specificationDTOliList;
-				
+
 			} catch (SQLException e) {
 				System.out.println(e);
 				e.printStackTrace();
 				return specificationDTOliList;
+			} finally {
+				try {
+					MYSQLcon.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
-			
+
 		}
 		return specificationDTOliList;
-		
+
 	}
 
 	@Override
 	public List<DoctorDTO> getAllDoctors() {
 		List<DoctorDTO> allDocList = new ArrayList<DoctorDTO>();
-		if (this.connectionChecker()) {
-			
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		if (this.connectionChecker(MYSQLcon)) {
+
 			StringBuilder sBuilder = new StringBuilder();
 			sBuilder.append("SELECT\n");
 			sBuilder.append("*\t");
 			sBuilder.append("FROM\n");
 			sBuilder.append("doctors");
-			
+
 			String qurtString = sBuilder.toString();
-			
-			
+
 			try {
-				Statement stmt = this.MYSQLcon.createStatement();
+				Statement stmt = MYSQLcon.createStatement();
 				ResultSet rs = stmt.executeQuery(qurtString);
-				
+
 				while (rs.next()) {
 					DoctorDTO dto = new DoctorDTO();
 					dto.setDoc_id(rs.getInt("doc_id"));
@@ -105,32 +111,35 @@ public class DoctorModel implements IDataModel {
 					dto.setDoc_email(rs.getString("doc_email"));
 					dto.setDoc_status_id(rs.getInt("doc_status_id"));
 					dto.setSpecification_id(rs.getInt("doc_specification_id"));
-					dto.setHospital_id(rs.getInt("doc_host_id"));
-					dto.setWard_id(rs.getInt("doc_word_id"));
 					allDocList.add(dto);
 				}
-				this.MYSQLcon.close();
+
 				return allDocList;
-				
+
 			} catch (SQLException e) {
 				DoctorDTO dto = new DoctorDTO();
 				dto.setSpecification_dis(e.toString());
 				allDocList.add(dto);
 				return allDocList;
+			} finally {
+				try {
+					MYSQLcon.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			
-			
-		
-			
+
 		}
-		
+
 		return null;
 	}
-	
+
 	@Override
-	public String insertIntoDoctors(DoctorDTO doctorDTOs ) {
-		if (this.connectionChecker()) {
-			
+	public String insertIntoDoctors(DoctorDTO doctorDTOs) {
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		if (this.connectionChecker(MYSQLcon)) {
+
 			StringBuilder sBuilder = new StringBuilder();
 			sBuilder.append("INSERT INTO doctors ( \n");
 			sBuilder.append("doc_reg_no,");
@@ -146,62 +155,142 @@ public class DoctorModel implements IDataModel {
 			sBuilder.append("doc_tp3,");
 			sBuilder.append("doc_email,");
 			sBuilder.append("doc_status_id,");
-			sBuilder.append("doc_specification_id,");
-			sBuilder.append("doc_host_id,");
-			sBuilder.append("doc_word_id)\n");
+			sBuilder.append("doc_specification_id)\n");
 			sBuilder.append("VALUES (\n");
-			sBuilder.append("?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?\n");
+			sBuilder.append("?,?,?,?,?,?,?,?,?,?,?,?,?,?\n");
 			sBuilder.append(")");
-			
-			
+
 			String queryString = sBuilder.toString();
 			try {
-				PreparedStatement pStatement = this.MYSQLcon.prepareStatement(queryString);
-				pStatement.setString(1,doctorDTOs.getDoc_reg_no() != null ? doctorDTOs.getDoc_reg_no():null );
-				pStatement.setString(2,doctorDTOs.getDoc_first_name() != null ? doctorDTOs.getDoc_first_name():null );
-				pStatement.setString(3,doctorDTOs.getDoc_last_name() != null ? doctorDTOs.getDoc_last_name():null );
-				
-				pStatement.setString(4,doctorDTOs.getDoc_address_no() != null ? doctorDTOs.getDoc_address_no():null );
-				pStatement.setString(5,doctorDTOs.getDoc_address_lane1() != null ? doctorDTOs.getDoc_address_lane1():null );
-				pStatement.setString(6,doctorDTOs.getDoc_address_lane2() != null ? doctorDTOs.getDoc_address_lane2():null );
-				pStatement.setString(7,doctorDTOs.getDoc_address_lane3() != null ? doctorDTOs.getDoc_address_lane3():null );
-				pStatement.setString(8,doctorDTOs.getDoc_city() != null ? doctorDTOs.getDoc_city():null );
-				
-				pStatement.setString(9,doctorDTOs.getDoc_tp1() != null ? doctorDTOs.getDoc_tp1():null );
-				pStatement.setString(10,doctorDTOs.getDoc_tp2() != null ? doctorDTOs.getDoc_tp2():null );
-				pStatement.setString(11,doctorDTOs.getDoc_tp3() != null ? doctorDTOs.getDoc_tp3():null );
-				pStatement.setString(12,doctorDTOs.getDoc_email() != null ? doctorDTOs.getDoc_email():null );
-				
-				pStatement.setInt(13,doctorDTOs.getDoc_status_id() != null ? doctorDTOs.getDoc_status_id():0 );
-				pStatement.setInt(14,doctorDTOs.getSpecification_id() != null ? doctorDTOs.getSpecification_id():0 );
-				pStatement.setInt(15,doctorDTOs.getHospital_id() != null ? doctorDTOs.getHospital_id():0 );
-				pStatement.setInt(16,doctorDTOs.getWard_id() != null ? doctorDTOs.getWard_id():null );
-				
+				PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
+				pStatement.setString(1, doctorDTOs.getDoc_reg_no() != null ? doctorDTOs.getDoc_reg_no() : null);
+				pStatement.setString(2, doctorDTOs.getDoc_first_name() != null ? doctorDTOs.getDoc_first_name() : null);
+				pStatement.setString(3, doctorDTOs.getDoc_last_name() != null ? doctorDTOs.getDoc_last_name() : null);
+
+				pStatement.setString(4, doctorDTOs.getDoc_address_no() != null ? doctorDTOs.getDoc_address_no() : null);
+				pStatement.setString(5,
+						doctorDTOs.getDoc_address_lane1() != null ? doctorDTOs.getDoc_address_lane1() : null);
+				pStatement.setString(6,
+						doctorDTOs.getDoc_address_lane2() != null ? doctorDTOs.getDoc_address_lane2() : null);
+				pStatement.setString(7,
+						doctorDTOs.getDoc_address_lane3() != null ? doctorDTOs.getDoc_address_lane3() : null);
+				pStatement.setString(8, doctorDTOs.getDoc_city() != null ? doctorDTOs.getDoc_city() : null);
+
+				pStatement.setString(9, doctorDTOs.getDoc_tp1() != null ? doctorDTOs.getDoc_tp1() : null);
+				pStatement.setString(10, doctorDTOs.getDoc_tp2() != null ? doctorDTOs.getDoc_tp2() : null);
+				pStatement.setString(11, doctorDTOs.getDoc_tp3() != null ? doctorDTOs.getDoc_tp3() : null);
+				pStatement.setString(12, doctorDTOs.getDoc_email() != null ? doctorDTOs.getDoc_email() : null);
+
+				pStatement.setInt(13, doctorDTOs.getDoc_status_id() != null ? doctorDTOs.getDoc_status_id() : 0);
+				pStatement.setInt(14, doctorDTOs.getSpecification_id() != null ? doctorDTOs.getSpecification_id() : 0);
+
 				boolean result = pStatement.execute();
-				
+
 				if (!result) {
-					return Messages.dataSuccess;
+					boolean val = this.insertIntoDocHospital(doctorDTOs.getHospital_list(), doctorDTOs.getDoc_reg_no());
+					
+					if (val) {
+						return Messages.docAndHostSuccess;
+					}
+					return Messages.doctorSuccess;
 				}
-			
-				
-				this.MYSQLcon.close();
-			
 			} catch (SQLException e) {
 				return e.toString();
+			} finally {
+				try {
+					MYSQLcon.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
-			
+
 		}
-	    return Messages.connectionER;
-		
-		
+		return Messages.connectionER;
+
 	}
 
-	
+	@Override
+	public boolean insertIntoDocHospital(String Hospitals,String RegNo) {
+		
+		boolean result = false;
+		if (Hospitals == null || RegNo == null) {
+			return false;
+		}else {
+			String docId = this.SelectDocId(RegNo);
+			if (docId != null) {
+				Connection MYSQLcon  = cBuilder.MYSQLConnection();
+				String[] hostArr = Hospitals.split(",");
+				
+				StringBuilder sBuilder = new StringBuilder();
+				sBuilder.append("INSERT INTO doc_hospital ( \n");
+				sBuilder.append("doc_id,\n");
+				sBuilder.append("hostpital_id )\n");
+				sBuilder.append("VALUES(?,?)");
+				
+				try {
+					
+					for (int i = 0; i < hostArr.length; i++) {
+						String qurtString = sBuilder.toString();
+						PreparedStatement pStatement = MYSQLcon.prepareStatement(qurtString);
+						pStatement.setInt(1,Integer.parseInt(hostArr[i]));
+						pStatement.setInt(2,Integer.parseInt(docId));
+						result = pStatement.execute();
+						if (result) {
+							return false;
+						}
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return false;
+				}finally {
+					try {
+						MYSQLcon.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+			if (!result) {
+				return true;
+			}
+		}
+		return result;
 
-	
+	}
 
+	@Override
+	public String SelectDocId(String regNO) {
+		if (regNO != null) {
+			Connection MYSQLcon = cBuilder.MYSQLConnection();
+			StringBuilder sBuilder = new StringBuilder();
+			sBuilder.append("SELECT\n");
+			sBuilder.append("doc_id\n");
+			sBuilder.append("FROM\n");
+			sBuilder.append("doctors\n");
+			sBuilder.append("WHERE doc_reg_no = ?");
+			String qurtString = sBuilder.toString();
 
-	
-	
+			try {
+				PreparedStatement pStatement = MYSQLcon.prepareStatement(qurtString);
+				pStatement.setString(1, regNO.trim());
+				ResultSet rs = pStatement.executeQuery();
+				while (rs.next()) {
+					return rs.getString("doc_id");
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					MYSQLcon.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
 
 }

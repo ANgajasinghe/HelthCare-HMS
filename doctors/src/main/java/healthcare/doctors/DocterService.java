@@ -20,30 +20,21 @@ public class DocterService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<DoctorDTO> getAllDoctors() {
-
 		return dm.getAllDoctors();
-
 	}
 	
 	@GET
 	@Path("spec")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<DoctorDTO> getSpecications() {
-
 		return dm.getSepecificationAllData();
-
 	}
-
-	
-
 	
 	@POST
 	@Path("add")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String insertIntoDoctors(DoctorDTO doctorDTOs) {
-
 		return dm.insertIntoDoctors(doctorDTOs);
-
 	}
 
 }

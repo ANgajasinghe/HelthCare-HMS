@@ -32,11 +32,13 @@ public class DoctorDTO {
 	private Integer hospital_id;
 	private Integer ward_id;
 	private Data start_date;
+	
 	private Data end_date;
 	private Data available_time	;
 	
 	/*other attributes is here*/
 	private String hospital_name;
+	private String hospital_list;
 
 	public Integer getDoc_id() {
 		return doc_id;
@@ -236,6 +238,14 @@ public class DoctorDTO {
 
 	public void setHospital_name(String hospital_name) {
 		this.hospital_name = hospital_name;
+	}
+	
+	public String getHospital_list() {
+		return hospital_list;
+	}
+
+	public void setHospital_list(String hospital_list) {
+		this.hospital_list = hospital_list;
 	}
 
 	
