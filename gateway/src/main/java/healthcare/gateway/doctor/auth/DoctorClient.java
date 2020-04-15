@@ -27,7 +27,7 @@ public class DoctorClient {
 	}
 	
 	public final Response getDocSpecData() {
-		WebTarget service = client.target(API);
+		WebTarget service = client.target(API).path("doc");
 		try {
 			Response response = service.request(MediaType.APPLICATION_JSON).get();
 			return response;
@@ -38,7 +38,7 @@ public class DoctorClient {
 	}
 	
 	public final Response postDoc(DoctorDTO dto) {
-		WebTarget service = client.target(API).path("add");
+		WebTarget service = client.target(API).path("doc").path("add");
 		try {
 			Response response = service.request().post(Entity.json(dto));
 			return response;

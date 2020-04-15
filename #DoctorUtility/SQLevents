@@ -1,2 +1,3 @@
 SELECT @@event_scheduler;
+SET GLOBAL event_scheduler := 1;
 

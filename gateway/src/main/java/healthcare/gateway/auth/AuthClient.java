@@ -1,15 +1,12 @@
 package healthcare.gateway.auth;
 
-import javax.json.JsonArray;
+
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import healthcare.gatewayDTO.IpMapperDTO;
 import healthcare.gatewayDTO.IpMapperModel;
@@ -29,6 +26,7 @@ public class AuthClient {
 	}	
 	
 	public final String AuthChecker(String authToken) {
+		System.out.println(API);
 		WebTarget service = client.target(API).path("check").queryParam("token", authToken);
 		try {
 			String response = service.request(MediaType.APPLICATION_JSON).get(String.class);

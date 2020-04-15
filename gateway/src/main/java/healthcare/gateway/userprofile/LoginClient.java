@@ -24,12 +24,13 @@ public class LoginClient {
 	Client client = ClientBuilder.newClient();
 	
 	public final String loginTokenApiCaller(String username , String password ) {
-		
+		System.out.println(username + password);
 		WebTarget service = client.target(API).path(username).path(password);
 		try {
 			String response = service.request(MediaType.TEXT_PLAIN).get(String.class);
 			return response;
 		} catch (ProcessingException e) {
+			e.printStackTrace();
 			// TODO: handle exception
 		}
 		
