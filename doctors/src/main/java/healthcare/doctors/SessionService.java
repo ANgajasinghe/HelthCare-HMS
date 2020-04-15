@@ -20,7 +20,7 @@ public class SessionService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<DoctorDTO> getSessionData() {
-		return sModel.getSessionData("102", "10003", "2020-04-18");
+		return sModel.getSessionData("", "", "");
 		
 	}
 	

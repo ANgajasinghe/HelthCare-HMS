@@ -39,19 +39,32 @@ public class SessionModel {
 		if (this.connectionChecker(MYSQLcon)) {
 			StringBuilder sBuilder = new StringBuilder();
 			sBuilder.append("SELECT \n");
-			sBuilder.append("* \t");
-			sBuilder.append("FROM\n");
-			sBuilder.append("doc_session\n");
-			sBuilder.append("WHERE (available_date >= ? || isEveryday = 1)");
+			sBuilder.append("s.session_id,");
+			sBuilder.append("s.hostpital_id,");
+			sBuilder.append("s.available_date,");
+			sBuilder.append("s.start_time,");
+			sBuilder.append("s.end_time,");
+			sBuilder.append("s.isEveryday,");
+			sBuilder.append("d.doc_reg_no,");
+			sBuilder.append("d.doc_first_name,");
+			sBuilder.append("d.doc_last_name,");
+			sBuilder.append("d.doc_tp1,");
+			sBuilder.append("d.doc_city,");
+			sBuilder.append("d.doc_email,");
+			sBuilder.append("p.specification_name \n");
+			sBuilder.append("FROM doc_session s \n");
+			sBuilder.append("INNER JOIN doctors d ON d.doc_id = s.doc_id \n");
+			sBuilder.append("INNER JOIN doc_specification p ON p.specification_id = d.doc_specification_id \n");
+			sBuilder.append("WHERE (s.available_date >= ? || s.isEveryday = 1)");
 			
 			if (!(hospitalID.isEmpty() || hospitalID == null)) {
-				sBuilder.append("\n AND hostpital_id ="+hospitalID);
+				sBuilder.append("\n AND s.hostpital_id ="+hospitalID);
 			}
 			if (!(docID.isEmpty() || docID == null)) {
-				sBuilder.append("\n AND doc_id ="+docID);
+				sBuilder.append("\n AND s.doc_id ="+docID);
 			}
 			
-			sBuilder.append("\n AND isActive = 1");
+			sBuilder.append("\n AND s.isActive = 1");
 			
 			String queryString = sBuilder.toString();
 			
@@ -74,6 +87,10 @@ public class SessionModel {
 					DoctorDTO dto = new DoctorDTO();
 					
 					dto.setSession_id(rs.getInt("session_id"));
+					dto.setDoc_first_name(rs.getString("doc_first_name"));
+					dto.setSpecification_name(rs.getString("specification_name"));
+					dto.setHospital_id(rs.getInt("hostpital_id"));
+					
 					sessionList.add(dto);
 				}
 			} catch (SQLException e) {
