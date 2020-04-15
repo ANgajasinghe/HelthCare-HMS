@@ -1,9 +1,10 @@
-package healthcare.gatewayDTO;
+package dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.crypto.Data;
 
 
-
+@XmlRootElement(name = "doc_reg_no")
 public class DoctorDTO {
 
 	private Integer doc_id;//prinary key-doctor

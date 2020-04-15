@@ -2,15 +2,13 @@ package healthcare.gateway.userprofile;
 
 import java.io.IOException;
 
-
-
-import healthcare.gatewayDTO.IpMapperDTO;
-import healthcare.gatewayDTO.IpMapperModel;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import utility.IpMapperDTO;
+import utility.IpMapperModel;
 
 public class UserHttpCall {
 	

@@ -1,4 +1,4 @@
-package healthcare.gatewayDTO;
+package utility;
 
 
 public class IpMapperDTO {

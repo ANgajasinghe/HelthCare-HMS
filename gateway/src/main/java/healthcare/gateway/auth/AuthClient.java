@@ -8,8 +8,8 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import healthcare.gatewayDTO.IpMapperDTO;
-import healthcare.gatewayDTO.IpMapperModel;
+import utility.IpMapperDTO;
+import utility.IpMapperModel;
 
 public class AuthClient {
 	

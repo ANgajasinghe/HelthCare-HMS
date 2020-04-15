@@ -1,4 +1,4 @@
-package healthcare.gateway.doctor.auth;
+package healthcare.gateway.client;
 
 
 
@@ -10,9 +10,9 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import healthcare.gatewayDTO.DoctorDTO;
-import healthcare.gatewayDTO.IpMapperDTO;
-import healthcare.gatewayDTO.IpMapperModel;
+import dto.DoctorDTO;
+import utility.IpMapperDTO;
+import utility.IpMapperModel;
 
 public class DoctorClient {
 	
@@ -26,9 +26,18 @@ public class DoctorClient {
 		API = iMapperDTO.getDocIP();
 	}
 	
-	public final Response getDocSpecData() {
+	
+	public static Response UnAuthorize() {
+		return Response.status(Response.Status.UNAUTHORIZED)
+		         .entity("User Cannot Access the resource")
+		         .build();
+	}
+	
+	public final Response GetAllDoctors() {
 		WebTarget service = client.target(API).path("doc");
 		try {
+		//DoctorDTO dto = service.request(MediaType.APPLICATION_JSON).get(DoctorDTO.class);
+			//System.out.println(dto.getDoc_city());
 			Response response = service.request(MediaType.APPLICATION_JSON).get();
 			return response;
 		} catch (ProcessingException e) {
@@ -46,6 +55,8 @@ public class DoctorClient {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 	}
+	
+	
 	
 
 }
