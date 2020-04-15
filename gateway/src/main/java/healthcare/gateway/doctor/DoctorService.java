@@ -20,6 +20,7 @@ public class DoctorService {
 	DoctorAuth doctorService;
 	
 	private void setInterfaces() {
+		System.out.println("calling");
 		currentUser = AuthFilter.CurrentAuth;
 		switch (currentUser) {
 		case "admin":

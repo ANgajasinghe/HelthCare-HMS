@@ -77,14 +77,16 @@ public class AuthFilter implements ContainerRequestFilter {
 		
 		String mode = client.AuthChecker(tokenString);
 		mode = mode.trim();
+		System.out.println(mode);
+		System.out.println("calling");
 		
 		String[] arr = mode.split(",");
 		
 		if (!arr[0].equals("false")) {
 			CurrentAuth = arr[0];
 			CurrentAuthUserId =arr[1]; 
-			CuttentAuthUserHospitalId = this.getHospitalID(arr[1]);
-			
+			//CuttentAuthUserHospitalId = this.getHospitalID(arr[1]);
+			System.out.println("calling");
 			return;
 		}
 		else {

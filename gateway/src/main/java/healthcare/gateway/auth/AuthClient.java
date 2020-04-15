@@ -26,10 +26,11 @@ public class AuthClient {
 	}	
 	
 	public final String AuthChecker(String authToken) {
-		System.out.println(API);
+		System.out.println("login:- " + API);
 		WebTarget service = client.target(API).path("check").queryParam("token", authToken);
 		try {
 			String response = service.request(MediaType.APPLICATION_JSON).get(String.class);
+			System.out.println("responce:-"+response);
 			return response;
 		} catch (ProcessingException e) {
 			 Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
