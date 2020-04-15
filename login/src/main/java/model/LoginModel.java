@@ -171,7 +171,7 @@ public class LoginModel {
 
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		StringBuilder sBuilder = new StringBuilder();
-		sBuilder.append("SELECT u.user_role \n");
+		sBuilder.append("SELECT u.user_role, u.user_id\n");
 		sBuilder.append("FROM login l \n");
 		sBuilder.append("INNER JOIN userprofile u \n");
 		sBuilder.append("ON l.user_id = u.user_id \n");
@@ -189,7 +189,7 @@ public class LoginModel {
 
 			while (rs.next()) {
 				this.UpdateLoginTime(tokenString.trim());
-				return rs.getString("user_role");
+				return rs.getString("user_role")+","+rs.getString("user_id");
 			}
 
 		} catch (SQLException e) {

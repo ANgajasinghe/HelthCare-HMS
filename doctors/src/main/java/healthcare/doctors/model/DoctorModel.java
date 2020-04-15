@@ -232,8 +232,8 @@ public class DoctorModel implements IDataModel {
 					for (int i = 0; i < hostArr.length; i++) {
 						String qurtString = sBuilder.toString();
 						PreparedStatement pStatement = MYSQLcon.prepareStatement(qurtString);
-						pStatement.setInt(1,Integer.parseInt(hostArr[i]));
-						pStatement.setInt(2,Integer.parseInt(docId));
+						pStatement.setInt(1,Integer.parseInt(docId));
+						pStatement.setInt(2,Integer.parseInt(hostArr[i]));
 						result = pStatement.execute();
 						if (result) {
 							return false;
@@ -290,6 +290,19 @@ public class DoctorModel implements IDataModel {
 				}
 			}
 		}
+		return null;
+	}
+
+	@Override
+	public String DocWorkAssign(DoctorDTO doctorDTO) {
+		
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		StringBuilder sBuilder = new StringBuilder();
+		
+		
+		
+		
+		
 		return null;
 	}
 

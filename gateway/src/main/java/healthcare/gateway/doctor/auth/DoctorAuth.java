@@ -9,5 +9,6 @@ public interface DoctorAuth {
 	DoctorClient client = new DoctorClient();
 	public Response getDocSpecData();
 	public Response postDoc(DoctorDTO dto);
+	
 
 }

@@ -1,6 +1,6 @@
 package dto;
 
-import javax.xml.crypto.Data;
+
 
 
 
@@ -28,15 +28,21 @@ public class DoctorDTO {
 	private String specification_name;
 	private String specification_dis;
 	
-	private Integer work_id;//primary key work
-	private Integer hospital_id;
-	private Integer ward_id;
-	private Data start_date;
+	//doc_session
 	
-	private Data end_date;
-	private Data available_time	;
+	private Integer session_id;
+	private String available_date;
+	private String start_time;
+	private String end_time;
+	private Integer isEveryday;
+	private Integer isActive;
+	private Integer patient_limit;
+	
 	
 	/*other attributes is here*/
+	private Integer ward_id;
+	
+	private Integer hospital_id;
 	private String hospital_name;
 	private String hospital_list;
 
@@ -183,13 +189,62 @@ public class DoctorDTO {
 	public void setSpecification_dis(String specification_dis) {
 		this.specification_dis = specification_dis;
 	}
-
-	public Integer getWork_id() {
-		return work_id;
+	
+	
+	public Integer getSession_id() {
+		return session_id;
 	}
 
-	public void setWork_id(Integer work_id) {
-		this.work_id = work_id;
+	public void setSession_id(Integer session_id) {
+		this.session_id = session_id;
+	}
+
+	public String getAvailable_date() {
+		return available_date;
+	}
+
+	public void setAvailable_date(String available_date) {
+		this.available_date = available_date;
+	}
+
+	public String getStart_time() {
+		return start_time;
+	}
+
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+
+	public String getEnd_time() {
+		return end_time;
+	}
+
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
+	}
+
+	public Integer getIsEveryday() {
+		return isEveryday;
+	}
+
+	public void setIsEveryday(Integer isEveryday) {
+		this.isEveryday = isEveryday;
+	}
+
+	public Integer getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Integer isActive) {
+		this.isActive = isActive;
+	}
+
+	public Integer getPatient_limit() {
+		return patient_limit;
+	}
+
+	public void setPatient_limit(Integer patient_limit) {
+		this.patient_limit = patient_limit;
 	}
 
 	public Integer getHospital_id() {
@@ -206,30 +261,6 @@ public class DoctorDTO {
 
 	public void setWard_id(Integer ward_id) {
 		this.ward_id = ward_id;
-	}
-
-	public Data getStart_date() {
-		return start_date;
-	}
-
-	public void setStart_date(Data start_date) {
-		this.start_date = start_date;
-	}
-
-	public Data getEnd_date() {
-		return end_date;
-	}
-
-	public void setEnd_date(Data end_date) {
-		this.end_date = end_date;
-	}
-
-	public Data getAvailable_time() {
-		return available_time;
-	}
-
-	public void setAvailable_time(Data available_time) {
-		this.available_time = available_time;
 	}
 
 	public String getHospital_name() {

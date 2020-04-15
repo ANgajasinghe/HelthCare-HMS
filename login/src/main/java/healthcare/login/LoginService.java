@@ -37,6 +37,8 @@ public class LoginService {
 		//System.out.println(lg.CheckLogin(encriptString));
 		return lg.CheckLogin(encriptString);
 	}
+	
+	
 //	
 	@POST
 	@Path("abc")
