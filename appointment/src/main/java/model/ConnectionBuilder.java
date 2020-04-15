@@ -13,6 +13,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ConnectionBuilder {
+	
 	private final String Path = "C:\\PAF";
 	private final String fileName = "Connection.xml";
 	private Connection MYSQLcon;
@@ -34,9 +35,9 @@ public class ConnectionBuilder {
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
 						Element eElement = (Element) node;
 						ConnectionDTO connectionDTO = new ConnectionDTO();
-						//connectionDTO.setUrlString(eElement.getElementsByTagName("url").item(0).getTextContent());
-						//connectionDTO.setUserNameString(eElement.getElementsByTagName("username").item(0).getTextContent());
-					//	connectionDTO.setPasswordString(eElement.getElementsByTagName("password").item(0).getTextContent());
+						connectionDTO.setUrlString(eElement.getElementsByTagName("url").item(0).getTextContent());
+						connectionDTO.setUserNameString(eElement.getElementsByTagName("username").item(0).getTextContent());
+						connectionDTO.setPasswordString(eElement.getElementsByTagName("password").item(0).getTextContent());
 						return connectionDTO;
 					}
 
@@ -56,7 +57,7 @@ public class ConnectionBuilder {
 			ConnectionDTO cDto = this.ReadCfg();
 			Class.forName("com.mysql.jdbc.Driver");
 			//MYSQLcon = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/healthcare?useTimezone=true&serverTimezone=UTC", "root", "");
-			//MYSQLcon = DriverManager.getConnection(cDto.getUrlString(),cDto.getUserNameString(),cDto.getPasswordString());
+			MYSQLcon = DriverManager.getConnection(cDto.getUrlString(),cDto.getUserNameString(),cDto.getPasswordString());
 
 			return MYSQLcon;
 		} catch (Exception e) {
