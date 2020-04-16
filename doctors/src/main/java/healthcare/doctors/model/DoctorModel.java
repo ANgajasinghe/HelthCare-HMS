@@ -306,4 +306,66 @@ public class DoctorModel implements IDataModel {
 		return null;
 	}
 
+	@Override
+	public DoctorDTO SelectDocById(String id) {
+		System.out.println(id);
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		if (this.connectionChecker(MYSQLcon)) {
+
+			StringBuilder sBuilder = new StringBuilder();
+			sBuilder.append("SELECT\n");
+			sBuilder.append("*\t");
+			sBuilder.append("FROM\n");
+			sBuilder.append("doctors d\n");
+			sBuilder.append("INNER JOIN doc_specification  s\n");
+			sBuilder.append("ON d.doc_specification_id = s.specification_id\n");
+			sBuilder.append("WHERE d.doc_id = ?");
+
+			String qurtString = sBuilder.toString();
+
+			try {
+				PreparedStatement pStatement =  MYSQLcon.prepareStatement(qurtString);
+				pStatement.setString(1, id.trim());
+				ResultSet rs = pStatement.executeQuery();
+				
+
+				if(rs.next()) {
+					DoctorDTO dto = new DoctorDTO();
+					dto.setDoc_id(rs.getInt("doc_id"));
+					dto.setDoc_reg_no(rs.getString("doc_reg_no"));
+					dto.setDoc_first_name(rs.getString("doc_first_name"));
+					dto.setDoc_last_name(rs.getString("doc_last_name"));
+					dto.setDoc_address_no(rs.getString("doc_address_no"));
+					dto.setDoc_address_lane1(rs.getString("doc_address_lane1"));
+					dto.setDoc_address_lane2(rs.getString("doc_address_lane2"));
+					dto.setDoc_address_lane3(rs.getString("doc_address_lane3"));
+					dto.setDoc_city(rs.getString("doc_city"));
+					dto.setDoc_tp1(rs.getString("doc_tp1"));
+					dto.setDoc_tp2(rs.getString("doc_tp2"));
+					dto.setDoc_tp3(rs.getString("doc_tp3"));
+					dto.setDoc_email(rs.getString("doc_email"));
+					dto.setDoc_status_id(rs.getInt("doc_status_id"));
+					dto.setSpecification_name(rs.getString("specification_name"));
+					return dto;
+				}
+
+				
+
+			} catch (SQLException e) {
+				DoctorDTO dto = new DoctorDTO();
+				return dto;
+			} finally {
+				try {
+					MYSQLcon.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+		return null;
+	}
+
 }

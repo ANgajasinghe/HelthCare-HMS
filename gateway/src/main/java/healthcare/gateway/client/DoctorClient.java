@@ -1,6 +1,6 @@
 package healthcare.gateway.client;
 
-import javax.ws.rs.PathParam;
+
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -41,6 +41,21 @@ public class DoctorClient {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 
+	}
+	
+	public final Response SelectDocById(String docID) {
+		
+		
+		
+		System.out.println("SelectDocById is calling");
+		WebTarget service = client.target(API).path("doc").path(docID);
+		try {
+			Response response = service.request(MediaType.APPLICATION_JSON).get();
+			return response;
+		} catch (ProcessingException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+		
 	}
 
 	public final Response postDoc(DoctorDTO dto) {

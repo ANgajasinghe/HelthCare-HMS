@@ -36,4 +36,16 @@ public class PatientAuth implements IAuthorization {
 		
 	}
 
+	@Override
+	public Response SelectDocById(String docID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Response getHospitalNameByID(String hostID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

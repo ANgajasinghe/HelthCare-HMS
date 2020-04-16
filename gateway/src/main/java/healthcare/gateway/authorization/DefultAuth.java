@@ -20,6 +20,11 @@ public class DefultAuth implements IAuthorization {
 		// TODO Auto-generated method stub
 		return DoctorClient.UnAuthorize();
 	}
+	
+	@Override
+	public Response SelectDocById(String docID) {
+		return DoctorClient.UnAuthorize();
+	}
 
 	@Override
 	public Response getSessionData(String hospitalID, String docID, String date) {
@@ -31,7 +36,12 @@ public class DefultAuth implements IAuthorization {
 	public Response getSessionDataById(int sessionId) {
 		return DoctorClient.UnAuthorize();
 		//return doctorClient.getSessionDataById(sessionId);
-		
+	}
+
+	@Override
+	public Response getHospitalNameByID(String hostID) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

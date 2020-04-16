@@ -14,6 +14,8 @@ public interface IDataModel {
 	public String insertIntoDoctors(DoctorDTO doctorDTOs);
 	public boolean insertIntoDocHospital(String Hospitals,String RegNo);
 	public String SelectDocId(String regNO);
+	public DoctorDTO SelectDocById(String id);
 	public String DocWorkAssign(DoctorDTO doctorDTO);
+	
 	
 }

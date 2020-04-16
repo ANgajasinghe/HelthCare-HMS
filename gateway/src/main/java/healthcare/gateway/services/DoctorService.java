@@ -20,32 +20,12 @@ import healthcare.gateway.authorization.PatientAuth;
 public class DoctorService {
 
 	String currentUser;
-	String currentUserID;
+	String currentUserID = AuthFilter.CurrentAuthUserId;
 	//DoctorAuth doctorService;
 	
 	IAuthorization iAuthorization;
 	
-	
-//	private void setInterfaces() {
-//		currentUser = AuthFilter.CurrentAuth;
-//		switch (currentUser) {
-//		case "admin":
-//			doctorService = new DoctorAuthAdmin();
-//			break;
-//		case "doctor":
-//			doctorService = new DoctorAuthDoctor();
-//			break;
-//		case "patient":
-//			doctorService = new DoctorAuthPatient();
-//			break;
-//		default:
-//			doctorService = new DoctorAuthDefult();
-//			break;
-//		}
-//
-//	}
-	
-	private void SetAuthorization() {
+	protected void SetAuthorization() {
 		currentUser = AuthFilter.CurrentAuth;
 		switch (currentUser) {
 		case "admin":
@@ -72,6 +52,17 @@ public class DoctorService {
 		return response;
 	}
 	
+	@GET
+	@Path("{id}")
+	public Response SelectDocById(@PathParam("id") String id) {
+		SetAuthorization();
+		System.out.println(id);
+		DoctorDTO a = iAuthorization.SelectDocById(id).readEntity(DoctorDTO.class);
+		System.out.println(a);
+		iAuthorization.getHospitalNameByID("100");
+		return null;
+	}
+	
 	@POST
 	@Path("add")
 	public Response postDoc(DoctorDTO dto) {
@@ -96,6 +87,8 @@ public class DoctorService {
 		SetAuthorization();
 		return iAuthorization.getSessionDataById(sessionId);
 	}
+	
+	
 	
 
 	

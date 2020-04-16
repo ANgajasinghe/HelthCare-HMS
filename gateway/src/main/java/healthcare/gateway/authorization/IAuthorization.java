@@ -13,5 +13,11 @@ public interface IAuthorization {
 	public Response getSessionData(String hospitalID,String docID,String date);
 	public Response getSessionDataById(int sessionId);
 	
+	public Response SelectDocById(String docID);
+	
+	
+	//hospital
+	public Response getHospitalNameByID(String hostID);
+	
 	
 }

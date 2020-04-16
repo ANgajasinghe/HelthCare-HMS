@@ -38,4 +38,16 @@ public class DoctorAuth implements IAuthorization {
 		
 	}
 
+	@Override
+	public Response getHospitalNameByID(String hostID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response SelectDocById(String docID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
