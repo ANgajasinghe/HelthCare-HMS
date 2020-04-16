@@ -1,10 +1,5 @@
 Manifest-Version: 1.0
-<<<<<<< HEAD
-Built-By: Hyper
-Build-Jdk: 13.0.2
-=======
 Built-By: NAYANAJITH
 Build-Jdk: 1.8.0_241
->>>>>>> branch 'master' of https://github.com/ANgajasinghe/PAF-Health_Care.git
 Created-By: Maven Integration for Eclipse
 

@@ -310,6 +310,7 @@ public class DoctorModel implements IDataModel {
 	public DoctorDTO SelectDocById(String id) {
 		System.out.println(id);
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		DoctorDTO dto = new DoctorDTO();
 		if (this.connectionChecker(MYSQLcon)) {
 
 			StringBuilder sBuilder = new StringBuilder();
@@ -325,12 +326,12 @@ public class DoctorModel implements IDataModel {
 
 			try {
 				PreparedStatement pStatement =  MYSQLcon.prepareStatement(qurtString);
-				pStatement.setString(1, id.trim());
+				pStatement.setString(1,(id != null) ? id.trim():null);
 				ResultSet rs = pStatement.executeQuery();
 				
 
 				if(rs.next()) {
-					DoctorDTO dto = new DoctorDTO();
+					
 					dto.setDoc_id(rs.getInt("doc_id"));
 					dto.setDoc_reg_no(rs.getString("doc_reg_no"));
 					dto.setDoc_first_name(rs.getString("doc_first_name"));
@@ -346,13 +347,11 @@ public class DoctorModel implements IDataModel {
 					dto.setDoc_email(rs.getString("doc_email"));
 					dto.setDoc_status_id(rs.getInt("doc_status_id"));
 					dto.setSpecification_name(rs.getString("specification_name"));
-					return dto;
+					dto.setHospilalIDList(this.GetDoctorHositalId(id));
 				}
 
-				
-
 			} catch (SQLException e) {
-				DoctorDTO dto = new DoctorDTO();
+				e.printStackTrace();
 				return dto;
 			} finally {
 				try {
@@ -362,10 +361,37 @@ public class DoctorModel implements IDataModel {
 					e.printStackTrace();
 				}
 			}
-
+			
 		}
-
-		return null;
+		return dto;
+		
+		
+	}
+	
+	private List<String> GetDoctorHositalId(String id) throws SQLException {
+		
+		List<String> list = new ArrayList<String>();
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append("SELECT\n");
+		sBuilder.append("hostpital_id \t");
+		sBuilder.append("FROM\n");
+		sBuilder.append("doc_hospital \n");
+		sBuilder.append("WHERE doc_id = ?");
+		String qurtString = sBuilder.toString();
+		
+		PreparedStatement pStatement =  MYSQLcon.prepareStatement(qurtString);
+		pStatement.setString(1,(id != null) ? id.trim():null);
+		ResultSet rs = pStatement.executeQuery();
+		
+		while (rs.next()) {
+			System.out.println(rs.getString("hostpital_id"));
+			list.add(rs.getString("hostpital_id"));
+			
+		}	
+		MYSQLcon.close();
+		return list;
+		
 	}
 
 }
