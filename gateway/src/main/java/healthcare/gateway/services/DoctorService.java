@@ -3,6 +3,8 @@ package healthcare.gateway.services;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import dto.DoctorDTO;
@@ -76,6 +78,28 @@ public class DoctorService {
 		SetAuthorization();
 		return iAuthorization.postDoc(dto);
 	}
+	
+	@GET
+	@Path("session")
+	public Response getSessionData(
+			@QueryParam("hospital_id") String hospitalID,
+			@QueryParam("doc_id") String docID,
+			@QueryParam("date")String date
+			){
+		SetAuthorization();
+		return iAuthorization.getSessionData(hospitalID, docID, date);
+	}
+	
+	@GET
+	@Path("session/{id}")
+	public Response getSessionDataById(@PathParam("id") int sessionId) {
+		SetAuthorization();
+		return iAuthorization.getSessionDataById(sessionId);
+	}
+	
+
+	
+	
 
 	
 	

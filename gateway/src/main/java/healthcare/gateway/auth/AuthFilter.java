@@ -58,7 +58,8 @@ public class AuthFilter implements ContainerRequestFilter {
 
 		
 		if (authorizationHeader == null) {
-			abortWithUnauthorized(requestContext,GMessage.addToken);
+			//abortWithUnauthorized(requestContext,GMessage.addToken);
+			return;
 		}
 		else {
 			String token = authorizationHeader
