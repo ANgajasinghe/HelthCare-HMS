@@ -306,6 +306,19 @@ public class DoctorDTO {
 	public void setHospital_list(String hospital_list) {
 		this.hospital_list = hospital_list;
 	}
+	
+	
+	private DoctorDTO docObj;
+
+	public DoctorDTO getDocObj() {
+		return docObj;
+	}
+
+	public void setDocObj(DoctorDTO docObj) {
+		this.docObj = docObj;
+	}
+	
+	
 
 	
 	
