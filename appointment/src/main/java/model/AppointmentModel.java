@@ -36,8 +36,8 @@ public boolean connectionChecker() {
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		StringBuilder sBuilder = new StringBuilder();
 		sBuilder.append("INSERT INTO \n");
-		sBuilder.append("appointment (app_doc_work_id,app_patient_id,app_patient_name,app_hospital_name,app_book_date,app_patient_contact_no,app_payment_status) VALUES( \n");
-		sBuilder.append("?,?,?,?,?,?,? )");
+		sBuilder.append("appointment (app_doc_work_id,app_patient_id,app_patient_name,app_hospital_name,app_book_date,app_patient_contact_no,app_price,app_payment_status) VALUES( \n");
+		sBuilder.append("?,?,?,?,?,?,?,? )");
 
 		String queryString = sBuilder.toString();
 
@@ -49,7 +49,8 @@ public boolean connectionChecker() {
 			pStatement.setString(4, appoinmentDTO.getApp_hospital_name());
 			pStatement.setDate(5, (Date) appoinmentDTO.getApp_book_date());
 			pStatement.setInt(6, appoinmentDTO.getApp_patient_contact_no());
-			pStatement.setString(7, appoinmentDTO.getApp_payment_status());
+			pStatement.setDouble(7, appoinmentDTO.getApp_price());
+			pStatement.setString(8, appoinmentDTO.getApp_payment_status());
 			
 
 			boolean result = pStatement.execute();
@@ -101,6 +102,7 @@ public boolean connectionChecker() {
 				appDTO.setApp_hospital_name(rs.getString("app_hospital_name"));
 				appDTO.setApp_book_date(rs.getDate("app_book_date"));
 				appDTO.setApp_patient_contact_no(rs.getInt("app_patient_contact_no"));
+				appDTO.setApp_price(rs.getDouble("app_price"));
 				appDTO.setApp_payment_status(rs.getString("app_payment_status"));
 				appDTOList.add(appDTO);
 			
