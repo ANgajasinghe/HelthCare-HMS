@@ -27,8 +27,8 @@ public class AuthFilter implements ContainerRequestFilter {
 	private List<String> urlSkipper = new ArrayList<String>();
 	AuthClient client = new AuthClient();
 	public static String CurrentAuth = "admin";
-	public static String CurrentAuthUserId = "0";
-	public static String CuttentAuthUserHospitalId = "0";
+	public static String CurrentAuthUserId = null;
+	public static String CuttentAuthUserHospitalId = null;
 	
 	
 	
@@ -86,7 +86,9 @@ public class AuthFilter implements ContainerRequestFilter {
 		if (!arr[0].equals("false")) {
 			CurrentAuth = arr[0];
 			CurrentAuthUserId =arr[1]; 
-			//CuttentAuthUserHospitalId = this.getHospitalID(arr[1]);
+			if (CurrentAuth.equals("hospital")) {
+				CuttentAuthUserHospitalId = this.getHospitalID(arr[1]);
+			}
 			System.out.println("calling");
 			return;
 		}
@@ -110,13 +112,11 @@ public class AuthFilter implements ContainerRequestFilter {
 		IpMapperDTO iMapperDTO = iModel.getIpMapperDTO();
 		urlSkipper.add(iMapperDTO.getGatewayIP()+GMessage.path("login"));
 		urlSkipper.add(iMapperDTO.getGatewayIP()+GMessage.path("doc")+GMessage.path("session"));
-		
+		urlSkipper.add(iMapperDTO.getGatewayIP()+GMessage.path("doc")+GMessage.path("session")+GMessage.path("id"));
 	}
 	
 	private boolean UrlSkipper(String url) {
 		for (String string : urlSkipper) {
-			System.out.println(url);
-			System.out.println(string);
 			if (string.equals(url)) {
 				System.out.println("This URL need to skip");
 				return true;

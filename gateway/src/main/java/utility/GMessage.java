@@ -6,6 +6,8 @@ public class GMessage {
 	
 	public static String addToken ="You have to have a bearer token to get this services";
 	
+	public static String nodata="Couldn't find requested data from database  : ";
+	
 	public static String path(String path) {
 		return "/"+path;
 	}

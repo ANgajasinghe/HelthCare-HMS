@@ -12,6 +12,7 @@ import java.util.List;
 
 import dto.DoctorDTO;
 import utility.ConnectionBuilder;
+import utility.Messages;
 
 public class SessionModel {
 
@@ -93,7 +94,8 @@ public class SessionModel {
 
 		}
 
-		return sessionList;
+		return (sessionList.isEmpty())?null:sessionList;
+		
 
 	}
 
@@ -146,5 +148,55 @@ public class SessionModel {
 		}
 		
 		return null;
+	}
+	
+	public String insertIntoDoctors(DoctorDTO doctorDTOs) {
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append("INSERT INTO doc_session ( \n");
+		sBuilder.append("hostpital_id, \n");
+		sBuilder.append("doc_id, \n");
+		sBuilder.append("available_date, \n");
+		sBuilder.append("start_time, \n");
+		sBuilder.append("end_time, \n");
+		sBuilder.append("isEveryday, \n");
+		sBuilder.append("isActive, \n");
+		sBuilder.append("patient_limit, \n");
+		sBuilder.append("price )\n");
+		sBuilder.append("VALUES (\n");
+		sBuilder.append("?,?,?,?,?,?,?,?,?\n");
+		sBuilder.append(")");
+		String queryString = sBuilder.toString();
+		
+		try {
+			PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
+			pStatement.setInt(1, doctorDTOs.getHospital_id());
+			pStatement.setInt(2, doctorDTOs.getDoc_id());
+			pStatement.setString(3, doctorDTOs.getAvailable_date());
+			pStatement.setString(4, doctorDTOs.getStart_time());
+			pStatement.setString(5, doctorDTOs.getEnd_time());
+			pStatement.setInt(6, doctorDTOs.getIsEveryday());
+			pStatement.setInt(7, doctorDTOs.getIsActive());
+			pStatement.setInt(8, doctorDTOs.getPatient_limit());
+			pStatement.setDouble(9, doctorDTOs.getPrice());
+			
+			boolean result = pStatement.execute();
+			
+			if (!result) {
+				return Messages.sessionnDtaOK;
+			}
+			
+		} catch (SQLException e) {
+			return Messages.insertSessonErr + e.toString();
+			
+		}finally {
+			try {
+				MYSQLcon.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return Messages.insertSessonErr;
+
 	}
 }
