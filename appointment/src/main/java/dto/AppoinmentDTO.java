@@ -4,9 +4,10 @@ import java.util.Date;
 
 public class AppoinmentDTO {
 	
-	private Integer app_doc_work_id;//primary key
+	private Integer app_doc_id;//primary key
 	private Integer app_patient_id;//primary key
 	private Integer app_patient_contact_no;
+	private Integer app_session_id;
 	
 	private  Double app_price;
 	
@@ -15,15 +16,25 @@ public class AppoinmentDTO {
 	private String app_hospital_name;
 	private String app_payment_status;
 	
-	private Date app_book_date;
+	private String app_book_date;
 	
-	
-	public Integer getApp_doc_work_id() {
-		return app_doc_work_id;
+	public Integer getApp_session_id() {
+		return app_session_id;
 	}
 
-	public void setApp_doc_work_id(Integer app_doc_work_id) {
-		this.app_doc_work_id = app_doc_work_id;
+	public void setApp_session_id(Integer app_session_id) {
+		this.app_session_id = app_session_id;
+	}
+
+
+	
+	
+	public Integer getApp_doc_id() {
+		return app_doc_id;
+	}
+
+	public void setApp_doc_id(Integer app_doc_work_id) {
+		this.app_doc_id = app_doc_work_id;
 	}
 
 	public Integer getApp_patient_id() {
@@ -66,13 +77,16 @@ public class AppoinmentDTO {
 		this.app_payment_status = app_payment_status;
 	}
 
-	public Date getApp_book_date() {
+	
+
+	public String getApp_book_date() {
 		return app_book_date;
 	}
 
-	public void setApp_book_date(Date app_book_date) {
+	public void setApp_book_date(String app_book_date) {
 		this.app_book_date = app_book_date;
 	}
+
 	public Double getApp_price() {
 		return app_price;
 	}
