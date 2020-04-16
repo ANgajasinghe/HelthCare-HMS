@@ -56,4 +56,40 @@ public class HospitalModel {
 		return result;
 
 	}
+
+	public String getHospitalNameByID(String id) {
+		String result = null;
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append("SELECT\n");
+		sBuilder.append(" * \t");
+		sBuilder.append("FROM\n");
+		sBuilder.append("hospitals\n");
+		sBuilder.append("WHERE hospital_id  = ?\n");
+		String queryString = sBuilder.toString();
+		
+		try {
+			PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
+			pStatement.setString(1, id.trim());
+			ResultSet rs = pStatement.executeQuery();
+			if(rs.next()) {
+				result = rs.getString("hospital_name")+","+rs.getString("hospital_location");
+				return result;
+			}
+
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				MYSQLcon.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+		
+	}
 }

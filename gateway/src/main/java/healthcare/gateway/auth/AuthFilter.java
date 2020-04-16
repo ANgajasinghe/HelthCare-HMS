@@ -1,7 +1,8 @@
 package healthcare.gateway.auth;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -11,11 +12,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
-
-
-import healthcare.gatewayDTO.IpMapperDTO;
-import healthcare.gatewayDTO.IpMapperModel;
 import utility.GMessage;
+import utility.IpMapperDTO;
+import utility.IpMapperModel;
 
 @Provider
 public class AuthFilter implements ContainerRequestFilter {
@@ -25,9 +24,9 @@ public class AuthFilter implements ContainerRequestFilter {
 	private static final String REALM = "example";
 	private static final String AUTHENTICATION_SCHEME  = "Bearer ";
 	
-	private String[] urlSkipper = new String[3]; 
+	private List<String> urlSkipper = new ArrayList<String>();
 	AuthClient client = new AuthClient();
-	public static String CurrentAuth = "defult";
+	public static String CurrentAuth = "admin";
 	public static String CurrentAuthUserId = "0";
 	public static String CuttentAuthUserHospitalId = "0";
 	
@@ -48,27 +47,29 @@ public class AuthFilter implements ContainerRequestFilter {
 		
 		String reqPath = info.getAbsolutePath().toString().trim();
 		
-		Init();
-		
-		if (urlSkipper[0].equals(reqPath)) {
+		this.Init();
+	
+		if (UrlSkipper(reqPath)) {
 			return;
 		}
-	
 		
-		String authorizationHeader =
-                requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-
-		
-		if (authorizationHeader == null) {
-			abortWithUnauthorized(requestContext,GMessage.addToken);
+		if (true) {
+			return;
 		}
-		else {
-			String token = authorizationHeader
-	                .substring(AUTHENTICATION_SCHEME.length()).trim();
-			
-			System.out.println(token);
-			this.authChecker(token,requestContext);
-		}
+//		String authorizationHeader =
+//                requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+//
+//		
+//		if (authorizationHeader == null) {
+//			abortWithUnauthorized(requestContext,GMessage.addToken);
+//		}
+//		else {
+//			String token = authorizationHeader
+//	                .substring(AUTHENTICATION_SCHEME.length()).trim();
+//			
+//			System.out.println(token);
+//			this.authChecker(token,requestContext);
+//		}
 		
 			
 	}
@@ -96,8 +97,6 @@ public class AuthFilter implements ContainerRequestFilter {
 	
 	private void abortWithUnauthorized(ContainerRequestContext requestContext,String message) {
 
-        // Abort the filter chain with a 401 status code response
-        // The WWW-Authenticate header is sent along with the response
         requestContext.abortWith(
                 Response.status(Response.Status.UNAUTHORIZED)
                         .header(HttpHeaders.WWW_AUTHENTICATE, 
@@ -109,14 +108,26 @@ public class AuthFilter implements ContainerRequestFilter {
 	private void Init() {
 		IpMapperModel iModel = new IpMapperModel();
 		IpMapperDTO iMapperDTO = iModel.getIpMapperDTO();
-		urlSkipper[0] = iMapperDTO.getGatewayIP()+GMessage.path("login");
+		urlSkipper.add(iMapperDTO.getGatewayIP()+GMessage.path("login"));
+		urlSkipper.add(iMapperDTO.getGatewayIP()+GMessage.path("doc")+GMessage.path("session"));
 		
+	}
+	
+	private boolean UrlSkipper(String url) {
+		for (String string : urlSkipper) {
+			System.out.println(url);
+			System.out.println(string);
+			if (string.equals(url)) {
+				System.out.println("This URL need to skip");
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private String getHospitalID(String UserID) {
 		 String result[] = client.GetHospitalId(UserID).split(",");
-		 return result[0];
-		
+		 return result[0];	
 	}
 	
 	

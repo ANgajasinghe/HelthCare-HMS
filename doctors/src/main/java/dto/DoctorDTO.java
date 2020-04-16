@@ -37,6 +37,7 @@ public class DoctorDTO {
 	private Integer isEveryday;
 	private Integer isActive;
 	private Integer patient_limit;
+	private Double price;
 	
 	
 	/*other attributes is here*/
@@ -241,6 +242,16 @@ public class DoctorDTO {
 
 	public Integer getPatient_limit() {
 		return patient_limit;
+	}
+	
+	
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
 	}
 
 	public void setPatient_limit(Integer patient_limit) {

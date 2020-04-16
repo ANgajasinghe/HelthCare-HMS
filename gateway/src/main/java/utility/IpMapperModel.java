@@ -1,4 +1,4 @@
-package healthcare.gatewayDTO;
+package utility;
 
 import java.io.File;
 import java.io.IOException;
