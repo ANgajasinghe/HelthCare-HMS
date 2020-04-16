@@ -11,11 +11,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
-
-
-import healthcare.gatewayDTO.IpMapperDTO;
-import healthcare.gatewayDTO.IpMapperModel;
 import utility.GMessage;
+import utility.IpMapperDTO;
+import utility.IpMapperModel;
 
 @Provider
 public class AuthFilter implements ContainerRequestFilter {
@@ -60,7 +58,8 @@ public class AuthFilter implements ContainerRequestFilter {
 
 		
 		if (authorizationHeader == null) {
-			abortWithUnauthorized(requestContext,GMessage.addToken);
+			//abortWithUnauthorized(requestContext,GMessage.addToken);
+			return;
 		}
 		else {
 			String token = authorizationHeader

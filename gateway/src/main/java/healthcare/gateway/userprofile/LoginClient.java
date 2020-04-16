@@ -6,8 +6,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import healthcare.gatewayDTO.IpMapperDTO;
-import healthcare.gatewayDTO.IpMapperModel;
+import utility.IpMapperDTO;
+import utility.IpMapperModel;
 
 
 public class LoginClient {
