@@ -30,5 +30,7 @@ public class AppoinmentService {
 	public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO) {
 		return appm.InsertIntoAppoinment(appoinmentDTO);
 	}
+	
+	
 
 }

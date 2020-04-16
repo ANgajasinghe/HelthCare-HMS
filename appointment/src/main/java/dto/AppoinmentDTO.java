@@ -8,6 +8,8 @@ public class AppoinmentDTO {
 	private Integer app_patient_id;//primary key
 	private Integer app_patient_contact_no;
 	
+	private  Double app_price;
+	
 	
 	private String app_patient_name;
 	private String app_hospital_name;
@@ -70,6 +72,13 @@ public class AppoinmentDTO {
 
 	public void setApp_book_date(Date app_book_date) {
 		this.app_book_date = app_book_date;
+	}
+	public Double getApp_price() {
+		return app_price;
+	}
+
+	public void setApp_price(Double app_price) {
+		this.app_price = app_price;
 	}
 
 	
