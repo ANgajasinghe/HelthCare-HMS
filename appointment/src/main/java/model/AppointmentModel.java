@@ -36,7 +36,15 @@ public boolean connectionChecker() {
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		StringBuilder sBuilder = new StringBuilder();
 		sBuilder.append("INSERT INTO \n");
-		sBuilder.append("appointment (app_doc_work_id,app_patient_id,app_patient_name,app_hospital_name,app_book_date,app_patient_contact_no,app_price,app_payment_status) VALUES( \n");
+		sBuilder.append("appointment ("
+				+ "app_doc_work_id,"
+				+ "app_patient_id,"
+				+ "app_patient_name,"
+				+ "app_hospital_name,"
+				+ "app_book_date,"
+				+ "app_patient_contact_no,"
+				+ "app_price,app_payment_status)"
+				+ " VALUES( \n");
 		sBuilder.append("?,?,?,?,?,?,?,? )");
 
 		String queryString = sBuilder.toString();
@@ -75,6 +83,7 @@ public boolean connectionChecker() {
 	
 	
  public List<AppoinmentDTO> getAppointmentData() {
+	 System.out.println("getAppointmentData()");
 
 		List<AppoinmentDTO> appDTOList = new ArrayList<AppoinmentDTO>();
 		//Connection MYSQLcon = cBuilder.MYSQLConnection();
@@ -83,7 +92,7 @@ public boolean connectionChecker() {
 		if (this.connectionChecker()) {
 			StringBuilder sBuilder = new StringBuilder();
 			sBuilder.append("SELECT\n");
-			sBuilder.append("*\t,");
+			sBuilder.append("*\t");
 			sBuilder.append("FROM\n");
 			sBuilder.append("appointment\n");
 		

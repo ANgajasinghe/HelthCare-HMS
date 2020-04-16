@@ -25,7 +25,7 @@ public class AppoinmentService {
 	}
 	
 	@POST
-	@Path("add")
+	//@Path("add")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO) {
 		return appm.InsertIntoAppoinment(appoinmentDTO);
