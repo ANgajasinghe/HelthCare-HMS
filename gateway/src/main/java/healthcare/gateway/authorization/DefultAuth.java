@@ -3,6 +3,8 @@ package healthcare.gateway.authorization;
 import javax.ws.rs.core.Response;
 
 import dto.DoctorDTO;
+import dto.PatientDto;
+import dto.UserDTO;
 import healthcare.gateway.client.DoctorClient;
 
 public class DefultAuth implements IAuthorization {
@@ -40,6 +42,17 @@ public class DefultAuth implements IAuthorization {
 
 	@Override
 	public Response getHospitalNameByID(String hostID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Response InsertIntoUserProfile(UserDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Response InsertIntoPatient(PatientDto dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

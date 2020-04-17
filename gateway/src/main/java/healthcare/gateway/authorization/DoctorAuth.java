@@ -3,6 +3,8 @@ package healthcare.gateway.authorization;
 import javax.ws.rs.core.Response;
 
 import dto.DoctorDTO;
+import dto.PatientDto;
+import dto.UserDTO;
 import healthcare.gateway.client.DoctorClient;
 
 
@@ -46,6 +48,16 @@ public class DoctorAuth implements IAuthorization {
 
 	@Override
 	public Response SelectDocById(String docID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Response InsertIntoUserProfile(UserDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Response InsertIntoPatient(PatientDto dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

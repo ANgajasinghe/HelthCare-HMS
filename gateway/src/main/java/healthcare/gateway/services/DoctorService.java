@@ -12,7 +12,7 @@ import javax.ws.rs.core.Response;
 
 
 import dto.DoctorDTO;
-import healthcare.gateway.client.DoctorClient;
+
 
 
 @Path("doc")

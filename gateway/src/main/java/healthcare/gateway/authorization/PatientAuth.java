@@ -3,13 +3,15 @@ package healthcare.gateway.authorization;
 import javax.ws.rs.core.Response;
 
 import dto.DoctorDTO;
+import dto.PatientDto;
+import dto.UserDTO;
 import healthcare.gateway.client.DoctorClient;
 
 
-public class PatientAuth implements IAuthorization {
+public class PatientAuth extends ConfigAuth implements IAuthorization {
 
-	//Init();
-	DoctorClient doctorClient = new DoctorClient();
+
+	
 
 	
 	@Override
@@ -31,9 +33,8 @@ public class PatientAuth implements IAuthorization {
 
 	@Override
 	public Response getSessionDataById(int sessionId) {
-		return DoctorClient.UnAuthorize();
-		//return doctorClient.getSessionDataById(sessionId);
-		
+		return doctorClient.getSessionDataById(sessionId);
+		//return doctorClient.getSessionDataById(sessionId);	
 	}
 
 	@Override
@@ -46,6 +47,16 @@ public class PatientAuth implements IAuthorization {
 	public Response getHospitalNameByID(String hostID) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public Response InsertIntoUserProfile(UserDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Response InsertIntoPatient(PatientDto dto) {
+		return patientClient.InsertIntoPatient(dto);
 	}
 
 }

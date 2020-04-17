@@ -27,7 +27,7 @@ public class MyResource {
     @POST
     @Path("add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String insertData(PatientDto dto) {
+    public String InsertIntoPatient(PatientDto dto) {
     	return pmodel.insertIntoPatient(dto);
     }
 }

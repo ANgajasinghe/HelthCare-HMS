@@ -3,6 +3,8 @@ package healthcare.gateway.authorization;
 import javax.ws.rs.core.Response;
 
 import dto.DoctorDTO;
+import dto.PatientDto;
+import dto.UserDTO;
 
 
 public interface IAuthorization {
@@ -20,4 +22,13 @@ public interface IAuthorization {
 	public Response getHospitalNameByID(String hostID);
 	
 	
+	
+	
+	//userProfile
+	public Response InsertIntoUserProfile(UserDTO dto);
+	
+	
+	
+	//patient
+	public Response InsertIntoPatient(PatientDto dto);
 }

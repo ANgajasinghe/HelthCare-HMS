@@ -15,11 +15,12 @@ public class PatientDto {
 	private String user_password;
 	private String user_role;
 	
-	public Integer getPatient_idInteger() {
+	
+	public Integer getPatient_id() {
 		return patient_id;
 	}
-	public void setPatient_idInteger(Integer patient_idInteger) {
-		this.patient_id = patient_idInteger;
+	public void setPatient_id(Integer patient_id) {
+		this.patient_id = patient_id;
 	}
 	public String getFirst_name() {
 		return first_name;
@@ -63,6 +64,19 @@ public class PatientDto {
 	public void setUser_role(String user_role) {
 		this.user_role = user_role;
 	}
+	
+	//user obj
+	private UserDTO userProfile;
+
+
+	public UserDTO getUserProfile() {
+		return userProfile;
+	}
+	public void setUserProfile(UserDTO userPro) {
+		userProfile = userPro;
+	}
+	
+	
 	
 	
 	
