@@ -47,5 +47,13 @@ public class PatientAuth implements IAuthorization {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+//
+	
+	@Override
+	public void name() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

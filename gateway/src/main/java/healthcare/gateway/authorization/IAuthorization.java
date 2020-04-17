@@ -20,4 +20,9 @@ public interface IAuthorization {
 	public Response getHospitalNameByID(String hostID);
 	
 	
+	
+	//
+	public void name(); 
+	
+	
 }

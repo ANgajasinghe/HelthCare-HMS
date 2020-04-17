@@ -52,4 +52,15 @@ public class AdminAuth implements IAuthorization {
 		
 	}
 
+
+	
+	
+	//
+	
+	@Override
+	public void name() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

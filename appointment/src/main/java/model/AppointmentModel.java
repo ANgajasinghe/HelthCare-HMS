@@ -13,6 +13,7 @@ import java.util.List;
 
 
 import dto.AppoinmentDTO;
+import utility.ConnectionBuilder;
 
 
 public class AppointmentModel {
@@ -30,25 +31,25 @@ public class AppointmentModel {
 //	}
 
 	
-	
-	public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO ) {
+//insert	
+public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO ) {
 
 
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		StringBuilder sBuilder = new StringBuilder();
-		sBuilder.append("INSERT INTO \n");
-		sBuilder.append("appointment ("
-				+ "app_doc_id,"
-				+ "app_patient_id,"
-				+ "app_session_id,"
-				+ "app_patient_name,"
-				+ "app_hospital_name,"
-				+ "app_book_date,"
-				+ "app_patient_contact_no,"
-				+ "app_price,"
-				+ "app_payment_status)\n"
-				+ " VALUES( \n");
-		sBuilder.append("?,?,?,?,?,?,?,?,?)");
+		sBuilder.append("INSERT INTO appointment(\n");
+		sBuilder.append("app_doc_id,");
+		sBuilder.append("app_patient_id,");
+		sBuilder.append("app_session_id,");
+		sBuilder.append("app_patient_name,");
+		sBuilder.append("app_hospital_name,");
+		sBuilder.append("app_book_date,");
+		sBuilder.append("app_patient_contact_no,");
+		sBuilder.append("app_price,");
+		sBuilder.append("app_payment_status)\n");
+		sBuilder.append(" VALUES( \n");
+		sBuilder.append("?,?,?,?,?,?,?,?,?\n");
+		sBuilder.append(")");
 
 		String queryString = sBuilder.toString();
 
@@ -88,7 +89,7 @@ public class AppointmentModel {
 	
 	
 	
-	
+//get details	
  public List<AppoinmentDTO> getAppointmentData() {
 	 System.out.println("getAppointmentData()");
 
@@ -117,7 +118,7 @@ public class AppointmentModel {
 				appDTO.setApp_session_id(rs.getInt("app_session_id"));
 				appDTO.setApp_patient_name(rs.getString("app_patient_name"));
 				appDTO.setApp_hospital_name(rs.getString("app_hospital_name"));
-				//appDTO.setApp_book_date(rs.getDate("app_book_date"));
+				appDTO.setApp_book_date(rs.getString("app_book_date"));
 				appDTO.setApp_patient_contact_no(rs.getInt("app_patient_contact_no"));
 				appDTO.setApp_price(rs.getDouble("app_price"));
 				appDTO.setApp_payment_status(rs.getString("app_payment_status"));
@@ -134,13 +135,24 @@ public class AppointmentModel {
 		}
  }
  
+ 
+ 
+ ///update
  public boolean UpdateAppoinment(AppoinmentDTO appoinmentDTO) {
 		// update 
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		StringBuilder sBuilder = new StringBuilder();
 		sBuilder.append("UPDATE appointment \n");
-		sBuilder.append("SET app_doc_id= ?,app_session_id=?, app_patient_name=?,app_hospital_name=?,app_book_date=?,app_patient_contact_no=?,app_price=?\n");
-		sBuilder.append("WHERE app_patient_id= ? \n");
+		sBuilder.append( "SET \n");
+		sBuilder.append("app_doc_id= ?,");
+		sBuilder.append("app_session_id=?,");
+		sBuilder.append("app_patient_name=?,");
+		sBuilder.append("app_hospital_name=?,");
+		sBuilder.append("app_book_date=?,");
+		sBuilder.append("app_patient_contact_no=?,");
+		sBuilder.append("app_price=?,");
+		sBuilder.append("app_payment_status=?");
+		sBuilder.append(" WHERE app_patient_id= ? \n");
 		
 
 		String queryString = sBuilder.toString();
@@ -149,13 +161,15 @@ public class AppointmentModel {
 		try {
 			pStatement = MYSQLcon.prepareStatement(queryString);
 			pStatement.setInt(1, appoinmentDTO.getApp_doc_id());
-			pStatement.setInt(3, appoinmentDTO.getApp_session_id());
-			pStatement.setString(4, appoinmentDTO.getApp_patient_name());
-			pStatement.setString(5, appoinmentDTO.getApp_hospital_name());
-			//pStatement.setDate(6, (Date) appoinmentDTO.getApp_book_date());
-			pStatement.setInt(7, appoinmentDTO.getApp_patient_contact_no());
-			pStatement.setDouble(8, appoinmentDTO.getApp_price());
-			pStatement.setString(9, appoinmentDTO.getApp_payment_status());
+			pStatement.setInt(2, appoinmentDTO.getApp_session_id());
+			pStatement.setString(3, appoinmentDTO.getApp_patient_name());
+			pStatement.setString(4, appoinmentDTO.getApp_hospital_name());
+			pStatement.setString(5, appoinmentDTO.getApp_book_date());
+			pStatement.setInt(6, appoinmentDTO.getApp_patient_contact_no());
+			pStatement.setDouble(7, appoinmentDTO.getApp_price());
+			pStatement.setString(8, appoinmentDTO.getApp_payment_status());
+			pStatement.setInt(9, appoinmentDTO.getApp_patient_id());
+			
 			boolean result = pStatement.execute();
 			if (!result) {
 				return true;
@@ -174,7 +188,44 @@ public class AppointmentModel {
 	}
  
  
-	public String SelecthospitalName(String app_session_id) {
+ ///delete
+ public boolean DeleteAppoinment(AppoinmentDTO appoinmentDTO) {
+		// update 
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append("DELETE FROM appointment WHERE app_patient_id= ? \n");
+		
+
+		String queryString = sBuilder.toString();
+
+		PreparedStatement pStatement;
+		try {
+			pStatement = MYSQLcon.prepareStatement(queryString);
+			pStatement.setInt(1, appoinmentDTO.getApp_patient_id());
+			
+			boolean result = pStatement.execute();
+			if (!result) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				MYSQLcon.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return false;
+	}
+ 
+ 
+ 
+ 
+ 
+//get hospital Name by session id
+public String SelecthospitalName(String app_session_id) {
 		if (app_session_id != null) {
 			Connection MYSQLcon = cBuilder.MYSQLConnection();
 			StringBuilder sBuilder = new StringBuilder();
