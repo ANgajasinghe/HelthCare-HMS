@@ -23,10 +23,12 @@ public class MyResource {
      */
 	
 	HospitalModel hmodel= new HospitalModel();
+	
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("user")
     public String getIt(@QueryParam("id") String userID) {
+    	System.out.println("calling"+userID);
         return hmodel.getHospitalIdByuserId(userID);
     }
 }
