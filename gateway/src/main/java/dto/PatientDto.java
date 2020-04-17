@@ -5,6 +5,35 @@ public class PatientDto {
 	private Integer patient_id;
 	private String first_name;
 	private String last_name;
+	private String DOB;
+	private String NIC;
+	private String Password;
+
+	public Integer getPatient_id() {
+		return patient_id;
+	}
+	public void setPatient_id(Integer patient_id) {
+		this.patient_id = patient_id;
+	}
+	
+	public String getDOB() {
+		return DOB;
+	}
+	public void setDOB(String dOB) {
+		DOB = dOB;
+	}
+	public String getNIC() {
+		return NIC;
+	}
+	public void setNIC(String nIC) {
+		NIC = nIC;
+	}
+	public String getPassword() {
+		return Password;
+	}
+	public void setPassword(String password) {
+		Password = password;
+	}
 	
 	
 	//user profile table
@@ -15,13 +44,6 @@ public class PatientDto {
 	private String user_password;
 	private String user_role;
 	
-	
-	public Integer getPatient_id() {
-		return patient_id;
-	}
-	public void setPatient_id(Integer patient_id) {
-		this.patient_id = patient_id;
-	}
 	public String getFirst_name() {
 		return first_name;
 	}
@@ -64,10 +86,9 @@ public class PatientDto {
 	public void setUser_role(String user_role) {
 		this.user_role = user_role;
 	}
-	
-	//user obj
-	private UserDTO userProfile;
 
+	
+	private UserDTO userProfile;
 
 	public UserDTO getUserProfile() {
 		return userProfile;
@@ -75,8 +96,6 @@ public class PatientDto {
 	public void setUserProfile(UserDTO userPro) {
 		userProfile = userPro;
 	}
-	
-	
 	
 	
 	
