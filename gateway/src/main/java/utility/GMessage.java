@@ -12,6 +12,8 @@ public class GMessage {
 	
 	public static String invalid = "Invalid User Input : ";
 	
+	public static String logfirt = "Please Login or register first";
+	
 	public static String path(String path) {
 		return "/"+path;
 	}

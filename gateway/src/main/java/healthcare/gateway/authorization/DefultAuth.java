@@ -2,10 +2,13 @@ package healthcare.gateway.authorization;
 
 import javax.ws.rs.core.Response;
 
+import dto.AppoinmentDTO;
 import dto.DoctorDTO;
 import dto.PatientDto;
 import dto.UserDTO;
 import healthcare.gateway.client.DoctorClient;
+import utility.GMessage;
+import utility.Rcode;
 
 public class DefultAuth implements IAuthorization {
 
@@ -13,13 +16,11 @@ public class DefultAuth implements IAuthorization {
 	
 	@Override
 	public Response GetAllDoctors() {
-		
 		return DoctorClient.UnAuthorize();
 	}
 
 	@Override
 	public Response postDoc(DoctorDTO dto) {
-		// TODO Auto-generated method stub
 		return DoctorClient.UnAuthorize();
 	}
 	
@@ -36,35 +37,28 @@ public class DefultAuth implements IAuthorization {
 
 	@Override
 	public Response getSessionDataById(int sessionId) {
-		return DoctorClient.UnAuthorize();
-		//return doctorClient.getSessionDataById(sessionId);
+		return doctorClient.getSessionDataById(sessionId);
 	}
 
 	@Override
 	public Response getHospitalNameByID(String hostID) {
-		// TODO Auto-generated method stub
-		return null;
+		return DoctorClient.UnAuthorize();
 	}
-<<<<<<< HEAD
+
 	@Override
 	public Response InsertIntoUserProfile(UserDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		return DoctorClient.UnAuthorize();
 	}
 	
 	@Override
 	public Response InsertIntoPatient(PatientDto dto) {
-		// TODO Auto-generated method stub
-		return null;
-=======
-	
-//
+		return DoctorClient.UnAuthorize();
+
+	}
 	
 	@Override
-	public void name() {
-		// TODO Auto-generated method stub
-		
->>>>>>> branch 'master' of https://github.com/ANgajasinghe/PAF-Health_Care.git
+	public Response insertIntoAppoiment(AppoinmentDTO dto) {
+		return Rcode.UNAUTHORIZED(GMessage.logfirt);
 	}
 
 }

@@ -61,14 +61,14 @@ public class IpMapperModel {
 					if (node.getNodeType() == Node.ELEMENT_NODE) {
 						Element eElement = (Element) node;
 						IpMapperDTO ipMapperDTO = new IpMapperDTO();
-						ipMapperDTO.setDocIP(eElement.getElementsByTagName("doctor").item(0).getTextContent());
-						ipMapperDTO.setRoomIP(eElement.getElementsByTagName("room").item(0).getTextContent());
-						ipMapperDTO.setPatientIP(eElement.getElementsByTagName("patient").item(0).getTextContent());
-						ipMapperDTO.setPaymentIP(eElement.getElementsByTagName("payment").item(0).getTextContent());
-						ipMapperDTO.setHospitalIP(eElement.getElementsByTagName("hospital").item(0).getTextContent());
-						ipMapperDTO.setAppoimentIP(eElement.getElementsByTagName("appoiment").item(0).getTextContent());
-						ipMapperDTO.setUserIP(eElement.getElementsByTagName("user").item(0).getTextContent());
-						ipMapperDTO.setGatewayIP(eElement.getElementsByTagName("gateway").item(0).getTextContent());
+						ipMapperDTO.setDocIP(eElement.getElementsByTagName("doctor").item(0).getTextContent().trim());
+						ipMapperDTO.setRoomIP(eElement.getElementsByTagName("room").item(0).getTextContent().trim());
+						ipMapperDTO.setPatientIP(eElement.getElementsByTagName("patient").item(0).getTextContent().trim());
+						ipMapperDTO.setPaymentIP(eElement.getElementsByTagName("payment").item(0).getTextContent().trim());
+						ipMapperDTO.setHospitalIP(eElement.getElementsByTagName("hospital").item(0).getTextContent().trim());
+						ipMapperDTO.setAppoimentIP(eElement.getElementsByTagName("appoiment").item(0).getTextContent().trim());
+						ipMapperDTO.setUserIP(eElement.getElementsByTagName("user").item(0).getTextContent().trim());
+						ipMapperDTO.setGatewayIP(eElement.getElementsByTagName("gateway").item(0).getTextContent().trim());
 						return ipMapperDTO;
 					}
 				}

@@ -2,6 +2,7 @@ package healthcare.gateway.authorization;
 
 import javax.ws.rs.core.Response;
 
+import dto.AppoinmentDTO;
 import dto.DoctorDTO;
 import dto.PatientDto;
 import dto.UserDTO;
@@ -30,7 +31,7 @@ public class DoctorAuth implements IAuthorization {
 	@Override
 	public Response getSessionData(String hospitalID, String docID, String date) {
 		// TODO Auto-generated method stub
-		return null;
+		return doctorClient.getSessionData(hospitalID, docID, date);
 	}
 
 	@Override
@@ -43,33 +44,33 @@ public class DoctorAuth implements IAuthorization {
 	@Override
 	public Response getHospitalNameByID(String hostID) {
 		// TODO Auto-generated method stub
-		return null;
+		return DoctorClient.UnAuthorize();
 	}
 
 	@Override
 	public Response SelectDocById(String docID) {
 		// TODO Auto-generated method stub
-		return null;
+		return DoctorClient.UnAuthorize();
 	}
-<<<<<<< HEAD
+
 	@Override
 	public Response InsertIntoUserProfile(UserDTO dto) {
 		// TODO Auto-generated method stub
-		return null;
+		return DoctorClient.UnAuthorize();
 	}
 	@Override
 	public Response InsertIntoPatient(PatientDto dto) {
 		// TODO Auto-generated method stub
-		return null;
-=======
+		return DoctorClient.UnAuthorize();
+	}
+
 	
 //
 	
 	@Override
-	public void name() {
+	public Response insertIntoAppoiment(AppoinmentDTO dto) {
 		// TODO Auto-generated method stub
-		
->>>>>>> branch 'master' of https://github.com/ANgajasinghe/PAF-Health_Care.git
+		return DoctorClient.UnAuthorize();
 	}
 
 }

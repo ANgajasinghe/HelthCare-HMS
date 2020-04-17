@@ -2,27 +2,21 @@ package healthcare.gateway.authorization;
 
 import javax.ws.rs.core.Response;
 
+import dto.AppoinmentDTO;
 import dto.DoctorDTO;
 import dto.PatientDto;
 import dto.UserDTO;
 import healthcare.gateway.client.DoctorClient;
 
-
 public class PatientAuth extends ConfigAuth implements IAuthorization {
 
-
-	
-
-	
 	@Override
 	public Response GetAllDoctors() {
-		
 		return DoctorClient.UnAuthorize();
 	}
 
 	@Override
 	public Response postDoc(DoctorDTO dto) {
-
 		return DoctorClient.UnAuthorize();
 	}
 
@@ -34,38 +28,37 @@ public class PatientAuth extends ConfigAuth implements IAuthorization {
 	@Override
 	public Response getSessionDataById(int sessionId) {
 		return doctorClient.getSessionDataById(sessionId);
-		//return doctorClient.getSessionDataById(sessionId);	
 	}
 
 	@Override
 	public Response SelectDocById(String docID) {
-		// TODO Auto-generated method stub
-		return null;
+		return DoctorClient.UnAuthorize();
 	}
-	
+
 	@Override
 	public Response getHospitalNameByID(String hostID) {
-		// TODO Auto-generated method stub
-		return null;
+		return DoctorClient.UnAuthorize();
 	}
-	
-<<<<<<< HEAD
+
 	@Override
 	public Response InsertIntoUserProfile(UserDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		return DoctorClient.UnAuthorize();
 	}
+
+	
+	
+	// patient
 	@Override
 	public Response InsertIntoPatient(PatientDto dto) {
 		return patientClient.InsertIntoPatient(dto);
-=======
-//
+	}
+
 	
+	
+	// appointment
 	@Override
-	public void name() {
-		// TODO Auto-generated method stub
-		
->>>>>>> branch 'master' of https://github.com/ANgajasinghe/PAF-Health_Care.git
+	public Response insertIntoAppoiment(AppoinmentDTO dto) {
+		return appointmentClient.insertIntoAppoiment(dto);
 	}
 
 }

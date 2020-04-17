@@ -11,7 +11,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
-
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -29,11 +29,10 @@ public class DoctorClient {
 	String API;
 	Client client = ClientBuilder.newClient();
 	HospitalClient hsClient = new HospitalClient();
-
+	IpMapperModel iModel = new IpMapperModel();
+	IpMapperDTO iMapperDTO = iModel.getIpMapperDTO();
 	public DoctorClient() {
 		super();
-		IpMapperModel iModel = new IpMapperModel();
-		IpMapperDTO iMapperDTO = iModel.getIpMapperDTO();
 		API = iMapperDTO.getDocIP();
 	}
 
@@ -50,7 +49,8 @@ public class DoctorClient {
 
 	
  	public static Response UnAuthorize() {
-		return Response.status(Response.Status.UNAUTHORIZED).entity("User Cannot Access the resource").build();
+		return Response.status(Response.Status.UNAUTHORIZED)
+				.entity("User Cannot Access the resource").build();
 	}
 
 	public final Response GetAllDoctors() {
@@ -106,7 +106,9 @@ public class DoctorClient {
 		WebTarget service = client.target(API).path("session").queryParam("hospital_id", hospitalID)
 				.queryParam("doc_id", docID).queryParam("date", date);
 		try {
-			String response = service.request(MediaType.APPLICATION_JSON).get().readEntity(String.class);
+			String response = service.request(MediaType.APPLICATION_JSON)
+					.header(HttpHeaders.ALLOW,iMapperDTO.getGatewayIP())
+					.get().readEntity(String.class);
 			
 			List<DoctorDTO> sessionList = this.deserializeList(response);
 			 for (DoctorDTO doctorDTO : sessionList) {
@@ -115,6 +117,7 @@ public class DoctorClient {
 				 doctorDTO.setHospital_id(null);
 			}
 			 return this.buildResponse(sessionList);
+		
 		} catch (ProcessingException e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}catch (NullPointerException e) {
@@ -133,7 +136,7 @@ public class DoctorClient {
 			
 			int doctor_id = sessionDto.getDoc_id();
 			
-			//get Outbound  request :- when you are sending a response from the server
+		    //get Outbound  request :- when you are sending a response from the server
 			Object doctorObject  = this.SelectDocById(String.valueOf(doctor_id)).getEntity();
 			
 			DoctorDTO doctor = (DoctorDTO) doctorObject;

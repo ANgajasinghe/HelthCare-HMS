@@ -84,6 +84,7 @@ public class SessionModel {
 					dto.setDoc_first_name(rs.getString("doc_first_name"));
 					dto.setSpecification_name(rs.getString("specification_name"));
 					dto.setHospital_id(rs.getInt("hostpital_id"));
+					dto.setStart_time(rs.getString("start_time"));
 
 					sessionList.add(dto);
 				}

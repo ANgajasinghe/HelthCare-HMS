@@ -19,16 +19,17 @@ public class HospitalClient {
 		super();
 		IpMapperModel iModel = new IpMapperModel();
 		IpMapperDTO iMapperDTO = iModel.getIpMapperDTO();
-		API = iMapperDTO.getHospitalIP();
+		API = iMapperDTO.getHospitalIP().trim();
 	}
 	
 	public final Response getHospitalNameByID(String hospitalId) {
-		
+		System.out.println(API);
 		WebTarget service = client.target(API).path(hospitalId);
 		try {
 			Response response = service.request(MediaType.APPLICATION_JSON).get();
 			return response;
 		} catch (ProcessingException e) {
+			e.printStackTrace();
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
 		}
 		

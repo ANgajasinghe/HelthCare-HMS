@@ -3,6 +3,7 @@ package healthcare.gateway.authorization;
 
 import javax.ws.rs.core.Response;
 
+import dto.AppoinmentDTO;
 import dto.DoctorDTO;
 import dto.PatientDto;
 import dto.UserDTO;
@@ -12,13 +13,13 @@ import healthcare.gateway.client.PatientClient;
 import healthcare.gateway.client.UserProfileClient;
 
 
-public class AdminAuth implements IAuthorization {
+public class AdminAuth extends ConfigAuth implements IAuthorization {
 
 	//Init();
-	DoctorClient doctorClient = new DoctorClient();
-	HospitalClient hospitalClient = new HospitalClient();
-	UserProfileClient userProfileClient = new UserProfileClient();
-	PatientClient patientClient =  new PatientClient();
+//	DoctorClient doctorClient = new DoctorClient();
+//	HospitalClient hospitalClient = new HospitalClient();
+//	UserProfileClient userProfileClient = new UserProfileClient();
+//	PatientClient patientClient =  new PatientClient();
 	
 	
 	
@@ -69,8 +70,6 @@ public class AdminAuth implements IAuthorization {
 	
 	
 	//patient
-	
-	
 	@Override
 	public Response InsertIntoPatient(PatientDto dto) {
 		return patientClient.InsertIntoPatient(dto);
@@ -79,12 +78,10 @@ public class AdminAuth implements IAuthorization {
 
 	
 	
-	//
-	
+	//Appointment
 	@Override
-	public void name() {
-		// TODO Auto-generated method stub
-		
+	public Response insertIntoAppoiment(AppoinmentDTO dto) {
+		return appointmentClient.insertIntoAppoiment(dto);
 	}
 
 }

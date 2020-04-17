@@ -12,6 +12,8 @@ public class HospitalService extends ConfigService {
 	@Path("{id}")
 	public Response getHospitalNameByID(@PathParam("id") String hospitalId) {
 		this.SetAuthorization();
+		System.out.println(currentUser);
+		System.out.println("calling hospital");
 		return iAuthorization.getHospitalNameByID(hospitalId);
 	}
 }

@@ -2,6 +2,7 @@ package healthcare.gateway.authorization;
 
 import javax.ws.rs.core.Response;
 
+import dto.AppoinmentDTO;
 import dto.DoctorDTO;
 import dto.PatientDto;
 import dto.UserDTO;
@@ -22,8 +23,8 @@ public interface IAuthorization {
 	public Response getHospitalNameByID(String hostID);
 	
 	
-	
-<<<<<<< HEAD
+
+
 	
 	//userProfile
 	public Response InsertIntoUserProfile(UserDTO dto);
@@ -32,10 +33,12 @@ public interface IAuthorization {
 	
 	//patient
 	public Response InsertIntoPatient(PatientDto dto);
-=======
-	//
-	public void name(); 
+
 	
 	
->>>>>>> branch 'master' of https://github.com/ANgajasinghe/PAF-Health_Care.git
+	//appointment Client
+	public Response insertIntoAppoiment(AppoinmentDTO dto); 
+	
+	
+
 }

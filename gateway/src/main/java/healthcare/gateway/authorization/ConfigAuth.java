@@ -1,5 +1,6 @@
 package healthcare.gateway.authorization;
 
+import healthcare.gateway.client.AppointmentClient;
 import healthcare.gateway.client.DoctorClient;
 import healthcare.gateway.client.HospitalClient;
 import healthcare.gateway.client.PatientClient;
@@ -10,4 +11,5 @@ public class ConfigAuth {
 	public HospitalClient hospitalClient = new HospitalClient();
 	public UserProfileClient userProfileClient = new UserProfileClient();
 	public PatientClient patientClient =  new PatientClient();
+	public AppointmentClient appointmentClient = new AppointmentClient();
 }

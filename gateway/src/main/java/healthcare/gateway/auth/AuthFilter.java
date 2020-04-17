@@ -26,7 +26,7 @@ public class AuthFilter implements ContainerRequestFilter {
 	
 	private List<String> urlSkipper = new ArrayList<String>();
 	AuthClient client = new AuthClient();
-	public static String CurrentAuth = "defult";
+	public static String CurrentAuth = "admin";
 	public static String CurrentAuthUserId = null;
 	public static String CuttentAuthUserHospitalId = null;
 	
@@ -39,23 +39,23 @@ public class AuthFilter implements ContainerRequestFilter {
 	
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		//update tablename set LASTTOUCH=CURRENT_TIMESTAMP;
+		
 		UriInfo info = requestContext.getUriInfo();
-		//System.out.println(info.getAbsolutePath());
-		//System.out.println("Request Filters");
-		//System.out.println("Headers " + requestContext.getHeaders());
+
 		
 		String reqPath = info.getAbsolutePath().toString().trim();
 		
 		this.Init();
 	
 		if (UrlSkipper(reqPath)) {
+			System.out.println("calling");
 			return;
 		}
 		
 //		if (true) {
 //			return;
 //		}
+		
 		String authorizationHeader =
                 requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
 
