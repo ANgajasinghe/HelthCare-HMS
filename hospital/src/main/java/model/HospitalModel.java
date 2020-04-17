@@ -161,5 +161,56 @@ public class HospitalModel {
 		return Messages.connectionER;
 
 	}
+	
+	
+	 ///update
+	 public boolean UpdateAppoinment(HospitalDto hospitalDTO) {
+			// update 
+			Connection MYSQLcon = cBuilder.MYSQLConnection();
+			StringBuilder sBuilder = new StringBuilder();
+			sBuilder.append("UPDATE hospital \n");
+			sBuilder.append( "SET \n");
+			sBuilder.append("hospital_id= ?,");
+			sBuilder.append("hospital_name=?,");
+			sBuilder.append("hospital_address_no=?,");
+			sBuilder.append("hospital_address_lane1=?,");
+			sBuilder.append("hospital_address_lane2=?,");
+			sBuilder.append("hospital_address_lane3=?,");
+			sBuilder.append("hospital_city=?,");
+			sBuilder.append("tel=?");
+			sBuilder.append("email= ? \n");
+			
+
+			String queryString = sBuilder.toString();
+
+			PreparedStatement pStatement;
+			try {
+				pStatement = MYSQLcon.prepareStatement(queryString);
+				pStatement.setInt(1, hospitalDTO.getHospital_id());
+				pStatement.setString(2, hospitalDTO.getHospital_name());
+				pStatement.setString(3, hospitalDTO.getHospital_address_no());
+				pStatement.setString(4, hospitalDTO.getHospital_address_lane1());
+				pStatement.setString(5, hospitalDTO.getHospital_address_lane2());
+				pStatement.setString(6, hospitalDTO.getHospital_address_lane3());
+				pStatement.setString(7, hospitalDTO.getHospital_city());
+				pStatement.setString(8, hospitalDTO.getTel());
+				pStatement.setString(9,hospitalDTO.getEmail());
+				
+				boolean result = pStatement.execute();
+				if (!result) {
+					return true;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					MYSQLcon.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+			return false;
+		}
 
 }
