@@ -63,6 +63,59 @@ public class HospitalModel {
 
 	}
 	
+	
+	
+	public String insertIntoHospital(HospitalDto hospitalDTOs) {
+		// TODO Auto-generated method stub
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		if (this.connectionChecker(MYSQLcon)) {
+
+			StringBuilder sBuilder = new StringBuilder();
+			sBuilder.append("INSERT INTO hospitals ( \n");
+			sBuilder.append("hospital_id,");
+			sBuilder.append("hospital_name,");
+			sBuilder.append("hospital_address_no,");
+			sBuilder.append("hospital_address_lane1,");
+			sBuilder.append("hospital_address_lane2,");
+			sBuilder.append("hospital_address_lane3,");
+			sBuilder.append("hospital_city,");
+			sBuilder.append("tel,");
+			sBuilder.append("email)\n");
+			sBuilder.append("VALUES (\n");
+			sBuilder.append("?,?,?,?,?,?,?,?,?\n");
+			sBuilder.append(")");
+
+			String queryString = sBuilder.toString();
+			try {
+				PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
+				pStatement.setInt(1, hospitalDTOs.getHospital_id() != null ? hospitalDTOs.getHospital_id() : null);
+				pStatement.setString(2, hospitalDTOs.getHospital_name() != null ? hospitalDTOs.getHospital_name() : null);
+				pStatement.setString(3, hospitalDTOs.getHospital_address_no() != null ? hospitalDTOs.getHospital_address_no() : null);
+				pStatement.setString(4,hospitalDTOs.getHospital_address_lane1() != null ? hospitalDTOs.getHospital_address_lane1() : null);
+				pStatement.setString(5,hospitalDTOs.getHospital_address_lane2() != null ? hospitalDTOs.getHospital_address_lane2() : null);
+				pStatement.setString(6,hospitalDTOs.getHospital_address_lane3() != null ? hospitalDTOs.getHospital_address_lane3() : null);
+				pStatement.setString(7, hospitalDTOs.getHospital_city() != null ? hospitalDTOs.getHospital_city() : null);
+				pStatement.setString(8, hospitalDTOs.getEmail() != null ? hospitalDTOs.getEmail() : null);
+				pStatement.setString(9, hospitalDTOs.getTel() != null ? hospitalDTOs.getTel() : null);
+
+			
+			} catch (SQLException e) {
+				return e.toString();
+			} finally {
+				try {
+					MYSQLcon.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+		return Messages.connectionER;
+
+	}
+	
+	
+	
 	public List<HospitalDto> getAllHospitals() {
 		List<HospitalDto> allHospitalList = new ArrayList<HospitalDto>();
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
@@ -114,57 +167,10 @@ public class HospitalModel {
 		return null;
 	}
 	
-	public String insertIntoHospitls(HospitalDto hospitalDTOs) {
-		Connection MYSQLcon = cBuilder.MYSQLConnection();
-		if (this.connectionChecker(MYSQLcon)) {
-
-			StringBuilder sBuilder = new StringBuilder();
-			sBuilder.append("INSERT INTO hospitals ( \n");
-			sBuilder.append("hospital_id,");
-			sBuilder.append("hospital_name,");
-			sBuilder.append("hospital_address_no,");
-			sBuilder.append("hospital_address_lane1,");
-			sBuilder.append("hospital_address_lane2,");
-			sBuilder.append("hospital_address_lane3,");
-			sBuilder.append("hospital_city,");
-			sBuilder.append("tel,");
-			sBuilder.append("email)\n");
-			sBuilder.append("VALUES (\n");
-			sBuilder.append("?,?,?,?,?,?,?,?,?\n");
-			sBuilder.append(")");
-
-			String queryString = sBuilder.toString();
-			try {
-				PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
-				pStatement.setInt(1, hospitalDTOs.getHospital_id() != null ? hospitalDTOs.getHospital_id() : null);
-				pStatement.setString(2, hospitalDTOs.getHospital_name() != null ? hospitalDTOs.getHospital_name() : null);
-				pStatement.setString(3, hospitalDTOs.getHospital_address_no() != null ? hospitalDTOs.getHospital_address_no() : null);
-				pStatement.setString(4,hospitalDTOs.getHospital_address_lane1() != null ? hospitalDTOs.getHospital_address_lane1() : null);
-				pStatement.setString(5,hospitalDTOs.getHospital_address_lane2() != null ? hospitalDTOs.getHospital_address_lane2() : null);
-				pStatement.setString(6,hospitalDTOs.getHospital_address_lane3() != null ? hospitalDTOs.getHospital_address_lane3() : null);
-				pStatement.setString(7, hospitalDTOs.getHospital_city() != null ? hospitalDTOs.getHospital_city() : null);
-				pStatement.setString(8, hospitalDTOs.getEmail() != null ? hospitalDTOs.getEmail() : null);
-				pStatement.setString(9, hospitalDTOs.getTel() != null ? hospitalDTOs.getTel() : null);
-
-			
-			} catch (SQLException e) {
-				return e.toString();
-			} finally {
-				try {
-					MYSQLcon.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-
-		}
-		return Messages.connectionER;
-
-	}
 	
 	
 	 ///update
-	 public boolean UpdateAppoinment(HospitalDto hospitalDTO) {
+	 public boolean UpdateHospital(HospitalDto hospitalDTO) {
 			// update 
 			Connection MYSQLcon = cBuilder.MYSQLConnection();
 			StringBuilder sBuilder = new StringBuilder();
@@ -212,5 +218,40 @@ public class HospitalModel {
 
 			return false;
 		}
+	 
+	 
+	 
+	 ///delete
+	 public boolean DeleteHospital(HospitalDto hospitalDTO) {
+			// update 
+			Connection MYSQLcon = cBuilder.MYSQLConnection();
+			StringBuilder sBuilder = new StringBuilder();
+			sBuilder.append("DELETE FROM hospital WHERE hospital_id= ? \n");
+			
 
+			String queryString = sBuilder.toString();
+
+			PreparedStatement pStatement;
+			try {
+				pStatement = MYSQLcon.prepareStatement(queryString);
+				pStatement.setInt(1, hospitalDTO.getHospital_id());
+				
+				boolean result = pStatement.execute();
+				if (!result) {
+					return true;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					MYSQLcon.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+			return false;
+		}
+	 
+	 
 }
