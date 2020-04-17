@@ -5,6 +5,35 @@ public class PatientDto {
 	private Integer patient_id;
 	private String first_name;
 	private String last_name;
+	private String DOB;
+	private String NIC;
+	private String Password;
+
+	public Integer getPatient_id() {
+		return patient_id;
+	}
+	public void setPatient_id(Integer patient_id) {
+		this.patient_id = patient_id;
+	}
+	
+	public String getDOB() {
+		return DOB;
+	}
+	public void setDOB(String dOB) {
+		DOB = dOB;
+	}
+	public String getNIC() {
+		return NIC;
+	}
+	public void setNIC(String nIC) {
+		NIC = nIC;
+	}
+	public String getPassword() {
+		return Password;
+	}
+	public void setPassword(String password) {
+		Password = password;
+	}
 	
 	
 	//user profile table
@@ -15,12 +44,6 @@ public class PatientDto {
 	private String user_password;
 	private String user_role;
 	
-	public Integer getPatient_idInteger() {
-		return patient_id;
-	}
-	public void setPatient_idInteger(Integer patient_idInteger) {
-		this.patient_id = patient_idInteger;
-	}
 	public String getFirst_name() {
 		return first_name;
 	}
