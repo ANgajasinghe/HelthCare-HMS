@@ -22,13 +22,13 @@ public class AppointmentModel {
 	private final  ConnectionBuilder cBuilder = new ConnectionBuilder();
 	//private final  Connection MYSQLcon  = cBuilder.MYSQLConnection();
 	
-//public boolean connectionChecker() {
-//		
-////		if (MYSQLcon == null) {
-////			return false;
-////		}
-////		return true;
-//	}
+	public boolean connectionChecker(Connection MYSQLcon) {
+
+		if (MYSQLcon == null) {
+			return false;
+		}
+		return true;
+	}
 
 	
 //insert	
@@ -255,6 +255,58 @@ public String SelecthospitalName(String app_session_id) {
 		}
 		return null;
 	}
+
+		//get all appointment by patientID 
+
+public AppoinmentDTO getAppointmentByUser(int patientId) {
+	Connection MYSQLcon = cBuilder.MYSQLConnection();
+	AppoinmentDTO appDTO = new AppoinmentDTO();
+	if (this.connectionChecker(MYSQLcon)) {
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append("SELECT \n");
+		sBuilder.append("* \t");
+		sBuilder.append("FROM \n");
+		sBuilder.append("appointment \n");
+		sBuilder.append("WHERE app_patient_id =?\n");
+
+		String queryString = sBuilder.toString();
+
+		try {
+			PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
+			pStatement.setInt(2, patientId);
+
+			ResultSet rs = pStatement.executeQuery();
+			while (rs.next()) {
+				appDTO.setApp_doc_id(rs.getInt("app_doc_id"));
+				appDTO.setApp_patient_id(rs.getInt("app_patient_id"));
+				appDTO.setApp_session_id(rs.getInt("app_session_id"));
+				appDTO.setApp_patient_name(rs.getString("app_patient_name"));
+				appDTO.setApp_hospital_name(rs.getString("app_hospital_name"));
+				appDTO.setApp_book_date(rs.getString("app_book_date"));
+				appDTO.setApp_patient_contact_no(rs.getInt("app_patient_contact_no"));
+				appDTO.setApp_price(rs.getDouble("app_price"));
+				appDTO.setApp_payment_status(rs.getString("app_payment_status"));
+				return appDTO;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return appDTO;
+		} finally {
+			try {
+				MYSQLcon.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+	} else {
+		System.out.println("connection not establish correctly");
+	}
+	
+	return null;
+}
+
 
 }
 
