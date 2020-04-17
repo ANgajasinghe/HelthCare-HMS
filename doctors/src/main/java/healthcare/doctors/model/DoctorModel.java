@@ -296,8 +296,8 @@ public class DoctorModel implements IDataModel {
 	@Override
 	public String DocWorkAssign(DoctorDTO doctorDTO) {
 		
-		Connection MYSQLcon = cBuilder.MYSQLConnection();
-		StringBuilder sBuilder = new StringBuilder();
+		//Connection MYSQLcon = cBuilder.MYSQLConnection();
+		//StringBuilder sBuilder = new StringBuilder();
 		
 		
 		

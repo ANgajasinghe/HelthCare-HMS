@@ -49,6 +49,7 @@ public class PatientAuth extends ConfigAuth implements IAuthorization {
 		return null;
 	}
 	
+<<<<<<< HEAD
 	@Override
 	public Response InsertIntoUserProfile(UserDTO dto) {
 		// TODO Auto-generated method stub
@@ -57,6 +58,14 @@ public class PatientAuth extends ConfigAuth implements IAuthorization {
 	@Override
 	public Response InsertIntoPatient(PatientDto dto) {
 		return patientClient.InsertIntoPatient(dto);
+=======
+//
+	
+	@Override
+	public void name() {
+		// TODO Auto-generated method stub
+		
+>>>>>>> branch 'master' of https://github.com/ANgajasinghe/PAF-Health_Care.git
 	}
 
 }

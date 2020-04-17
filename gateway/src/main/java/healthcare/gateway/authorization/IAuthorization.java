@@ -23,6 +23,7 @@ public interface IAuthorization {
 	
 	
 	
+<<<<<<< HEAD
 	
 	//userProfile
 	public Response InsertIntoUserProfile(UserDTO dto);
@@ -31,4 +32,10 @@ public interface IAuthorization {
 	
 	//patient
 	public Response InsertIntoPatient(PatientDto dto);
+=======
+	//
+	public void name(); 
+	
+	
+>>>>>>> branch 'master' of https://github.com/ANgajasinghe/PAF-Health_Care.git
 }

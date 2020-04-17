@@ -76,4 +76,15 @@ public class AdminAuth implements IAuthorization {
 		return patientClient.InsertIntoPatient(dto);
 	}
 
+
+	
+	
+	//
+	
+	@Override
+	public void name() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
