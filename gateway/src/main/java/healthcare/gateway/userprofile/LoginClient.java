@@ -31,7 +31,7 @@ public class LoginClient {
 			String response = service.request(MediaType.TEXT_PLAIN).get(String.class);
 			return response;
 		} catch (ProcessingException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			// TODO: handle exception
 		}
 		

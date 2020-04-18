@@ -45,7 +45,7 @@ public class SessionService {
 	@Path("add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public String insertIntoDoctors(DoctorDTO doctorDTO) {
-		return sModel.insertIntoDoctors(doctorDTO);
+		return sModel.insertIntoSession(doctorDTO);
 	}
 	
 	@PUT

@@ -77,6 +77,14 @@ public class DoctorService extends ConfigService{
 		return iAuthorization.getSessionData(hospitalID, docID, date);
 	}
 	
+	@POST
+	@Path("session/add")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response insertIntoDoctors(DoctorDTO doctorDTO) {
+		this.SetAuthorization();
+		return iAuthorization.insertIntoSession(doctorDTO);
+	}
+	
 	@GET
 	@Path("session/id")
 	@Produces(MediaType.APPLICATION_JSON)

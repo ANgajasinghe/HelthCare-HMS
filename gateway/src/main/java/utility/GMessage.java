@@ -14,6 +14,8 @@ public class GMessage {
 	
 	public static String logfirt = "Please Login or register first";
 	
+	public static String wrongPwd = "Incorrect username or password";
+	
 	public static String path(String path) {
 		return "/"+path;
 	}

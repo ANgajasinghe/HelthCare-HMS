@@ -83,4 +83,10 @@ public class DefultAuth implements IAuthorization {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Response insertIntoSession(DoctorDTO doctorDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

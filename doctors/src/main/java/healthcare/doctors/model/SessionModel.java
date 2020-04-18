@@ -151,7 +151,7 @@ public class SessionModel {
 		return null;
 	}
 
-	public String insertIntoDoctors(DoctorDTO doctorDTOs) {
+	public String insertIntoSession(DoctorDTO doctorDTOs) {
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		StringBuilder sBuilder = new StringBuilder();
 		sBuilder.append("INSERT INTO doc_session ( \n");
@@ -188,7 +188,7 @@ public class SessionModel {
 			}
 
 		} catch (SQLException e) {
-			return Messages.insertSessonErr + e.toString();
+			return Messages.insertSessonErr + e.getMessage();
 
 		} finally {
 			try {
