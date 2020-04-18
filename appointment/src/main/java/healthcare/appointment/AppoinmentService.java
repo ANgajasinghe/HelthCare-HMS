@@ -2,6 +2,7 @@ package healthcare.appointment;
 
 import java.util.List;
 
+//import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -71,24 +72,27 @@ public class AppoinmentService {
 	
 	
 	@PUT
-	@Path("{id}")
+	@Path("update/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response UpdateAppoinment(@PathParam("id")int id,AppoinmentDTO appoinmentDTO) {
-		appoinmentDTO.setApp_patient_id(id);
+	public AppoinmentDTO UpdateAppoinment(AppoinmentDTO appoinmentDTO) {
 		if(appm.UpdateAppoinment(appoinmentDTO)) {
-			return Response.ok().build();
+			System.out.println("Update sucsses");
+			System.out.println(appoinmentDTO);
+			return appoinmentDTO;
 		}else {
-		return Response.notModified().build();
+			System.out.println("Not Update");
+			return appoinmentDTO;
 		}
 	}
 	
-	
+
 	
 	@DELETE
-	@Path("{id}")
+	@Path("del/{id}")
 	public Response DeleteAppoinment(@PathParam("id") int id,AppoinmentDTO appoinmentDTO) {
 		appoinmentDTO.setApp_patient_id(id);
 	    if (appm.DeleteAppoinment(appoinmentDTO)) {
+	    	System.out.println(appoinmentDTO);
 	        return Response.ok().build();
 	    } else {
 	        return Response.notModified().build();
