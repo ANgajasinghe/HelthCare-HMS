@@ -42,6 +42,18 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 		// TODO Auto-generated method stub
 		return doctorClient.postDoc(dto);
 	}
+	
+	@Override
+	public Response DeleteDocAll(int docID) {
+		// TODO Auto-generated method stub
+		return doctorClient.DeleteDocAll(docID);
+	}
+	
+	@Override
+	public Response UpdateDoc(String docID, DoctorDTO dto) {
+		// TODO Auto-generated method stub
+		return doctorClient.UpdateDoc( docID, dto);
+	}
 
 	//session client is here
 	@Override
@@ -53,7 +65,17 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 		return doctorClient.getSessionDataById(sessionId);
 		
 	}
+	@Override
+	public Response UpdateSession(int sessionId, DoctorDTO dto) {
+		// TODO Auto-generated method stub
+		return doctorClient.UpdateSession(sessionId,dto);
+	}
 	
+	@Override
+	public Response deleteSession(int sessionId) {
+		// TODO Auto-generated method stub
+		return doctorClient.deleteSession(sessionId);
+	}
 	
 	//hospital
 	@Override

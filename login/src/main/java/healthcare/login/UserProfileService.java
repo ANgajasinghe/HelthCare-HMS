@@ -52,7 +52,7 @@ public class UserProfileService {
 	 	@Consumes(MediaType.APPLICATION_JSON)
 	 	public String InsertIntoUserProfile(UserDTO userDTO) {
 	 		if (uModel.InsertIntoUserProfile(userDTO)) { 
-	 			return LMessage.regisrationSucess+" : for the username use"
+	 			return LMessage.regisrationSucess+" : for the username uses "
 	 			+userDTO.getUsername() +" OR "
 	 			+userDTO.getUser_email() +" And for the password use "+userDTO.getUser_password();
 			} else {

@@ -44,18 +44,7 @@ public class LoginService {
 	@Path("abc")
 	public void ABC(String X) {
 		Gson gson = new Gson();
-		//array conversion 
-		//LoginDTO[] clzDto = gson.fromJson(X,LoginDTO[].class);
-		//System.out.println(clzDto[0].getLogin_id());
-		
-		
-		//ArrayList<LoginDTO> list = new ArrayList(Arrays.asList(clzDto));
-		//List<LoginDTO> fDtos = list;
-		
-		//System.out.println(fDtos.size());
-		
-		
-		//object conversion 
+	
 		LoginDTO clzDto = gson.fromJson(X,LoginDTO.class);
 		System.out.println(clzDto.getUser_id());
 	

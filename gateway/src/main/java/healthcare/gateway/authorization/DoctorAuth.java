@@ -72,5 +72,28 @@ public class DoctorAuth implements IAuthorization {
 		// TODO Auto-generated method stub
 		return DoctorClient.UnAuthorize();
 	}
+	
+	public Response DeleteDocAll(int docID) {
+		// TODO Auto-generated method stub
+		return DoctorClient.UnAuthorize();
+	}
+	
+	@Override
+	public Response UpdateDoc(String docID, DoctorDTO dto) {
+		// TODO Auto-generated method stub
+		return DoctorClient.UnAuthorize();
+	}
+	
+	@Override
+	public Response UpdateSession(int sessionId, DoctorDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response deleteSession(int sessionId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

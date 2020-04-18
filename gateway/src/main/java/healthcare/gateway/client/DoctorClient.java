@@ -101,6 +101,35 @@ public class DoctorClient {
 	}
 
 	
+	public final Response DeleteDocAll(int docID) {
+		WebTarget service = client.target(API).path("doc").path("delete").path(String.valueOf(docID));
+		try {
+			Response response = service.request(MediaType.APPLICATION_JSON).delete();
+			if (response.getStatus() == Rcode.No_Content) {
+				 return Rcode.No_content("invalid session id");
+			}
+			return response;
+		} catch (ProcessingException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+	
+
+	public Response UpdateDoc(String docID, DoctorDTO dto) {
+		WebTarget service = client.target(API).path("doc").path("update").path(String.valueOf(docID));
+		try {
+			Response response = service.request(MediaType.APPLICATION_JSON).put(Entity.json(dto));
+//			if (response.getStatus() == Rcode.No_Content) {
+//				 return Rcode.No_content("invalid session id");
+//			}
+			return response;
+		} catch (ProcessingException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+		
+	}
+	
+	
 	// session Client methods is here
 	public final Response getSessionData(String hospitalID, String docID, String date) {
 		WebTarget service = client.target(API).path("session").queryParam("hospital_id", hospitalID)
@@ -155,6 +184,36 @@ public class DoctorClient {
 		
 	}
 	
+	public Response UpdateSession(int sessionId, DoctorDTO dto) {
+		WebTarget service = client.target(API).path("session").path("update").path(String.valueOf(sessionId));
+		try {
+			Response response = service.request(MediaType.APPLICATION_JSON).put(Entity.json(dto));
+//			if (response.getStatus() == Rcode.No_Content) {
+//				 return Rcode.No_content("invalid session id");
+//			}
+			return response;
+			
+		} catch (ProcessingException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			 return Rcode.No_content("invalid session id");
+		}
+	}
+	
+	public Response deleteSession(int sessionId) {
+		WebTarget service = client.target(API).path("session").path("delete").path(String.valueOf(sessionId));
+		try {
+			Response response = service.request(MediaType.APPLICATION_JSON).delete();
+			if (response.getStatus() == Rcode.No_Content) {
+				 return Rcode.No_content("invalid session id");
+			}
+			return response;
+		} catch (ProcessingException e) {
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		} 
+	}
+	
 	public final Response GET_SESSION_DATA_FOR_APPOINMENT_SERVICE(int sessionId) {
 		WebTarget service = client.target(API).path("session").path(String.valueOf(sessionId));
 		try {
@@ -165,11 +224,15 @@ public class DoctorClient {
 			return response;
 		} catch (ProcessingException e) {
 			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-			 return Rcode.No_content("invalid session id");
 		}
 	}
+
+	
+
+	
+
+	
+	
 	
 	
 	
