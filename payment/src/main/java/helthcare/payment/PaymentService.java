@@ -17,7 +17,7 @@ import dto.PaymentDTO;
 import healthcare.payments.model.PaymentModel;
 
 
-@Path("app")
+@Path("payment")
 public class PaymentService {
 	
 	private PaymentModel appm = new PaymentModel();
@@ -25,6 +25,7 @@ public class PaymentService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<PaymentDTO> getPaymentData(){
+		System.out.println("Calling ");
 		return appm.getPaymentData();
 		
 	}
@@ -50,25 +51,24 @@ public class PaymentService {
 	
 	
 	@PUT
-	@Path("{id}")
+	@Path("update/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response UpdatePayment(@PathParam("id")int id,PaymentDTO paymentDTO) {
 		paymentDTO.setPayment_id(id);
 		if(appm.UpdatePayment(paymentDTO)) {
 			return Response.ok().build();
 		}else {
-		return Response.notModified().build();
+		return Response.notModified().entity("jhgrt").build();
 		}
 	}
 	
 	
 	
 	@DELETE
-	@Path("{id}")
-	public Response DeletePayment(@PathParam("id") int id,PaymentDTO paymentDTO) {
-		paymentDTO.setPayment_id(id);
-	    if (appm.DeletePayment(paymentDTO)) {
-	        return Response.ok().build();
+	@Path("delete/{id}")
+	public Response DeletePayment(@PathParam("id") int id) {
+	    if (appm.DeletePayment(id)) {
+	        return Response.ok().entity("Deleted").build();
 	    } else {
 	        return Response.notModified().build();
 	    }

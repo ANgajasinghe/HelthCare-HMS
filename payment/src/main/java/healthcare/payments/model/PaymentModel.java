@@ -100,7 +100,7 @@ public List<PaymentDTO> getPaymentData() {
 				payDTO.setDoc_id(rs.getInt("doc_id"));
 				payDTO.setHos_id(rs.getInt("hos_id"));
 				payDTO.setAmount(rs.getDouble("amount"));
-				payDTO.setDoc_fee(rs.getDouble("doc_fee)"));
+				payDTO.setDoc_fee(rs.getDouble("doc_fee"));
 				payDTO.setHos_fee(rs.getDouble("hos_fee"));
 				payDTO.setReference_No(rs.getInt("reference_No"));
 				payDTO.setDate_time(rs.getString("date_time"));
@@ -132,8 +132,8 @@ public boolean UpdatePayment(PaymentDTO paymentDTO) {
 		sBuilder.append("doc_fee=?,");
 		sBuilder.append("hos_fee=?,");
 		sBuilder.append("reference_No=?,");
-		sBuilder.append("date_time=?,");
-		sBuilder.append(" WHERE payment_id= ? \n");
+		sBuilder.append("date_time=?");
+		sBuilder.append(" WHERE payment_id =?");
 		
 
 		String queryString = sBuilder.toString();
@@ -148,6 +148,7 @@ public boolean UpdatePayment(PaymentDTO paymentDTO) {
 			pStatement.setDouble(5, paymentDTO.getHos_fee());
 			pStatement.setInt(6, paymentDTO.getReference_No());
 			pStatement.setString(7, paymentDTO.getDate_time());
+			pStatement.setInt(8, paymentDTO.getPayment_id());
 			
 			boolean result = pStatement.execute();
 			if (!result) {
@@ -168,7 +169,7 @@ public boolean UpdatePayment(PaymentDTO paymentDTO) {
 
 
 //Delete From Payments
-public boolean DeletePayment(PaymentDTO paymentDTO) {
+public boolean DeletePayment(int id) {
 		//delete 
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		StringBuilder sBuilder = new StringBuilder();
@@ -180,7 +181,7 @@ public boolean DeletePayment(PaymentDTO paymentDTO) {
 		PreparedStatement pStatement;
 		try {
 			pStatement = MYSQLcon.prepareStatement(queryString);
-			pStatement.setInt(1, paymentDTO.getPayment_id());
+			pStatement.setInt(1, id);
 			
 			boolean result = pStatement.execute();
 			if (!result) {

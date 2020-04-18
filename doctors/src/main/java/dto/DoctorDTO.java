@@ -6,7 +6,7 @@ package dto;
 
 public class DoctorDTO {
 
-	private Integer doc_id;//prinary key-doctor
+	private Integer doc_id;//primary key-doctor
 	
 	private String doc_reg_no;
 	private String doc_first_name;
