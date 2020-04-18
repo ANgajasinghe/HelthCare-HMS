@@ -65,6 +65,12 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 		return doctorClient.getSessionDataById(sessionId);
 		
 	}
+	
+	@Override
+	public Response insertIntoSession(DoctorDTO doctorDTO) {
+		// TODO Auto-generated method stub
+		return doctorClient.insertIntoSession(doctorDTO);
+	}
 	@Override
 	public Response UpdateSession(int sessionId, DoctorDTO dto) {
 		// TODO Auto-generated method stub

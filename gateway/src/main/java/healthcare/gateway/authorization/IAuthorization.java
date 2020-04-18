@@ -15,12 +15,13 @@ public interface IAuthorization {
 	public Response postDoc(DoctorDTO dto);
 	public Response getSessionData(String hospitalID,String docID,String date);
 	public Response getSessionDataById(int sessionId);
+	public Response UpdateDoc(String docID, DoctorDTO dto); 
 	
 	public Response SelectDocById(String docID);
 	public Response DeleteDocAll(int docID);
-	public Response UpdateDoc(String docID, DoctorDTO dto); 
 	
 	
+	public Response insertIntoSession(DoctorDTO doctorDTO);
 	public Response UpdateSession(int sessionId, DoctorDTO dto);
 	public Response deleteSession(int sessionId);
 	
@@ -43,6 +44,7 @@ public interface IAuthorization {
 	
 	//appointment Client
 	public Response insertIntoAppoiment(AppoinmentDTO dto);
+
 	
 	
 	
