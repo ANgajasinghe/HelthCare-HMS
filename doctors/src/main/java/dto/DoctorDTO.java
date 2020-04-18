@@ -1,10 +1,9 @@
 package dto;
 
-<<<<<<< HEAD
-=======
+
 import java.util.List;
 
->>>>>>> branch 'master' of https://github.com/ANgajasinghe/PAF-Health_Care.git
+
 public class DoctorDTO {
 
 	private Integer doc_id;//primary key-doctor
