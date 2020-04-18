@@ -15,48 +15,48 @@ import javax.ws.rs.core.Response;
 import dto.HospitalDto;
 import model.HospitalModel;
 
-@Path("hos")
-public class HospitalService {
+//@Path("hos")
+//public class HospitalService {
+//
+//	private HospitalModel hm = new HospitalModel();
 
-	private HospitalModel hm = new HospitalModel();
+//	@GET
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public List<HospitalDto> getAllHospitals() {
+//		return hm.getAllHospitals();
+//	}
+//	
+//	
+//	@POST
+//	@Path("add")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public String insertIntoHospital(HospitalDto hospitalDTOs) {
+//		return hm.insertIntoHospital(hospitalDTOs);
+//	}
+	
+	
+//	@PUT
+//	@Path("{hospital_id}")
+//	@Produces(MediaType.APPLICATION_JSON)
+//	public Response UpdateHospital(@PathParam("hospital_id")int hospital_id,HospitalDto hospitalDTO) {
+//		hospitalDTO.setHospital_id(hospital_id);
+//		if(hm.UpdateHospital(hospitalDTO)) {
+//			return Response.ok().build();
+//		}else {
+//		return Response.notModified().build();
+//		}
+//	}
+//	
+//	
+//	@DELETE
+//	@Path("{hospital_id}")
+//	public Response DeleteHospital(@PathParam("hospital_id") int hospital_id,HospitalDto hospitalDTO) {
+//		hospitalDTO.setHospital_id(hospital_id);;
+//	    if (hm.DeleteHospital(hospitalDTO)) {
+//	        return Response.ok().build();
+//	    } else {
+//	        return Response.notModified().build();
+//	    }
+//	}
 
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<HospitalDto> getAllDoctors() {
-		return hm.getAllHospitals();
-	}
-	
-	
-	@POST
-	@Path("add")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String insertIntoHospital(HospitalDto hospitalDTOs) {
-		return hm.insertIntoHospital(hospitalDTOs);
-	}
-	
-	
-	@PUT
-	@Path("{hospital_id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response UpdateHospital(@PathParam("hospital_id")int hospital_id,HospitalDto hospitalDTO) {
-		hospitalDTO.setHospital_id(hospital_id);
-		if(hm.UpdateHospital(hospitalDTO)) {
-			return Response.ok().build();
-		}else {
-		return Response.notModified().build();
-		}
-	}
-	
-	
-	@DELETE
-	@Path("{hospital_id}")
-	public Response DeleteHospital(@PathParam("hospital_id") int hospital_id,HospitalDto hospitalDTO) {
-		hospitalDTO.setHospital_id(hospital_id);;
-	    if (hm.DeleteHospital(hospitalDTO)) {
-	        return Response.ok().build();
-	    } else {
-	        return Response.notModified().build();
-	    }
-	}
-
-}
+//}

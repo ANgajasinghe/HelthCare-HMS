@@ -68,7 +68,7 @@ public class HospitalModel {
 	public String insertIntoHospital(HospitalDto hospitalDTOs) {
 		// TODO Auto-generated method stub
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
-		if (this.connectionChecker(MYSQLcon)) {
+		
 
 			StringBuilder sBuilder = new StringBuilder();
 			sBuilder.append("INSERT INTO hospitals ( \n");
@@ -88,30 +88,34 @@ public class HospitalModel {
 			String queryString = sBuilder.toString();
 			try {
 				PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
-				pStatement.setInt(1, hospitalDTOs.getHospital_id() != null ? hospitalDTOs.getHospital_id() : null);
-				pStatement.setString(2, hospitalDTOs.getHospital_name() != null ? hospitalDTOs.getHospital_name() : null);
-				pStatement.setString(3, hospitalDTOs.getHospital_address_no() != null ? hospitalDTOs.getHospital_address_no() : null);
-				pStatement.setString(4,hospitalDTOs.getHospital_address_lane1() != null ? hospitalDTOs.getHospital_address_lane1() : null);
-				pStatement.setString(5,hospitalDTOs.getHospital_address_lane2() != null ? hospitalDTOs.getHospital_address_lane2() : null);
-				pStatement.setString(6,hospitalDTOs.getHospital_address_lane3() != null ? hospitalDTOs.getHospital_address_lane3() : null);
-				pStatement.setString(7, hospitalDTOs.getHospital_city() != null ? hospitalDTOs.getHospital_city() : null);
-				pStatement.setString(8, hospitalDTOs.getEmail() != null ? hospitalDTOs.getEmail() : null);
-				pStatement.setString(9, hospitalDTOs.getTel() != null ? hospitalDTOs.getTel() : null);
+				pStatement.setInt(1, hospitalDTOs.getHospital_id());
+				pStatement.setString(2, hospitalDTOs.getHospital_name());
+				pStatement.setString(3, hospitalDTOs.getHospital_address_no());
+				pStatement.setString(4, hospitalDTOs.getHospital_address_lane1());
+				pStatement.setString(5, hospitalDTOs.getHospital_address_lane2());
+				pStatement.setString(6, hospitalDTOs.getHospital_address_lane3());
+				pStatement.setString(7, hospitalDTOs.getHospital_city());
+				pStatement.setString(8, hospitalDTOs.getTel());
+				pStatement.setString(9, hospitalDTOs.getEmail());
+				
 
+				System.out.println("calling Model");
+				
+				boolean result = pStatement.execute();
+				
+				if (!result) {
+					return "dataADDEDSuccess";
+				}
+			
+				
+				MYSQLcon.close();
 			
 			} catch (SQLException e) {
+				e.printStackTrace();
 				return e.toString();
-			} finally {
-				try {
-					MYSQLcon.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 			}
-
-		}
-		return Messages.connectionER;
-
+			
+		return "connectionER";
 	}
 	
 	
@@ -150,9 +154,7 @@ public class HospitalModel {
 				return allHospitalList;
 
 			} catch (SQLException e) {
-				HospitalDto hto = new HospitalDto();
-				allHospitalList.add(hto);
-				return allHospitalList;
+				e.printStackTrace();
 			} finally {
 				try {
 					MYSQLcon.close();
@@ -166,25 +168,28 @@ public class HospitalModel {
 
 		return null;
 	}
+
 	
 	
 	
-	 ///update
+	 //update
 	 public boolean UpdateHospital(HospitalDto hospitalDTO) {
-			// update 
-			Connection MYSQLcon = cBuilder.MYSQLConnection();
+			
+		 Connection MYSQLcon = cBuilder.MYSQLConnection();
+		 
 			StringBuilder sBuilder = new StringBuilder();
-			sBuilder.append("UPDATE hospital \n");
+			sBuilder.append("UPDATE hospitals \n");
 			sBuilder.append( "SET \n");
-			sBuilder.append("hospital_id= ?,");
 			sBuilder.append("hospital_name=?,");
 			sBuilder.append("hospital_address_no=?,");
 			sBuilder.append("hospital_address_lane1=?,");
 			sBuilder.append("hospital_address_lane2=?,");
 			sBuilder.append("hospital_address_lane3=?,");
 			sBuilder.append("hospital_city=?,");
-			sBuilder.append("tel=?");
-			sBuilder.append("email= ? \n");
+			sBuilder.append("tel=?,");
+			sBuilder.append("email= ?");
+			sBuilder.append(" WHERE hospital_id= ? \n");
+			
 			
 
 			String queryString = sBuilder.toString();
@@ -219,39 +224,80 @@ public class HospitalModel {
 			return false;
 		}
 	 
+	
 	 
 	 
-	 ///delete
-	 public boolean DeleteHospital(HospitalDto hospitalDTO) {
-			// update 
-			Connection MYSQLcon = cBuilder.MYSQLConnection();
-			StringBuilder sBuilder = new StringBuilder();
-			sBuilder.append("DELETE FROM hospital WHERE hospital_id= ? \n");
-			
 
-			String queryString = sBuilder.toString();
-
-			PreparedStatement pStatement;
-			try {
-				pStatement = MYSQLcon.prepareStatement(queryString);
-				pStatement.setInt(1, hospitalDTO.getHospital_id());
-				
-				boolean result = pStatement.execute();
-				if (!result) {
-					return true;
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				try {
-					MYSQLcon.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
+	public String getHospitalNameByID(String id) {
+		String result = null;
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append("SELECT\n");
+		sBuilder.append(" * \t");
+		sBuilder.append("FROM\n");
+		sBuilder.append("hospitals\n");
+		sBuilder.append("WHERE hospital_id  = ?\n");
+		String queryString = sBuilder.toString();
+		
+		try {
+			PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
+			pStatement.setString(1, id.trim());
+			ResultSet rs = pStatement.executeQuery();
+			if(rs.next()) {
+				result = rs.getString("hospital_name")+","+rs.getString("hospital_city");
+				return result;
 			}
 
-			return false;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				MYSQLcon.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+
+		return result;
+		
+	}
+
+	public boolean DeleteHospital(HospitalDto hospitalDTO) {
+		// TODO Auto-generated method stub
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		StringBuilder sBuilder = new StringBuilder();
+		sBuilder.append("DELETE \n");
+		sBuilder.append("FROM hospitals h\n");
+		sBuilder.append("INNER JOIN hospital_user u\n");
+		sBuilder.append("ON h.hospital_id = u.hospital_id\n");
+		sBuilder.append("WHERE h.hospital_id = ?");
+
+
+		String queryString = sBuilder.toString();
+
+		PreparedStatement pStatement;
+		try {
+			pStatement = MYSQLcon.prepareStatement(queryString);
+			pStatement.setInt(1, hospitalDTO.getHospital_id());
+			
+			boolean result = pStatement.execute();
+			if (!result) {
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				MYSQLcon.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return false;
+	}
 	 
 	 
 }
