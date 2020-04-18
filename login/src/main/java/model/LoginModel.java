@@ -13,6 +13,7 @@ import java.util.logging.SimpleFormatter;
 
 import auth.AuthToken;
 import dto.UserDTO;
+import utility.ConnectionBuilder;
 import utility.LMessage;
 
 public class LoginModel {

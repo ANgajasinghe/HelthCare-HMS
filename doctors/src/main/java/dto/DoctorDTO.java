@@ -1,5 +1,10 @@
 package dto;
 
+<<<<<<< HEAD
+=======
+import java.util.List;
+
+>>>>>>> branch 'master' of https://github.com/ANgajasinghe/PAF-Health_Care.git
 public class DoctorDTO {
 
 	private Integer doc_id;//primary key-doctor
@@ -40,6 +45,8 @@ public class DoctorDTO {
 	private Integer ward_id;
 	
 	private Integer hospital_id;
+	private List<String> hospilalIDList;
+	private List<String> hospitalNameList;
 	private String hospital_name;
 	private String hospital_list;
 
@@ -261,6 +268,23 @@ public class DoctorDTO {
 	public void setHospital_id(Integer hospital_id) {
 		this.hospital_id = hospital_id;
 	}
+	
+
+	public List<String> getHospilalIDList() {
+		return hospilalIDList;
+	}
+
+	public void setHospilalIDList(List<String> hospilalIDList) {
+		this.hospilalIDList = hospilalIDList;
+	}
+
+	public List<String> getHospitalNameList() {
+		return hospitalNameList;
+	}
+
+	public void setHospitalNameList(List<String> hospitalNameList) {
+		this.hospitalNameList = hospitalNameList;
+	}
 
 	public Integer getWard_id() {
 		return ward_id;
@@ -288,7 +312,19 @@ public class DoctorDTO {
 
 	
 	
-	
+	//Error DTO
+
+	private ErrorDTO Error;
+	public ErrorDTO getError() {
+		return Error;
+	}
+
+	public void setError(ErrorDTO error) {
+		Error = error;
+	}
+
+
+
 	
 	
 	

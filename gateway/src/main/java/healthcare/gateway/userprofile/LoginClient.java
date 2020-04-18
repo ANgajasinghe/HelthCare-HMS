@@ -25,7 +25,8 @@ public class LoginClient {
 	
 	public final String loginTokenApiCaller(String username , String password ) {
 		System.out.println(username + password);
-		WebTarget service = client.target(API).path(username).path(password);
+		System.out.println(API);
+		WebTarget service = client.target(API).path("login").path(username.trim()).path(password.trim());
 		try {
 			String response = service.request(MediaType.TEXT_PLAIN).get(String.class);
 			return response;

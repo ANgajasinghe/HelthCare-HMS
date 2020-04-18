@@ -1,101 +1,112 @@
 package healthcare.gateway.services;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+
 import dto.DoctorDTO;
-import healthcare.gateway.auth.AuthFilter;
-import healthcare.gateway.authorization.AdminAuth;
-import healthcare.gateway.authorization.DefultAuth;
-import healthcare.gateway.authorization.DoctorAuth;
-import healthcare.gateway.authorization.IAuthorization;
-import healthcare.gateway.authorization.PatientAuth;
+
 
 
 @Path("doc")
-public class DoctorService {
+public class DoctorService extends ConfigService{
 
-	String currentUser;
-	String currentUserID;
+
 	//DoctorAuth doctorService;
 	
-	IAuthorization iAuthorization;
-	
-	
-//	private void setInterfaces() {
-//		currentUser = AuthFilter.CurrentAuth;
-//		switch (currentUser) {
-//		case "admin":
-//			doctorService = new DoctorAuthAdmin();
-//			break;
-//		case "doctor":
-//			doctorService = new DoctorAuthDoctor();
-//			break;
-//		case "patient":
-//			doctorService = new DoctorAuthPatient();
-//			break;
-//		default:
-//			doctorService = new DoctorAuthDefult();
-//			break;
-//		}
-//
-//	}
-	
-	private void SetAuthorization() {
-		currentUser = AuthFilter.CurrentAuth;
-		switch (currentUser) {
-		case "admin":
-			iAuthorization = new AdminAuth();
-			break;
-		case "doctor":
-			iAuthorization = new DoctorAuth();
-			break;
-		case "patient":
-			iAuthorization = new PatientAuth();
-			break;
-		default:
-			iAuthorization = new DefultAuth();
-			break;
-		}
-	}
-
 	@GET
 	public Response getDocSpec() {
-		SetAuthorization();
-		System.out.println(currentUser);
-		System.out.println("calling");
+		this.SetAuthorization();
 		Response response = iAuthorization.GetAllDoctors();
 		return response;
 	}
 	
+	@GET
+	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response SelectDocById(@PathParam("id") String id) {
+		this.SetAuthorization();
+		return iAuthorization.SelectDocById(id);
+	}
+	
 	@POST
 	@Path("add")
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Response postDoc(DoctorDTO dto) {
-		SetAuthorization();
+		this.SetAuthorization();
 		return iAuthorization.postDoc(dto);
+	}
+	
+
+	@DELETE
+	@Path("delete/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response DeleteDocAll(@PathParam("id") String docID ) {
+		System.out.println("Clling");
+		this.SetAuthorization();
+		return iAuthorization.DeleteDocAll(Integer.valueOf(docID));
+	}
+	
+	@PUT
+	@Path("update/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response UpdateDoc(@PathParam("id") String docID , DoctorDTO dto) {
+		this.SetAuthorization();
+		return iAuthorization.UpdateDoc(docID, dto);
 	}
 	
 	@GET
 	@Path("session")
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getSessionData(
 			@QueryParam("hospital_id") String hospitalID,
 			@QueryParam("doc_id") String docID,
 			@QueryParam("date")String date
 			){
-		SetAuthorization();
+		this.SetAuthorization();
 		return iAuthorization.getSessionData(hospitalID, docID, date);
 	}
 	
 	@GET
-	@Path("session/{id}")
-	public Response getSessionDataById(@PathParam("id") int sessionId) {
-		SetAuthorization();
+	@Path("session/id")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getSessionDataById(@QueryParam("session_id") int sessionId) {
+		this.SetAuthorization();
 		return iAuthorization.getSessionDataById(sessionId);
+		//DoctorClient dClient = new DoctorClient();
+		//return dClient.GET_SESSION_DATA_FOR_APPOINMENT_SERVICE(sessionId);
 	}
+	
+	@PUT
+	@Path("session/update/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response UpdateSession(@PathParam("id")int sessionId,DoctorDTO dto) {
+		this.SetAuthorization();
+		return iAuthorization.UpdateSession(sessionId, dto);
+	}
+	
+	@DELETE
+	@Path("session/delete/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deleteSession(@PathParam("id") int sessionId) {
+		this.SetAuthorization();
+		return iAuthorization.deleteSession(sessionId);
+	}
+	
+	
+	
+	
 	
 
 	

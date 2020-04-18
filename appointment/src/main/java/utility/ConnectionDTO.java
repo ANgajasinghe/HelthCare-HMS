@@ -1,7 +1,6 @@
-package model;
+package utility;
 
 public class ConnectionDTO {
-	
 	private String urlString;
 	private String userNameString;
 	private String passwordString;
@@ -26,6 +25,4 @@ public class ConnectionDTO {
 	public void setPasswordString(String passwordString) {
 		this.passwordString = passwordString;
 	}
-	
-	
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 import dto.HospitalDto;
 import utility.ConnectionBuilder;
-import utility.Messages;
+//import utility.Messages;
 
 public class HospitalModel {
 
@@ -62,6 +62,7 @@ public class HospitalModel {
 		return result;
 
 	}
+//<<<<<<< HEAD
 	
 	
 	
@@ -269,10 +270,8 @@ public class HospitalModel {
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		StringBuilder sBuilder = new StringBuilder();
 		sBuilder.append("DELETE \n");
-		sBuilder.append("FROM hospitals h\n");
-		sBuilder.append("INNER JOIN hospital_user u\n");
-		sBuilder.append("ON h.hospital_id = u.hospital_id\n");
-		sBuilder.append("WHERE h.hospital_id = ?");
+		sBuilder.append("FROM hospitals \n");
+		sBuilder.append("WHERE hospital_id = ? \n");
 
 
 		String queryString = sBuilder.toString();
@@ -300,4 +299,6 @@ public class HospitalModel {
 	}
 	 
 	 
+
+//>>>>>>> branch 'master' of https://github.com/ANgajasinghe/PAF-Health_Care.git
 }

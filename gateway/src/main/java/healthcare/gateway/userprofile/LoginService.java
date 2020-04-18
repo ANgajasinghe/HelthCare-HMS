@@ -12,12 +12,13 @@ import healthcare.gateway.auth.AuthFilter;
 @Path("login")
 public class LoginService {
 	
-	LoginClient cLoginClient = new LoginClient();
+	
 	
 	@GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getTokenString(@QueryParam("user") String username, 
 			@QueryParam("pwd") String password) { 
+		LoginClient cLoginClient = new LoginClient();
 		System.out.println(AuthFilter.CurrentAuth);
     	 try {
 			return cLoginClient.loginTokenApiCaller(username,password);

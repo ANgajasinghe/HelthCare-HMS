@@ -3,14 +3,24 @@ package healthcare.gateway.authorization;
 
 import javax.ws.rs.core.Response;
 
+import dto.AppoinmentDTO;
 import dto.DoctorDTO;
+import dto.PatientDto;
+import dto.UserDTO;
 import healthcare.gateway.client.DoctorClient;
+import healthcare.gateway.client.HospitalClient;
+import healthcare.gateway.client.PatientClient;
+import healthcare.gateway.client.UserProfileClient;
 
 
-public class AdminAuth implements IAuthorization {
+public class AdminAuth extends ConfigAuth implements IAuthorization {
 
 	//Init();
-	DoctorClient doctorClient = new DoctorClient();
+//	DoctorClient doctorClient = new DoctorClient();
+//	HospitalClient hospitalClient = new HospitalClient();
+//	UserProfileClient userProfileClient = new UserProfileClient();
+//	PatientClient patientClient =  new PatientClient();
+	
 	
 	
 	
@@ -22,24 +32,78 @@ public class AdminAuth implements IAuthorization {
 
 
 	@Override
+	public Response SelectDocById(String docID) {
+		 System.out.println("Testing abcd");
+		return doctorClient.SelectDocById(docID);
+	}
+	
+	@Override
 	public Response postDoc(DoctorDTO dto) {
 		// TODO Auto-generated method stub
 		return doctorClient.postDoc(dto);
 	}
-
+	
+	@Override
+	public Response DeleteDocAll(int docID) {
+		// TODO Auto-generated method stub
+		return doctorClient.DeleteDocAll(docID);
+	}
+	
+	@Override
+	public Response UpdateDoc(String docID, DoctorDTO dto) {
+		// TODO Auto-generated method stub
+		return doctorClient.UpdateDoc( docID, dto);
+	}
 
 	//session client is here
 	@Override
 	public Response getSessionData(String hospitalID, String docID, String date) {
 		return doctorClient.getSessionData(hospitalID, docID, date);
-		 
 	}
-
-
 	@Override
 	public Response getSessionDataById(int sessionId) {
 		return doctorClient.getSessionDataById(sessionId);
 		
+	}
+	@Override
+	public Response UpdateSession(int sessionId, DoctorDTO dto) {
+		// TODO Auto-generated method stub
+		return doctorClient.UpdateSession(sessionId,dto);
+	}
+	
+	@Override
+	public Response deleteSession(int sessionId) {
+		// TODO Auto-generated method stub
+		return doctorClient.deleteSession(sessionId);
+	}
+	
+	//hospital
+	@Override
+	public Response getHospitalNameByID(String hostID) {
+		return hospitalClient.getHospitalNameByID(hostID); 
+		
+	}
+	
+	//user profile
+	@Override
+	public Response InsertIntoUserProfile(UserDTO dto) {
+		return userProfileClient.InsertIntoUserProfile(dto);
+	}
+	
+	
+	//patient
+	@Override
+	public Response InsertIntoPatient(PatientDto dto) {
+		return patientClient.InsertIntoPatient(dto);
+	}
+
+
+	
+	
+	//Appointment
+	@Override
+	public Response insertIntoAppoiment(AppoinmentDTO dto) {
+		return appointmentClient.insertIntoAppoiment(dto);
 	}
 
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
-import javax.ws.rs.PATCH;
+//import javax.ws.rs.PATCH;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 //import javax.ws.rs.POST;
@@ -16,7 +16,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.sun.crypto.provider.HmacMD5;
+//import com.sun.crypto.provider.HmacMD5;
 
 import dto.HospitalDto;
 import model.HospitalModel;
@@ -74,15 +74,17 @@ public class MyResource {
     
     
     
-	@PATCH
-	@Path("{id}")
+	@PUT
+	@Path("up/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response UpdateHospital(@PathParam("id")int id,HospitalDto hospitalDTO) {
-		hospitalDTO.setHospital_id(id);
+	public HospitalDto UpdateHospital(HospitalDto hospitalDTO) {
 		if(hmodel.UpdateHospital(hospitalDTO)) {
-			return Response.ok().build();
+			System.out.println("Update sucsses");
+			System.out.println( hospitalDTO);
+			return hospitalDTO;
 		}else {
-		return Response.notModified().build();
+			System.out.println("Not Update");
+		 return hospitalDTO;
 		}
 	}
     
@@ -93,10 +95,11 @@ public class MyResource {
 	
 	
     @DELETE
-	@Path("{id}")
+	@Path("del/{id}")
 	public Response DeleteHospital(@PathParam("id") int id,HospitalDto hospitalDTO) {
 		hospitalDTO.setHospital_id(id);
 	    if (hmodel.DeleteHospital(hospitalDTO)) {
+	    	System.out.println("Delete sucsses");
 	        return Response.ok().build();
 	    } else {
 	        return Response.notModified().build();
