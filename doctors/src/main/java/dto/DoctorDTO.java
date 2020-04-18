@@ -309,7 +309,19 @@ public class DoctorDTO {
 
 	
 	
-	
+	//Error DTO
+
+	private ErrorDTO Error;
+	public ErrorDTO getError() {
+		return Error;
+	}
+
+	public void setError(ErrorDTO error) {
+		Error = error;
+	}
+
+
+
 	
 	
 	

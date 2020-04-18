@@ -17,5 +17,8 @@ public interface IDataModel {
 	public DoctorDTO SelectDocById(String id);
 	public String DocWorkAssign(DoctorDTO doctorDTO);
 	
+	public String DeleteDocAll(int docID);
+	public String UpdateDoc(String docID , DoctorDTO dto);
+	
 	
 }

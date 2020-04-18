@@ -60,5 +60,27 @@ public class DefultAuth implements IAuthorization {
 	public Response insertIntoAppoiment(AppoinmentDTO dto) {
 		return Rcode.UNAUTHORIZED(GMessage.logfirt);
 	}
+	@Override
+	public Response DeleteDocAll(int docID) {
+		// TODO Auto-generated method stub
+		return DoctorClient.UnAuthorize();
+	}
+	
+	@Override
+	public Response UpdateDoc(String docID, DoctorDTO dto) {
+		// TODO Auto-generated method stub
+		return DoctorClient.UnAuthorize();
+	}
+	
+	@Override
+	public Response UpdateSession(int sessionId, DoctorDTO dto) {
+		// TODO Auto-generated method stub
+		return DoctorClient.UnAuthorize();
+	}
 
+	@Override
+	public Response deleteSession(int sessionId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
