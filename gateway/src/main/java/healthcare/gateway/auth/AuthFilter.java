@@ -1,7 +1,8 @@
 package healthcare.gateway.auth;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.container.ContainerRequestContext;
 import javax.ws.rs.container.ContainerRequestFilter;
@@ -11,11 +12,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
-
-
-import healthcare.gatewayDTO.IpMapperDTO;
-import healthcare.gatewayDTO.IpMapperModel;
 import utility.GMessage;
+import utility.IpMapperDTO;
+import utility.IpMapperModel;
 
 @Provider
 public class AuthFilter implements ContainerRequestFilter {
@@ -25,11 +24,11 @@ public class AuthFilter implements ContainerRequestFilter {
 	private static final String REALM = "example";
 	private static final String AUTHENTICATION_SCHEME  = "Bearer ";
 	
-	private String[] urlSkipper = new String[3]; 
+	private List<String> urlSkipper = new ArrayList<String>();
 	AuthClient client = new AuthClient();
-	public static String CurrentAuth = "defult";
-	public static String CurrentAuthUserId = "0";
-	public static String CuttentAuthUserHospitalId = "0";
+	public static String CurrentAuth = "admin";
+	public static String CurrentAuthUserId = null;
+	public static String CuttentAuthUserHospitalId = null;
 	
 	
 	
@@ -40,20 +39,22 @@ public class AuthFilter implements ContainerRequestFilter {
 	
 	@Override
 	public void filter(ContainerRequestContext requestContext) throws IOException {
-		//update tablename set LASTTOUCH=CURRENT_TIMESTAMP;
+		
 		UriInfo info = requestContext.getUriInfo();
-		//System.out.println(info.getAbsolutePath());
-		//System.out.println("Request Filters");
-		//System.out.println("Headers " + requestContext.getHeaders());
+
 		
 		String reqPath = info.getAbsolutePath().toString().trim();
 		
-		Init();
-		
-		if (urlSkipper[0].equals(reqPath)) {
+		this.Init();
+	
+		if (UrlSkipper(reqPath)) {
+			System.out.println("calling");
 			return;
 		}
-	
+		
+//		if (true) {
+//			return;
+//		}
 		
 		String authorizationHeader =
                 requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
@@ -77,14 +78,18 @@ public class AuthFilter implements ContainerRequestFilter {
 		
 		String mode = client.AuthChecker(tokenString);
 		mode = mode.trim();
+		System.out.println(mode);
+		System.out.println("calling");
 		
 		String[] arr = mode.split(",");
 		
 		if (!arr[0].equals("false")) {
 			CurrentAuth = arr[0];
 			CurrentAuthUserId =arr[1]; 
-			CuttentAuthUserHospitalId = this.getHospitalID(arr[1]);
-			
+			if (CurrentAuth.equals("hospital")) {
+				CuttentAuthUserHospitalId = this.getHospitalID(arr[1]);
+			}
+			System.out.println("calling");
 			return;
 		}
 		else {
@@ -94,8 +99,6 @@ public class AuthFilter implements ContainerRequestFilter {
 	
 	private void abortWithUnauthorized(ContainerRequestContext requestContext,String message) {
 
-        // Abort the filter chain with a 401 status code response
-        // The WWW-Authenticate header is sent along with the response
         requestContext.abortWith(
                 Response.status(Response.Status.UNAUTHORIZED)
                         .header(HttpHeaders.WWW_AUTHENTICATE, 
@@ -107,14 +110,25 @@ public class AuthFilter implements ContainerRequestFilter {
 	private void Init() {
 		IpMapperModel iModel = new IpMapperModel();
 		IpMapperDTO iMapperDTO = iModel.getIpMapperDTO();
-		urlSkipper[0] = iMapperDTO.getGatewayIP()+GMessage.path("login");
-		
+		urlSkipper.add(iMapperDTO.getGatewayIP()+GMessage.path("login"));
+		urlSkipper.add(iMapperDTO.getGatewayIP()+GMessage.path("doc")+GMessage.path("session"));
+		urlSkipper.add(iMapperDTO.getGatewayIP()+GMessage.path("doc")+GMessage.path("session")+GMessage.path("id"));
+		urlSkipper.add(iMapperDTO.getGatewayIP()+GMessage.path("patient")+GMessage.path("add"));
+	}
+	
+	private boolean UrlSkipper(String url) {
+		for (String string : urlSkipper) {
+			if (string.equals(url)) {
+				System.out.println("This URL need to skip");
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private String getHospitalID(String UserID) {
 		 String result[] = client.GetHospitalId(UserID).split(",");
-		 return result[0];
-		
+		 return result[0];	
 	}
 	
 	

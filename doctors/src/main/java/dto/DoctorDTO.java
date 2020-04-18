@@ -1,7 +1,7 @@
 package dto;
 
 
-
+import java.util.List;
 
 
 public class DoctorDTO {
@@ -37,12 +37,15 @@ public class DoctorDTO {
 	private Integer isEveryday;
 	private Integer isActive;
 	private Integer patient_limit;
+	private Double price;
 	
 	
 	/*other attributes is here*/
 	private Integer ward_id;
 	
 	private Integer hospital_id;
+	private List<String> hospilalIDList;
+	private List<String> hospitalNameList;
 	private String hospital_name;
 	private String hospital_list;
 
@@ -242,6 +245,16 @@ public class DoctorDTO {
 	public Integer getPatient_limit() {
 		return patient_limit;
 	}
+	
+	
+
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
 
 	public void setPatient_limit(Integer patient_limit) {
 		this.patient_limit = patient_limit;
@@ -253,6 +266,23 @@ public class DoctorDTO {
 
 	public void setHospital_id(Integer hospital_id) {
 		this.hospital_id = hospital_id;
+	}
+	
+
+	public List<String> getHospilalIDList() {
+		return hospilalIDList;
+	}
+
+	public void setHospilalIDList(List<String> hospilalIDList) {
+		this.hospilalIDList = hospilalIDList;
+	}
+
+	public List<String> getHospitalNameList() {
+		return hospitalNameList;
+	}
+
+	public void setHospitalNameList(List<String> hospitalNameList) {
+		this.hospitalNameList = hospitalNameList;
 	}
 
 	public Integer getWard_id() {
@@ -281,7 +311,19 @@ public class DoctorDTO {
 
 	
 	
-	
+	//Error DTO
+
+	private ErrorDTO Error;
+	public ErrorDTO getError() {
+		return Error;
+	}
+
+	public void setError(ErrorDTO error) {
+		Error = error;
+	}
+
+
+
 	
 	
 	

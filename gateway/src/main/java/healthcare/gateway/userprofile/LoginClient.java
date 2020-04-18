@@ -6,8 +6,8 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 
-import healthcare.gatewayDTO.IpMapperDTO;
-import healthcare.gatewayDTO.IpMapperModel;
+import utility.IpMapperDTO;
+import utility.IpMapperModel;
 
 
 public class LoginClient {
@@ -25,12 +25,13 @@ public class LoginClient {
 	
 	public final String loginTokenApiCaller(String username , String password ) {
 		System.out.println(username + password);
-		WebTarget service = client.target(API).path(username).path(password);
+		System.out.println(API);
+		WebTarget service = client.target(API).path("login").path(username.trim()).path(password.trim());
 		try {
 			String response = service.request(MediaType.TEXT_PLAIN).get(String.class);
 			return response;
 		} catch (ProcessingException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			// TODO: handle exception
 		}
 		
