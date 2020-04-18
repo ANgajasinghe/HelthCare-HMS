@@ -24,16 +24,25 @@ public class AppoinmentService {
 	private AppointmentModel appm = new AppointmentModel();
 	
 	@GET
+	@Path("get")
 	@Produces(MediaType.APPLICATION_JSON)
 	public List<AppoinmentDTO> getAppointmentData(){
 		return appm.getAppointmentData();
 		
 	}
 	
+	@GET
+	@Path("status")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<AppoinmentDTO>  getPaymentPendingList(){
+		return appm.getPaymentPendingList();
+		
+	}
+	
 	
 	
 	@GET
-	@Path("{id}")
+	@Path("session/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String SelecthospitalName(@PathParam("id") String id) {
 		System.out.println("calling+"+id);
@@ -42,12 +51,14 @@ public class AppoinmentService {
 	
 	
 	@GET
-	@Path("user/id")
+	@Path("user/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public AppoinmentDTO getAppointmentByUser(@PathParam("user_id") int patientId){
+	public AppoinmentDTO getAppointmentByUser(@PathParam("id") int patientId){
 		return appm.getAppointmentByUser(patientId);
 		
 	}
+	
+	
 	
 	
 	@POST

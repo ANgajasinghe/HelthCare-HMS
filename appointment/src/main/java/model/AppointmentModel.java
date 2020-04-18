@@ -273,7 +273,7 @@ public AppoinmentDTO getAppointmentByUser(int patientId) {
 
 		try {
 			PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
-			pStatement.setInt(2, patientId);
+			pStatement.setInt(1, patientId);
 
 			ResultSet rs = pStatement.executeQuery();
 			while (rs.next()) {
@@ -307,6 +307,55 @@ public AppoinmentDTO getAppointmentByUser(int patientId) {
 	return null;
 }
 
+///get pending list
+
+public List<AppoinmentDTO> getPaymentPendingList() {
+	 System.out.println("getAppointmentData()");
+
+		List<AppoinmentDTO> appDTOList = new ArrayList<AppoinmentDTO>();
+		//Connection MYSQLcon = cBuilder.MYSQLConnection();
+		
+		Connection MYSQLcon = cBuilder.MYSQLConnection();
+		
+			StringBuilder sBuilder = new StringBuilder();
+			sBuilder.append("SELECT\n");
+			sBuilder.append("*\t");
+			sBuilder.append("FROM\n");
+			sBuilder.append("appointment\n");
+			sBuilder.append("WHERE app_payment_status = 'pending' \n");
+			
+		
+			String queryString = sBuilder.toString();
+	
+		
+		try {
+			
+			Statement stmt = MYSQLcon.createStatement();
+			ResultSet rs = stmt.executeQuery(queryString);
+
+			while (rs.next()) {
+				AppoinmentDTO appDTO = new AppoinmentDTO();
+				appDTO.setApp_doc_id(rs.getInt("app_doc_id"));
+				appDTO.setApp_patient_id(rs.getInt("app_patient_id"));
+				appDTO.setApp_session_id(rs.getInt("app_session_id"));
+				appDTO.setApp_patient_name(rs.getString("app_patient_name"));
+				appDTO.setApp_hospital_name(rs.getString("app_hospital_name"));
+				appDTO.setApp_book_date(rs.getString("app_book_date"));
+				appDTO.setApp_patient_contact_no(rs.getInt("app_patient_contact_no"));
+				appDTO.setApp_price(rs.getDouble("app_price"));
+				appDTO.setApp_payment_status(rs.getString("app_payment_status"));
+				appDTOList.add(appDTO);
+			
+			}
+			MYSQLcon.close();
+			return appDTOList;
+			
+		} catch (SQLException e) {
+			System.out.println("calling");
+			e.printStackTrace();
+			return appDTOList;
+		}
+}
 
 }
 
