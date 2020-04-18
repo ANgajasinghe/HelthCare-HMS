@@ -72,6 +72,11 @@ public class PatientAuth extends ConfigAuth implements IAuthorization {
 	}
 	
 	@Override
+	public Response getAppointmentByUserID(String userId) {
+		return appointmentClient.getAppointmentByUserID(userId);
+	}
+	
+	@Override
 	public Response UpdateSession(int sessionId, DoctorDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
@@ -79,6 +84,11 @@ public class PatientAuth extends ConfigAuth implements IAuthorization {
 	
 	@Override
 	public Response deleteSession(int sessionId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Response insertIntoSession(DoctorDTO doctorDTO) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -67,6 +67,20 @@ public class AppointmentClient{
 		
 		
 	}
+	
+	public final Response getAppointmentByUserID(String userId) {
+		System.out.println("ABCDEF"+userId);
+		WebTarget service = client.target(API).path("user").path(userId);
+		try {
+			Response response = service.request(MediaType.APPLICATION_JSON).get();
+			return response;
+		} catch (ProcessingException e) {
+			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		
+	}
 
 
 }

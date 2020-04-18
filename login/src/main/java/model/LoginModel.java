@@ -131,7 +131,7 @@ public class LoginModel {
 			ipAddress = hostname.getHostAddress();
 		} catch (UnknownHostException e1) {
 
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
@@ -155,7 +155,7 @@ public class LoginModel {
 			return token;
 		} catch (SQLException e) {
 			logger.info(e.toString());
-			e.printStackTrace();
+			//e.printStackTrace();
 		} finally {
 			try {
 				MYSQLcon.close();

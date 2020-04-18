@@ -65,6 +65,12 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 		return doctorClient.getSessionDataById(sessionId);
 		
 	}
+	
+	@Override
+	public Response insertIntoSession(DoctorDTO doctorDTO) {
+		// TODO Auto-generated method stub
+		return doctorClient.insertIntoSession(doctorDTO);
+	}
 	@Override
 	public Response UpdateSession(int sessionId, DoctorDTO dto) {
 		// TODO Auto-generated method stub
@@ -104,6 +110,11 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 	@Override
 	public Response insertIntoAppoiment(AppoinmentDTO dto) {
 		return appointmentClient.insertIntoAppoiment(dto);
+	}
+	
+	@Override
+	public Response getAppointmentByUserID(String userId) {
+		return appointmentClient.getAppointmentByUserID(userId);
 	}
 
 }

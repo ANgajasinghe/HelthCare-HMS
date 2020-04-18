@@ -7,6 +7,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import healthcare.gateway.auth.AuthFilter;
+import utility.GMessage;
 
 
 @Path("login")
@@ -23,8 +24,7 @@ public class LoginService {
     	 try {
 			return cLoginClient.loginTokenApiCaller(username,password);
 		} catch (Exception e) {
-			System.out.println(e);
-			return null;
+			return GMessage.wrongPwd;
 		}
     }
 	
