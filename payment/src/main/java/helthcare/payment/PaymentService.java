@@ -58,7 +58,7 @@ public class PaymentService {
 		if(appm.UpdatePayment(paymentDTO)) {
 			return Response.ok().build();
 		}else {
-		return Response.notModified().entity("jhgrt").build();
+		return Response.notModified().entity("payment was updated!!").build();
 		}
 	}
 	
@@ -68,7 +68,7 @@ public class PaymentService {
 	@Path("delete/{id}")
 	public Response DeletePayment(@PathParam("id") int id) {
 	    if (appm.DeletePayment(id)) {
-	        return Response.ok().entity("Deleted").build();
+	        return Response.ok().entity("Payment was deleted!!").build();
 	    } else {
 	        return Response.notModified().build();
 	    }
