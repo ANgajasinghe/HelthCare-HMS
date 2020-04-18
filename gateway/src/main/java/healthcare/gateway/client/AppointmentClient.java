@@ -69,8 +69,8 @@ public class AppointmentClient{
 	}
 	
 	public final Response getAppointmentByUserID(String userId) {
-		System.out.println(API);
-		WebTarget service = client.target(API).path(userId);
+		System.out.println("ABCDEF"+userId);
+		WebTarget service = client.target(API).path("user").path(userId);
 		try {
 			Response response = service.request(MediaType.APPLICATION_JSON).get();
 			return response;

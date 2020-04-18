@@ -258,9 +258,10 @@ public String SelecthospitalName(String app_session_id) {
 
 		//get all appointment by patientID 
 
-public AppoinmentDTO getAppointmentByUser(int patientId) {
+public List<AppoinmentDTO> getAppointmentByUser(int patientId) {
+	List<AppoinmentDTO> list = new ArrayList<AppoinmentDTO>();
 	Connection MYSQLcon = cBuilder.MYSQLConnection();
-	AppoinmentDTO appDTO = new AppoinmentDTO();
+	
 	if (this.connectionChecker(MYSQLcon)) {
 		StringBuilder sBuilder = new StringBuilder();
 		sBuilder.append("SELECT \n");
@@ -277,6 +278,7 @@ public AppoinmentDTO getAppointmentByUser(int patientId) {
 
 			ResultSet rs = pStatement.executeQuery();
 			while (rs.next()) {
+				AppoinmentDTO appDTO = new AppoinmentDTO();
 				appDTO.setApp_doc_id(rs.getInt("app_doc_id"));
 				appDTO.setApp_patient_id(rs.getInt("app_patient_id"));
 				appDTO.setApp_session_id(rs.getInt("app_session_id"));
@@ -286,12 +288,14 @@ public AppoinmentDTO getAppointmentByUser(int patientId) {
 				appDTO.setApp_patient_contact_no(rs.getInt("app_patient_contact_no"));
 				appDTO.setApp_price(rs.getDouble("app_price"));
 				appDTO.setApp_payment_status(rs.getString("app_payment_status"));
-				return appDTO;
+				list.add(appDTO);
+				
 			}
+			return list;
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return appDTO;
+			return null;
 		} finally {
 			try {
 				MYSQLcon.close();

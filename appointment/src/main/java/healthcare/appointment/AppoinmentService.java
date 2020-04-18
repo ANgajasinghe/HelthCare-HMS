@@ -54,7 +54,7 @@ public class AppoinmentService {
 	@GET
 	@Path("user/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public AppoinmentDTO getAppointmentByUser(@PathParam("id") int patientId){
+	public List<AppoinmentDTO> getAppointmentByUser(@PathParam("id") int patientId){
 		return appm.getAppointmentByUser(patientId);
 		
 	}

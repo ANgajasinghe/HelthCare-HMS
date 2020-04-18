@@ -44,6 +44,7 @@ public interface IAuthorization {
 	
 	//appointment Client
 	public Response insertIntoAppoiment(AppoinmentDTO dto);
+	public Response getAppointmentByUserID(String userId);
 
 	
 	

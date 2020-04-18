@@ -111,5 +111,10 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 	public Response insertIntoAppoiment(AppoinmentDTO dto) {
 		return appointmentClient.insertIntoAppoiment(dto);
 	}
+	
+	@Override
+	public Response getAppointmentByUserID(String userId) {
+		return appointmentClient.getAppointmentByUserID(userId);
+	}
 
 }
