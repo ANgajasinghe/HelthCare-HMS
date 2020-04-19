@@ -24,7 +24,7 @@ public class PatientModel {
 		return true;
 	}
 	
-	public String insertIntoPatient(PatientDto dto) {
+	public boolean insertIntoPatient(PatientDto dto) {
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		if (this.connectionChecker(MYSQLcon)) {
 
@@ -44,8 +44,6 @@ public class PatientModel {
 				PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
 				pStatement.setString(1,dto.getFirst_name());
 				pStatement.setString(2,dto.getLast_name());
-				pStatement.setString(1,dto.getFirst_name());
-				pStatement.setString(2,dto.getLast_name());
 				pStatement.setString(3,dto.getNIC());
 				pStatement.setString(4,dto.getDOB());
 				pStatement.setString(5,dto.getPassword());
@@ -54,12 +52,12 @@ public class PatientModel {
 
 				if (!result) {
 					
-					return this.getInsertedRecodeId();
+					return true;
 					
 				//return Messages.doctorSuccess;
 				}
 			} catch (SQLException e) {
-				return e.toString();
+				e.printStackTrace();
 			} finally {
 				try {
 					MYSQLcon.close();
@@ -69,7 +67,7 @@ public class PatientModel {
 			}
 
 		}
-		return Messages.connectionER;
+		return false;
 
 	}	
 	
@@ -164,7 +162,7 @@ public class PatientModel {
 		}
 	}
 	
-	public void deleteAlien(String NIC) {
+	public void delete(String NIC) {
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		String sql = "delete from patients where NIC=?;";
 
