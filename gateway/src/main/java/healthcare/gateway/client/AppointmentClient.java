@@ -1,5 +1,9 @@
 package healthcare.gateway.client;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -54,6 +58,11 @@ public class AppointmentClient{
 		WebTarget service = client.target(API).path("add");
 		System.out.println(API);
 		try {
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			Date dateobj = new Date();
+
+			String currentData = df.format(dateobj);
+			dto.setApp_book_date(currentData);
 			dto.setApp_doc_id(doctorDTO.getDoc_id());
 			dto.setApp_hospital_name(doctorDTO.getHospital_name());
 			dto.setApp_price(doctorDTO.getPrice());
@@ -93,8 +102,8 @@ public class AppointmentClient{
 		}
 	}
 
-	public Response getPaymentPendingList() {
-		WebTarget service = client.target(API).path("status");
+	public Response getPaymentPendingList(int id) {
+		WebTarget service = client.target(API).path(String.valueOf(id));
 		try {
 			Response response = service.request(MediaType.APPLICATION_JSON).get();
 			return response;

@@ -8,19 +8,17 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import dto.AppoinmentDTO;
 import dto.PaymentDTO;
 import utility.IpMapperDTO;
 import utility.IpMapperModel;
+import utility.Rcode;
 
 public class PaymentClient {
 
 	
 	String API;
 	Client client = ClientBuilder.newClient();
-	
-	
-	
-	
 	
 	
 	public PaymentClient() {
@@ -46,11 +44,21 @@ public class PaymentClient {
 	}
 
 	public Response InsertIntoPayments(PaymentDTO paymentDTO) {
-		
+		AppointmentClient cAppointmentClient = new AppointmentClient();
 		System.out.println(API);
 		WebTarget service = client.target(API).path("add");
 		try {
+			
+			
+			try {
+				System.out.println("ID price:-"+paymentDTO.getApp_id());
+				AppoinmentDTO dto = cAppointmentClient.getPaymentPendingList(paymentDTO.getApp_id()).readEntity(AppoinmentDTO.class);
+				System.out.println(dto.getApp_id());
+			} catch (Exception e) {
+				return Rcode.No_content("Invalid Appoinment ID");
+			}
 			Response response = service.request(MediaType.APPLICATION_JSON).post(Entity.json(paymentDTO));
+			
 			return response;
 		} catch (ProcessingException e) {
 			e.printStackTrace();

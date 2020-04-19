@@ -3,6 +3,7 @@ package dto;
 
 public class AppoinmentDTO {
 	
+	private Integer app_id;//primary key
 	private Integer app_doc_id;//primary key
 	private Integer app_patient_id;//primary key
 	private Integer app_patient_contact_no;
@@ -16,6 +17,20 @@ public class AppoinmentDTO {
 	private String app_payment_status;
 	
 	private String app_book_date;
+	
+	
+	
+	
+	public Integer getApp_id() {
+		return app_id;
+	}
+
+	public void setApp_id(Integer app_id) {
+		this.app_id = app_id;
+	}
+
+	
+	
 	
 	public Integer getApp_session_id() {
 		return app_session_id;

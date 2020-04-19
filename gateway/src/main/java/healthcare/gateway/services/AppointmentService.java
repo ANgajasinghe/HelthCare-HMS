@@ -39,11 +39,11 @@ public class AppointmentService extends ConfigService {
 	}
 	
 	@GET
-	@Path("status")
+	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getPaymentPendingList(){
+	public Response getPaymentPendingList(@PathParam("id") int id){
 		SetAuthorization();
-		return iAuthorization.getPaymentPendingList();
+		return iAuthorization.getPaymentPendingList(id);
 		
 	}
 	

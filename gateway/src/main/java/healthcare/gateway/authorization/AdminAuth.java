@@ -130,9 +130,9 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 
 
 	@Override
-	public Response getPaymentPendingList() {
+	public Response getPaymentPendingList(int id) {
 		// TODO Auto-generated method stub
-		return appointmentClient.getPaymentPendingList();
+		return appointmentClient.getPaymentPendingList(id);
 	}
 
 

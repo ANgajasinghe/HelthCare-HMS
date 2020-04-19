@@ -102,7 +102,7 @@ public class PatientAuth extends ConfigAuth implements IAuthorization {
 	}
 
 	@Override
-	public Response getPaymentPendingList() {
+	public Response getPaymentPendingList(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

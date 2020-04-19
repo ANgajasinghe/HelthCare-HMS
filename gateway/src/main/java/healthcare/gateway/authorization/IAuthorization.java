@@ -48,7 +48,7 @@ public interface IAuthorization {
 	public Response insertIntoAppoiment(AppoinmentDTO dto);
 	public Response getAppointmentByUserID(String userId);
 	public Response getAppointmentData();
-	public Response getPaymentPendingList();
+	public Response getPaymentPendingList(int id);
 	public Response SelecthospitalName(String id);
 	public Response UpdateAppoinment(AppoinmentDTO appoinmentDTO);
 	public Response DeleteAppoinment(int id);

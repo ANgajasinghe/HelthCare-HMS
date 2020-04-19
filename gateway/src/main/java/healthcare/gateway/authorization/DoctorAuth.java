@@ -115,7 +115,7 @@ public class DoctorAuth implements IAuthorization {
 	}
 
 	@Override
-	public Response getPaymentPendingList() {
+	public Response getPaymentPendingList(int id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
