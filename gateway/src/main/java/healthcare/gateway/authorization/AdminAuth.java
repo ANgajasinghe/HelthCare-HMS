@@ -7,10 +7,7 @@ import dto.AppoinmentDTO;
 import dto.DoctorDTO;
 import dto.PatientDto;
 import dto.UserDTO;
-import healthcare.gateway.client.DoctorClient;
-import healthcare.gateway.client.HospitalClient;
-import healthcare.gateway.client.PatientClient;
-import healthcare.gateway.client.UserProfileClient;
+
 
 
 public class AdminAuth extends ConfigAuth implements IAuthorization {
@@ -121,35 +118,35 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 	@Override
 	public Response getAppointmentData() {
 		// TODO Auto-generated method stub
-		return null;
+		return appointmentClient.getAppointmentData();
 	}
 
 
 	@Override
 	public Response getPaymentPendingList() {
 		// TODO Auto-generated method stub
-		return null;
+		return appointmentClient.getPaymentPendingList();
 	}
 
 
 	@Override
 	public Response SelecthospitalName(String id) {
 		// TODO Auto-generated method stub
-		return null;
+		return appointmentClient. SelecthospitalName(id);
 	}
 
 
 	@Override
 	public Response UpdateAppoinment(AppoinmentDTO appoinmentDTO) {
 		// TODO Auto-generated method stub
-		return null;
+		return appointmentClient.UpdateAppoinment(appoinmentDTO);
 	}
 
 
 	@Override
 	public Response DeleteAppoinment(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return appointmentClient.DeleteAppoinment(id);
 	}
 	
 	

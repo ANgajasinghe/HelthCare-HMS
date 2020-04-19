@@ -1,6 +1,6 @@
 package healthcare.gateway.services;
 
-import java.util.List;
+
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -21,7 +21,7 @@ public class AppointmentService extends ConfigService {
 	
 	
 	@GET
-	@Path("get")
+	@Path("all")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAppointmentData(){
 		SetAuthorization();

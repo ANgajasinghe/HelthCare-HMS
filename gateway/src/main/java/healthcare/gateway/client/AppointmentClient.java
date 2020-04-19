@@ -82,5 +82,61 @@ public class AppointmentClient{
 		
 	}
 
+	public Response getAppointmentData() {
+		WebTarget service = client.target(API).path("get");
+		try {
+			Response response = service.request(MediaType.APPLICATION_JSON).get();
+			return response;
+		} catch (ProcessingException e) {
+			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	public Response getPaymentPendingList() {
+		WebTarget service = client.target(API).path("status");
+		try {
+			Response response = service.request(MediaType.APPLICATION_JSON).get();
+			return response;
+		} catch (ProcessingException e) {
+			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+		
+	}
+
+	public Response SelecthospitalName(String id) {
+		WebTarget service = client.target(API).path("status").path(id);
+		try {
+			Response response = service.request(MediaType.APPLICATION_JSON).get();
+			return response;
+		} catch (ProcessingException e) {
+			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	public Response UpdateAppoinment(AppoinmentDTO appoinmentDTO) {
+		WebTarget service = client.target(API).path("add");
+		try {
+			Response response = service.request(MediaType.APPLICATION_JSON).put(Entity.json(appoinmentDTO));
+			return response;
+		} catch (ProcessingException e) {
+			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
+	public Response DeleteAppoinment(int id) {
+		WebTarget service = client.target(API).path("add");
+		try {
+			Response response = service.request(MediaType.APPLICATION_JSON).delete();
+			return response;
+		} catch (ProcessingException e) {
+			e.printStackTrace();
+			return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+		}
+	}
+
 
 }
