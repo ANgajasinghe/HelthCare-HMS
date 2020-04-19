@@ -89,10 +89,8 @@ public class AppoinmentService {
 	
 	@DELETE
 	@Path("del/{id}")
-	public Response DeleteAppoinment(@PathParam("id") int id,AppoinmentDTO appoinmentDTO) {
-		appoinmentDTO.setApp_patient_id(id);
-	    if (appm.DeleteAppoinment(appoinmentDTO)) {
-	    	System.out.println(appoinmentDTO);
+	public Response DeleteAppoinment(@PathParam("id") int id) {
+	    if (appm.DeleteAppoinment(id)) {
 	        return Response.ok().build();
 	    } else {
 	        return Response.notModified().build();

@@ -28,9 +28,10 @@ public class SessionService {
 	public List<DoctorDTO> getSessionData(
 			@QueryParam("hospital_id") String hospitalID,
 			@QueryParam("doc_id") String docID,
-			@QueryParam("date")String date
+			@QueryParam("date")String date,
+			@QueryParam("type")String type
 			) {
-		return sModel.getSessionData(hospitalID,docID,date);
+		return sModel.getSessionData(hospitalID,docID,date,type);
 		
 	}
 	

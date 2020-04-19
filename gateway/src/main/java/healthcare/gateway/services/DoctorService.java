@@ -24,9 +24,9 @@ public class DoctorService extends ConfigService{
 	//DoctorAuth doctorService;
 	
 	@GET
-	public Response getDocSpec() {
+	public Response GetAllDoctors(@QueryParam("type") String ALL) {
 		this.SetAuthorization();
-		Response response = iAuthorization.GetAllDoctors();
+		Response response = iAuthorization.GetAllDoctors(ALL);
 		return response;
 	}
 	
@@ -71,10 +71,11 @@ public class DoctorService extends ConfigService{
 	public Response getSessionData(
 			@QueryParam("hospital_id") String hospitalID,
 			@QueryParam("doc_id") String docID,
-			@QueryParam("date")String date
+			@QueryParam("date")String date,
+			@QueryParam("type")String type
 			){
 		this.SetAuthorization();
-		return iAuthorization.getSessionData(hospitalID, docID, date);
+		return iAuthorization.getSessionData(hospitalID, docID, date,type);
 	}
 	
 	@POST

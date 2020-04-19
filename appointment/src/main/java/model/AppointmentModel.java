@@ -189,7 +189,7 @@ public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO ) {
  
  
  ///delete
- public boolean DeleteAppoinment(AppoinmentDTO appoinmentDTO) {
+ public boolean DeleteAppoinment(int id) {
 		// update 
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		StringBuilder sBuilder = new StringBuilder();
@@ -201,7 +201,7 @@ public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO ) {
 		PreparedStatement pStatement;
 		try {
 			pStatement = MYSQLcon.prepareStatement(queryString);
-			pStatement.setInt(1, appoinmentDTO.getApp_patient_id());
+			pStatement.setInt(1, id);
 			
 			boolean result = pStatement.execute();
 			if (!result) {
