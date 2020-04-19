@@ -1,5 +1,10 @@
 package healthcare.gateway.client;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
+
 import javax.ws.rs.ProcessingException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -54,9 +59,25 @@ public class PaymentClient {
 				System.out.println("ID price:-"+paymentDTO.getApp_id());
 				AppoinmentDTO dto = cAppointmentClient.getPaymentPendingList(paymentDTO.getApp_id()).readEntity(AppoinmentDTO.class);
 				System.out.println(dto.getApp_id());
+				
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				Date dateobj = new Date();
+
+				String currentData = df.format(dateobj);
+				paymentDTO.setDate_time(currentData);
+				
+				paymentDTO.setDoc_id(dto.getApp_doc_id());
+				paymentDTO.setApp_id(dto.getApp_id());
+				paymentDTO.setAmount(dto.getApp_price());
+				paymentDTO.setDoc_fee((dto.getApp_price() / 100)*20);
+				paymentDTO.setHos_fee((dto.getApp_price() / 100)*80);
+				paymentDTO.setHos_id(dto.getApp_session_id());
+				paymentDTO.setReference_No(ThreadLocalRandom.current().nextInt());
+				
 			} catch (Exception e) {
 				return Rcode.No_content("Invalid Appoinment ID");
 			}
+			
 			Response response = service.request(MediaType.APPLICATION_JSON).post(Entity.json(paymentDTO));
 			
 			return response;

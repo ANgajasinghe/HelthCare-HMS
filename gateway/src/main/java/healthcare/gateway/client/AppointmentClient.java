@@ -103,7 +103,7 @@ public class AppointmentClient{
 	}
 
 	public Response getPaymentPendingList(int id) {
-		WebTarget service = client.target(API).path(String.valueOf(id));
+		WebTarget service = client.target(API).path("Pid").path(String.valueOf(id));
 		try {
 			Response response = service.request(MediaType.APPLICATION_JSON).get();
 			return response;
