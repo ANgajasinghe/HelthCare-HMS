@@ -74,7 +74,8 @@ public class AppoinmentService {
 	@PUT
 	@Path("update/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public AppoinmentDTO UpdateAppoinment(AppoinmentDTO appoinmentDTO) {
+	public AppoinmentDTO UpdateAppoinment(@PathParam("id") int id, AppoinmentDTO appoinmentDTO) {
+		appoinmentDTO.setApp_id(id);
 		if(appm.UpdateAppoinment(appoinmentDTO)) {
 			System.out.println("Update sucsses");
 			System.out.println(appoinmentDTO);
@@ -91,9 +92,9 @@ public class AppoinmentService {
 	@Path("del/{id}")
 	public Response DeleteAppoinment(@PathParam("id") int id) {
 	    if (appm.DeleteAppoinment(id)) {
-	        return Response.ok().build();
+	        return Response.ok().entity("Delete success").build();
 	    } else {
-	        return Response.notModified().build();
+	        return Response.notModified().entity("Delete fail").build();
 	    }
 	}
 	

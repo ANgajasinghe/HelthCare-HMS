@@ -113,6 +113,7 @@ public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO ) {
 
 			while (rs.next()) {
 				AppoinmentDTO appDTO = new AppoinmentDTO();
+				appDTO.setApp_id(rs.getInt("app_id"));
 				appDTO.setApp_doc_id(rs.getInt("app_doc_id"));
 				appDTO.setApp_patient_id(rs.getInt("app_patient_id"));
 				appDTO.setApp_session_id(rs.getInt("app_session_id"));
@@ -145,6 +146,7 @@ public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO ) {
 		sBuilder.append("UPDATE appointment \n");
 		sBuilder.append( "SET \n");
 		sBuilder.append("app_doc_id= ?,");
+		sBuilder.append("app_patient_id= ?,");
 		sBuilder.append("app_session_id=?,");
 		sBuilder.append("app_patient_name=?,");
 		sBuilder.append("app_hospital_name=?,");
@@ -152,7 +154,7 @@ public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO ) {
 		sBuilder.append("app_patient_contact_no=?,");
 		sBuilder.append("app_price=?,");
 		sBuilder.append("app_payment_status=?");
-		sBuilder.append(" WHERE app_patient_id= ? \n");
+		sBuilder.append(" WHERE app_id= ? \n");
 		
 
 		String queryString = sBuilder.toString();
@@ -161,14 +163,15 @@ public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO ) {
 		try {
 			pStatement = MYSQLcon.prepareStatement(queryString);
 			pStatement.setInt(1, appoinmentDTO.getApp_doc_id());
-			pStatement.setInt(2, appoinmentDTO.getApp_session_id());
-			pStatement.setString(3, appoinmentDTO.getApp_patient_name());
-			pStatement.setString(4, appoinmentDTO.getApp_hospital_name());
-			pStatement.setString(5, appoinmentDTO.getApp_book_date());
-			pStatement.setInt(6, appoinmentDTO.getApp_patient_contact_no());
-			pStatement.setDouble(7, appoinmentDTO.getApp_price());
-			pStatement.setString(8, appoinmentDTO.getApp_payment_status());
-			pStatement.setInt(9, appoinmentDTO.getApp_patient_id());
+			pStatement.setInt(2, appoinmentDTO.getApp_patient_id());
+			pStatement.setInt(3, appoinmentDTO.getApp_session_id());
+			pStatement.setString(4, appoinmentDTO.getApp_patient_name());
+			pStatement.setString(5, appoinmentDTO.getApp_hospital_name());
+			pStatement.setString(6, appoinmentDTO.getApp_book_date());
+			pStatement.setInt(7, appoinmentDTO.getApp_patient_contact_no());
+			pStatement.setDouble(8, appoinmentDTO.getApp_price());
+			pStatement.setString(9, appoinmentDTO.getApp_payment_status());
+			pStatement.setInt(10, appoinmentDTO.getApp_id());
 			
 			boolean result = pStatement.execute();
 			if (!result) {
@@ -193,7 +196,7 @@ public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO ) {
 		// update 
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		StringBuilder sBuilder = new StringBuilder();
-		sBuilder.append("DELETE FROM appointment WHERE app_patient_id= ? \n");
+		sBuilder.append("DELETE FROM appointment WHERE app_id= ? \n");
 		
 
 		String queryString = sBuilder.toString();

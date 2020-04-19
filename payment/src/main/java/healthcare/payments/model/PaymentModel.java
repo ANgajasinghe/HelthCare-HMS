@@ -33,9 +33,10 @@ public String InsertIntoPayments(PaymentDTO paymentDTO ) {
 		sBuilder.append("amount,");
 		sBuilder.append("doc_fee,");
 		sBuilder.append("hos_fee,");
-		sBuilder.append("reference_No)\n");
+		sBuilder.append("reference_No,");
+		sBuilder.append("app_id)\n");
 		sBuilder.append(" VALUES( \n");
-		sBuilder.append("?,?,?,?,?,?\n");
+		sBuilder.append("?,?,?,?,?,?,?\n");
 		sBuilder.append(")");
 
 		String queryString = sBuilder.toString();
@@ -48,6 +49,7 @@ public String InsertIntoPayments(PaymentDTO paymentDTO ) {
 			pStatement.setDouble(4, paymentDTO.getDoc_fee());
 			pStatement.setDouble(5, paymentDTO.getHos_fee());
 			pStatement.setInt(6, paymentDTO.getReference_No());
+			pStatement.setInt(7, paymentDTO.getApp_id());
 			
 
 			System.out.println("calling Model");
@@ -55,7 +57,7 @@ public String InsertIntoPayments(PaymentDTO paymentDTO ) {
 			boolean result = pStatement.execute();
 			
 			if (!result) {
-				return "dataADDEDSuccess";
+				return "Data ADDED Success";
 			}
 		
 			
@@ -104,6 +106,7 @@ public List<PaymentDTO> getPaymentData() {
 				payDTO.setHos_fee(rs.getDouble("hos_fee"));
 				payDTO.setReference_No(rs.getInt("reference_No"));
 				payDTO.setDate_time(rs.getString("date_time"));
+				payDTO.setApp_id(rs.getInt("app_id"));
 				payDTOList.add(payDTO);
 			
 			}
@@ -133,6 +136,7 @@ public boolean UpdatePayment(PaymentDTO paymentDTO) {
 		sBuilder.append("hos_fee=?,");
 		sBuilder.append("reference_No=?,");
 		sBuilder.append("date_time=?");
+		sBuilder.append("app_id=?");
 		sBuilder.append(" WHERE payment_id =?");
 		
 
@@ -148,7 +152,9 @@ public boolean UpdatePayment(PaymentDTO paymentDTO) {
 			pStatement.setDouble(5, paymentDTO.getHos_fee());
 			pStatement.setInt(6, paymentDTO.getReference_No());
 			pStatement.setString(7, paymentDTO.getDate_time());
-			pStatement.setInt(8, paymentDTO.getPayment_id());
+			pStatement.setInt(8, paymentDTO.getApp_id());
+			
+			
 			
 			boolean result = pStatement.execute();
 			if (!result) {
