@@ -26,8 +26,12 @@ public class MyResource {
     @POST
     @Path("add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public String InsertIntoPatient(PatientDto dto) {
-    	return repo.insertIntoPatient(dto);
+    public PatientDto insertIntoPatient(PatientDto dto) {
+    	if(repo.insertIntoPatient(dto)) {
+    	return dto;
+    }else {
+    	return dto;
+    }
     }
 
 	@GET
@@ -54,13 +58,13 @@ public class MyResource {
 	}
 	
 	@DELETE
-	@Path("alien/{id}")
+	@Path("delete/{NIC}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public PatientDto deleteAlien(@PathParam("NIC") String NIC) {
 		PatientDto a = repo.getPatient(NIC);
 
 		if (a.getNIC() != null) {
-			repo.deleteAlien(NIC);
+			repo.delete(NIC);
 
 		}
 		return a;
