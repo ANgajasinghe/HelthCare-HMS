@@ -6,7 +6,9 @@ import javax.ws.rs.core.Response;
 import dto.AppoinmentDTO;
 import dto.DoctorDTO;
 import dto.PatientDto;
+import dto.PaymentDTO;
 import dto.UserDTO;
+import healthcare.gateway.auth.AuthFilter;
 
 
 
@@ -93,6 +95,11 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 		return userProfileClient.InsertIntoUserProfile(dto);
 	}
 	
+	@Override
+	public Response deleteToken() {
+		return userProfileClient.deleteToken(AuthFilter.Token);
+	}
+	
 	
 	//patient
 	@Override
@@ -147,6 +154,35 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 	public Response DeleteAppoinment(int id) {
 		// TODO Auto-generated method stub
 		return appointmentClient.DeleteAppoinment(id);
+	}
+
+
+	//payment 
+	@Override
+	public Response getPaymentData() {
+		// TODO Auto-generated method stub
+		return paymentClient.getPaymentData();
+	}
+
+
+	@Override
+	public Response InsertIntoPayments(PaymentDTO paymentDTO) {
+		// TODO Auto-generated method stub
+		return paymentClient.InsertIntoPayments(paymentDTO);
+	}
+
+
+	@Override
+	public Response UpdatePayment(PaymentDTO paymentDTO) {
+		// TODO Auto-generated method stub
+		return paymentClient.UpdatePayment(paymentDTO);
+	}
+
+
+	@Override
+	public Response DeletePayment(int id) {
+		// TODO Auto-generated method stub
+		return paymentClient.DeletePayment(id);
 	}
 	
 	

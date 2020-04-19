@@ -4,6 +4,7 @@ import healthcare.gateway.client.AppointmentClient;
 import healthcare.gateway.client.DoctorClient;
 import healthcare.gateway.client.HospitalClient;
 import healthcare.gateway.client.PatientClient;
+import healthcare.gateway.client.PaymentClient;
 import healthcare.gateway.client.UserProfileClient;
 
 public class ConfigAuth {
@@ -12,4 +13,5 @@ public class ConfigAuth {
 	public UserProfileClient userProfileClient = new UserProfileClient();
 	public PatientClient patientClient =  new PatientClient();
 	public AppointmentClient appointmentClient = new AppointmentClient();
+	public PaymentClient paymentClient = new PaymentClient();
 }

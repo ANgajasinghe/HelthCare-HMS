@@ -5,6 +5,7 @@ import javax.ws.rs.core.Response;
 import dto.AppoinmentDTO;
 import dto.DoctorDTO;
 import dto.PatientDto;
+import dto.PaymentDTO;
 import dto.UserDTO;
 
 
@@ -34,6 +35,7 @@ public interface IAuthorization {
 	
 	//userProfile
 	public Response InsertIntoUserProfile(UserDTO dto);
+	public Response deleteToken();
 	
 	
 	
@@ -50,6 +52,13 @@ public interface IAuthorization {
 	public Response SelecthospitalName(String id);
 	public Response UpdateAppoinment(AppoinmentDTO appoinmentDTO);
 	public Response DeleteAppoinment(int id);
+	//payment ---------------------
+	public Response getPaymentData();
+	public Response InsertIntoPayments(PaymentDTO paymentDTO);
+	public Response UpdatePayment(PaymentDTO paymentDTO);
+	public Response DeletePayment(int id);
+	
+	
 
 	
 	
