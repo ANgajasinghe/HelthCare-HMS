@@ -33,10 +33,10 @@ public class AppoinmentService {
 	}
 	
 	@GET
-	@Path("status")
+	@Path("Pid/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<AppoinmentDTO>  getPaymentPendingList(){
-		return appm.getPaymentPendingList();
+	public AppoinmentDTO  getPaymentPendingList(@PathParam("id") int id){
+		return appm.getPaymentPendingList(id);
 		
 	}
 	

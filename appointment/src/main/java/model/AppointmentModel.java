@@ -316,10 +316,10 @@ public List<AppoinmentDTO> getAppointmentByUser(int patientId) {
 
 ///get pending list
 
-public List<AppoinmentDTO> getPaymentPendingList() {
+public AppoinmentDTO getPaymentPendingList(int id) {
 	 System.out.println("getAppointmentData()");
 
-		List<AppoinmentDTO> appDTOList = new ArrayList<AppoinmentDTO>();
+		
 		//Connection MYSQLcon = cBuilder.MYSQLConnection();
 		
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
@@ -329,7 +329,7 @@ public List<AppoinmentDTO> getPaymentPendingList() {
 			sBuilder.append("*\t");
 			sBuilder.append("FROM\n");
 			sBuilder.append("appointment\n");
-			sBuilder.append("WHERE app_payment_status = 'pending' \n");
+			sBuilder.append("WHERE app_id = ? \n");
 			
 		
 			String queryString = sBuilder.toString();
@@ -337,12 +337,15 @@ public List<AppoinmentDTO> getPaymentPendingList() {
 		
 		try {
 			
-			Statement stmt = MYSQLcon.createStatement();
-			ResultSet rs = stmt.executeQuery(queryString);
+			PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
+			pStatement.setInt(1, id);
 
-			while (rs.next()) {
+			ResultSet rs = pStatement.executeQuery();
+
+			if (rs.next()) {
 				AppoinmentDTO appDTO = new AppoinmentDTO();
 				appDTO.setApp_doc_id(rs.getInt("app_doc_id"));
+				appDTO.setApp_id(rs.getInt("app_id"));
 				appDTO.setApp_patient_id(rs.getInt("app_patient_id"));
 				appDTO.setApp_session_id(rs.getInt("app_session_id"));
 				appDTO.setApp_patient_name(rs.getString("app_patient_name"));
@@ -351,16 +354,16 @@ public List<AppoinmentDTO> getPaymentPendingList() {
 				appDTO.setApp_patient_contact_no(rs.getInt("app_patient_contact_no"));
 				appDTO.setApp_price(rs.getDouble("app_price"));
 				appDTO.setApp_payment_status(rs.getString("app_payment_status"));
-				appDTOList.add(appDTO);
+				return appDTO;
 			
 			}
 			MYSQLcon.close();
-			return appDTOList;
+			return null;
 			
 		} catch (SQLException e) {
 			System.out.println("calling");
 			e.printStackTrace();
-			return appDTOList;
+			return null;
 		}
 }
 
