@@ -6,11 +6,10 @@ import javax.ws.rs.core.Response;
 import dto.AppoinmentDTO;
 import dto.DoctorDTO;
 import dto.PatientDto;
+import dto.PaymentDTO;
 import dto.UserDTO;
-import healthcare.gateway.client.DoctorClient;
-import healthcare.gateway.client.HospitalClient;
-import healthcare.gateway.client.PatientClient;
-import healthcare.gateway.client.UserProfileClient;
+import healthcare.gateway.auth.AuthFilter;
+
 
 
 public class AdminAuth extends ConfigAuth implements IAuthorization {
@@ -25,9 +24,9 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 	
 	
 	@Override
-	public Response GetAllDoctors() {
+	public Response GetAllDoctors(String ALL) {
 		// TODO Auto-generated method stub
-		return doctorClient.GetAllDoctors();
+		return doctorClient.GetAllDoctors(ALL);
 	}
 
 
@@ -57,8 +56,8 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 
 	//session client is here
 	@Override
-	public Response getSessionData(String hospitalID, String docID, String date) {
-		return doctorClient.getSessionData(hospitalID, docID, date);
+	public Response getSessionData(String hospitalID, String docID, String date,String type) {
+		return doctorClient.getSessionData(hospitalID, docID, date, type);
 	}
 	@Override
 	public Response getSessionDataById(int sessionId) {
@@ -96,6 +95,11 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 		return userProfileClient.InsertIntoUserProfile(dto);
 	}
 	
+	@Override
+	public Response deleteToken() {
+		return userProfileClient.deleteToken(AuthFilter.Token);
+	}
+	
 	
 	//patient
 	@Override
@@ -111,5 +115,77 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 	public Response insertIntoAppoiment(AppoinmentDTO dto) {
 		return appointmentClient.insertIntoAppoiment(dto);
 	}
+	
+	@Override
+	public Response getAppointmentByUserID(String userId) {
+		return appointmentClient.getAppointmentByUserID(userId);
+	}
+
+
+	@Override
+	public Response getAppointmentData() {
+		// TODO Auto-generated method stub
+		return appointmentClient.getAppointmentData();
+	}
+
+
+	@Override
+	public Response getPaymentPendingList() {
+		// TODO Auto-generated method stub
+		return appointmentClient.getPaymentPendingList();
+	}
+
+
+	@Override
+	public Response SelecthospitalName(String id) {
+		// TODO Auto-generated method stub
+		return appointmentClient. SelecthospitalName(id);
+	}
+
+
+	@Override
+	public Response UpdateAppoinment(AppoinmentDTO appoinmentDTO) {
+		// TODO Auto-generated method stub
+		return appointmentClient.UpdateAppoinment(appoinmentDTO);
+	}
+
+
+	@Override
+	public Response DeleteAppoinment(int id) {
+		// TODO Auto-generated method stub
+		return appointmentClient.DeleteAppoinment(id);
+	}
+
+
+	//payment 
+	@Override
+	public Response getPaymentData() {
+		// TODO Auto-generated method stub
+		return paymentClient.getPaymentData();
+	}
+
+
+	@Override
+	public Response InsertIntoPayments(PaymentDTO paymentDTO) {
+		// TODO Auto-generated method stub
+		return paymentClient.InsertIntoPayments(paymentDTO);
+	}
+
+
+	@Override
+	public Response UpdatePayment(PaymentDTO paymentDTO) {
+		// TODO Auto-generated method stub
+		return paymentClient.UpdatePayment(paymentDTO);
+	}
+
+
+	@Override
+	public Response DeletePayment(int id) {
+		// TODO Auto-generated method stub
+		return paymentClient.DeletePayment(id);
+	}
+	
+	
+	
 
 }

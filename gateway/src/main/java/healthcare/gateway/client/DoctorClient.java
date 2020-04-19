@@ -49,8 +49,8 @@ public class DoctorClient {
 		return Response.status(Response.Status.UNAUTHORIZED).entity("User Cannot Access the resource").build();
 	}
 
-	public final Response GetAllDoctors() {
-		WebTarget service = client.target(API).path("doc");
+	public final Response GetAllDoctors(String ALL) {
+		WebTarget service = client.target(API).path("doc").queryParam("type", ALL);
 		try {
 			Response response = service.request(MediaType.APPLICATION_JSON)
 					.header(HttpHeaders.ALLOW, iMapperDTO.getGatewayIP()).get();
@@ -129,9 +129,9 @@ public class DoctorClient {
 	}
 
 	// session Client methods is here
-	public final Response getSessionData(String hospitalID, String docID, String date) {
+	public final Response getSessionData(String hospitalID, String docID, String date,String type) {
 		WebTarget service = client.target(API).path("session").queryParam("hospital_id", hospitalID)
-				.queryParam("doc_id", docID).queryParam("date", date);
+				.queryParam("doc_id", docID).queryParam("date", date).queryParam("type", type);
 		try {
 			String response = service.request(MediaType.APPLICATION_JSON)
 					.header(HttpHeaders.ALLOW, iMapperDTO.getGatewayIP()).get().readEntity(String.class);

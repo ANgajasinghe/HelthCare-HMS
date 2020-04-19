@@ -54,7 +54,7 @@ public class AppoinmentService {
 	@GET
 	@Path("user/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public AppoinmentDTO getAppointmentByUser(@PathParam("id") int patientId){
+	public List<AppoinmentDTO> getAppointmentByUser(@PathParam("id") int patientId){
 		return appm.getAppointmentByUser(patientId);
 		
 	}
@@ -89,10 +89,8 @@ public class AppoinmentService {
 	
 	@DELETE
 	@Path("del/{id}")
-	public Response DeleteAppoinment(@PathParam("id") int id,AppoinmentDTO appoinmentDTO) {
-		appoinmentDTO.setApp_patient_id(id);
-	    if (appm.DeleteAppoinment(appoinmentDTO)) {
-	    	System.out.println(appoinmentDTO);
+	public Response DeleteAppoinment(@PathParam("id") int id) {
+	    if (appm.DeleteAppoinment(id)) {
 	        return Response.ok().build();
 	    } else {
 	        return Response.notModified().build();

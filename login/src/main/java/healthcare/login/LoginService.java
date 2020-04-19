@@ -5,6 +5,7 @@ package healthcare.login;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -38,8 +39,15 @@ public class LoginService {
 		return lg.CheckLogin(encriptString);
 	}
 	
+	@DELETE
+	@Path("delete")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String deleteToken(@QueryParam("token") String encriptString) {
+		System.out.println("delete token "+encriptString);
+		return lg.deleteToken(encriptString);
+	}
 	
-//	
+	
 	@POST
 	@Path("abc")
 	public void ABC(String X) {

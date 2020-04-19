@@ -27,7 +27,7 @@ public class SessionModel {
 		return true;
 	}
 
-	public List<DoctorDTO> getSessionData(String hospitalID, String docID, String Date) {
+	public List<DoctorDTO> getSessionData(String hospitalID, String docID, String Date ,String type) {
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateobj = new Date();
@@ -64,8 +64,11 @@ public class SessionModel {
 			if (docID != null) {
 				sBuilder.append("\n AND s.doc_id =" + docID);
 			}
+			if (!(type != null && type.equals("all"))) {
+				sBuilder.append("\n AND s.isActive = 1");
+			}
 
-			sBuilder.append("\n AND s.isActive = 1");
+			
 
 			String queryString = sBuilder.toString();
 
@@ -190,11 +193,14 @@ public class SessionModel {
 		} catch (SQLException e) {
 			return Messages.insertSessonErr + e.getMessage();
 
+		} catch (Exception e) {
+			return Messages.insertSessonErr + e.getMessage();
 		} finally {
 			try {
 				MYSQLcon.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				return Messages.insertSessonErr + e.getMessage();
 			}
 		}
 		return Messages.insertSessonErr;

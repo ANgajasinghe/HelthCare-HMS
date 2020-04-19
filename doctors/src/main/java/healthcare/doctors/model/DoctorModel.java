@@ -11,7 +11,6 @@ import java.util.List;
 
 import dto.DoctorDTO;
 import dto.ErrorDTO;
-import healthcare.doctors.DTO.SpecificationDTO;
 import utility.ConnectionBuilder;
 import utility.Messages;
 
@@ -30,56 +29,7 @@ public class DoctorModel implements IDataModel {
 	}
 
 	@Override
-	public List<DoctorDTO> getSepecificationAllData() {
-
-		List<DoctorDTO> specificationDTOliList = new ArrayList<DoctorDTO>();
-		Connection MYSQLcon = cBuilder.MYSQLConnection();
-		if (this.connectionChecker(MYSQLcon)) {
-			StringBuilder sBuilder = new StringBuilder();
-			sBuilder.append("SELECT\n");
-			sBuilder.append(SpecificationDTO.specification_id + ",");
-			sBuilder.append(SpecificationDTO.specification_name + ",");
-			sBuilder.append(SpecificationDTO.specification_dis + "\n");
-			sBuilder.append("FROM\n");
-			sBuilder.append(SpecificationDTO.TABE_NAME);
-
-			String qurtString = sBuilder.toString();
-
-			try {
-				Statement stmt = MYSQLcon.createStatement();
-				ResultSet rs = stmt.executeQuery(qurtString);
-
-				while (rs.next()) {
-					DoctorDTO dto = new DoctorDTO();
-					dto.setSpecification_id(rs.getInt(SpecificationDTO.specification_id));
-					dto.setSpecification_name(rs.getString(SpecificationDTO.specification_name));
-					dto.setSpecification_dis((rs.getString(SpecificationDTO.specification_dis) != null)
-							? rs.getString(SpecificationDTO.specification_dis)
-							: Messages.NODATA);
-					specificationDTOliList.add(dto);
-				}
-
-				return specificationDTOliList;
-
-			} catch (SQLException e) {
-				System.out.println(e);
-				e.printStackTrace();
-				return specificationDTOliList;
-			} finally {
-				try {
-					MYSQLcon.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-
-		}
-		return specificationDTOliList;
-
-	}
-
-	@Override
-	public List<DoctorDTO> getAllDoctors() {
+	public List<DoctorDTO> getAllDoctors(String ALL) {
 		List<DoctorDTO> allDocList = new ArrayList<DoctorDTO>();
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		DoctorDTO Gdto = new DoctorDTO();
@@ -89,8 +39,12 @@ public class DoctorModel implements IDataModel {
 			sBuilder.append("SELECT\n");
 			sBuilder.append("*\t");
 			sBuilder.append("FROM\n");
-			sBuilder.append("doctors \n");
-			sBuilder.append("WHERE doc_status_id = 1");
+			sBuilder.append("doctors");
+			
+			if (ALL !=null && ALL.equals("active")) {
+				sBuilder.append(" \n WHERE doc_status_id = 1");
+			}
+			
 
 			String qurtString = sBuilder.toString();
 

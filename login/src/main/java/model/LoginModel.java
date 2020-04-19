@@ -169,7 +169,7 @@ public class LoginModel {
 	}
 
 	public String CheckLogin(String tokenString) {
-
+System.out.println("CheckLogin "+tokenString);
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		StringBuilder sBuilder = new StringBuilder();
 		sBuilder.append("SELECT u.user_role, u.user_id\n");
@@ -246,5 +246,31 @@ public class LoginModel {
 
 		return false;
 	}
+
+	public String deleteToken(String encriptString) {
+		
+		System.out.println(encriptString);
+	
+
+			Connection MYSQLcon = cBuilder.MYSQLConnection();
+			String queryString = "DELETE FROM login WHERE user_id = ?";
+			
+			PreparedStatement pStatement;
+			
+			
+			try {
+				pStatement = MYSQLcon.prepareStatement(queryString);
+				pStatement.setString(1, encriptString.trim());
+				pStatement.execute();
+				return "You have successfully logged out";
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return "Invalide Token";
+			}
+		}
+		
+
+	
 
 }

@@ -5,6 +5,7 @@ import javax.ws.rs.core.Response;
 import dto.AppoinmentDTO;
 import dto.DoctorDTO;
 import dto.PatientDto;
+import dto.PaymentDTO;
 import dto.UserDTO;
 import healthcare.gateway.client.DoctorClient;
 import utility.GMessage;
@@ -15,7 +16,7 @@ public class DefultAuth implements IAuthorization {
 	DoctorClient doctorClient = new DoctorClient();
 	
 	@Override
-	public Response GetAllDoctors() {
+	public Response GetAllDoctors(String ALL) {
 		return DoctorClient.UnAuthorize();
 	}
 
@@ -30,8 +31,8 @@ public class DefultAuth implements IAuthorization {
 	}
 
 	@Override
-	public Response getSessionData(String hospitalID, String docID, String date) {
-		return doctorClient.getSessionData(hospitalID, docID, date);
+	public Response getSessionData(String hospitalID, String docID, String date,String type) {
+		return doctorClient.getSessionData(hospitalID, docID, date,type);
 		
 	}
 
@@ -86,6 +87,72 @@ public class DefultAuth implements IAuthorization {
 	
 	@Override
 	public Response insertIntoSession(DoctorDTO doctorDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Response getAppointmentByUserID(String userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response getAppointmentData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response getPaymentPendingList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response SelecthospitalName(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response UpdateAppoinment(AppoinmentDTO appoinmentDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response DeleteAppoinment(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response getPaymentData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response InsertIntoPayments(PaymentDTO paymentDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response UpdatePayment(PaymentDTO paymentDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response DeletePayment(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response deleteToken() {
 		// TODO Auto-generated method stub
 		return null;
 	}

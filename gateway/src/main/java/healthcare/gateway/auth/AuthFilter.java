@@ -12,6 +12,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.ext.Provider;
 
+import org.apache.el.parser.Token;
+
 import utility.GMessage;
 import utility.IpMapperDTO;
 import utility.IpMapperModel;
@@ -26,9 +28,10 @@ public class AuthFilter implements ContainerRequestFilter {
 	
 	private List<String> urlSkipper = new ArrayList<String>();
 	AuthClient client = new AuthClient();
-	public static String CurrentAuth = "admin";
-	public static String CurrentAuthUserId = null;
+	public static String CurrentAuth = "defult";
+	public static String CurrentAuthUserId = "0";
 	public static String CuttentAuthUserHospitalId = null;
+	public static String Token = null;
 	
 	
 	
@@ -84,12 +87,13 @@ public class AuthFilter implements ContainerRequestFilter {
 		String[] arr = mode.split(",");
 		
 		if (!arr[0].equals("false")) {
+			Token = tokenString;
 			CurrentAuth = arr[0];
 			CurrentAuthUserId =arr[1]; 
 			if (CurrentAuth.equals("hospital")) {
 				CuttentAuthUserHospitalId = this.getHospitalID(arr[1]);
 			}
-			System.out.println("calling");
+			System.out.println("calling" + CurrentAuth);
 			return;
 		}
 		else {
