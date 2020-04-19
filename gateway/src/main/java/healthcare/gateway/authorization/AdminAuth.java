@@ -7,10 +7,7 @@ import dto.AppoinmentDTO;
 import dto.DoctorDTO;
 import dto.PatientDto;
 import dto.UserDTO;
-import healthcare.gateway.client.DoctorClient;
-import healthcare.gateway.client.HospitalClient;
-import healthcare.gateway.client.PatientClient;
-import healthcare.gateway.client.UserProfileClient;
+
 
 
 public class AdminAuth extends ConfigAuth implements IAuthorization {
@@ -25,9 +22,9 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 	
 	
 	@Override
-	public Response GetAllDoctors() {
+	public Response GetAllDoctors(String ALL) {
 		// TODO Auto-generated method stub
-		return doctorClient.GetAllDoctors();
+		return doctorClient.GetAllDoctors(ALL);
 	}
 
 
@@ -42,11 +39,23 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 		// TODO Auto-generated method stub
 		return doctorClient.postDoc(dto);
 	}
+	
+	@Override
+	public Response DeleteDocAll(int docID) {
+		// TODO Auto-generated method stub
+		return doctorClient.DeleteDocAll(docID);
+	}
+	
+	@Override
+	public Response UpdateDoc(String docID, DoctorDTO dto) {
+		// TODO Auto-generated method stub
+		return doctorClient.UpdateDoc( docID, dto);
+	}
 
 	//session client is here
 	@Override
-	public Response getSessionData(String hospitalID, String docID, String date) {
-		return doctorClient.getSessionData(hospitalID, docID, date);
+	public Response getSessionData(String hospitalID, String docID, String date,String type) {
+		return doctorClient.getSessionData(hospitalID, docID, date, type);
 	}
 	@Override
 	public Response getSessionDataById(int sessionId) {
@@ -54,6 +63,22 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 		
 	}
 	
+	@Override
+	public Response insertIntoSession(DoctorDTO doctorDTO) {
+		// TODO Auto-generated method stub
+		return doctorClient.insertIntoSession(doctorDTO);
+	}
+	@Override
+	public Response UpdateSession(int sessionId, DoctorDTO dto) {
+		// TODO Auto-generated method stub
+		return doctorClient.UpdateSession(sessionId,dto);
+	}
+	
+	@Override
+	public Response deleteSession(int sessionId) {
+		// TODO Auto-generated method stub
+		return doctorClient.deleteSession(sessionId);
+	}
 	
 	//hospital
 	@Override
@@ -83,5 +108,48 @@ public class AdminAuth extends ConfigAuth implements IAuthorization {
 	public Response insertIntoAppoiment(AppoinmentDTO dto) {
 		return appointmentClient.insertIntoAppoiment(dto);
 	}
+	
+	@Override
+	public Response getAppointmentByUserID(String userId) {
+		return appointmentClient.getAppointmentByUserID(userId);
+	}
+
+
+	@Override
+	public Response getAppointmentData() {
+		// TODO Auto-generated method stub
+		return appointmentClient.getAppointmentData();
+	}
+
+
+	@Override
+	public Response getPaymentPendingList() {
+		// TODO Auto-generated method stub
+		return appointmentClient.getPaymentPendingList();
+	}
+
+
+	@Override
+	public Response SelecthospitalName(String id) {
+		// TODO Auto-generated method stub
+		return appointmentClient. SelecthospitalName(id);
+	}
+
+
+	@Override
+	public Response UpdateAppoinment(AppoinmentDTO appoinmentDTO) {
+		// TODO Auto-generated method stub
+		return appointmentClient.UpdateAppoinment(appoinmentDTO);
+	}
+
+
+	@Override
+	public Response DeleteAppoinment(int id) {
+		// TODO Auto-generated method stub
+		return appointmentClient.DeleteAppoinment(id);
+	}
+	
+	
+	
 
 }

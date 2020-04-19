@@ -27,7 +27,7 @@ public class PatientClient {
 	}
 
 	public final Response InsertIntoPatient(PatientDto dto) {
-		System.out.println("calling");
+		System.out.println("calling patirent insettion");
 		WebTarget service = client.target(API).path("add");
 		try {
 			UserDTO newUser = dto.getUserProfile();

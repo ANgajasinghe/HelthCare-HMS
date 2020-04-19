@@ -11,7 +11,7 @@ import healthcare.gateway.client.DoctorClient;
 public class PatientAuth extends ConfigAuth implements IAuthorization {
 
 	@Override
-	public Response GetAllDoctors() {
+	public Response GetAllDoctors(String ALL) {
 		return DoctorClient.UnAuthorize();
 	}
 
@@ -21,8 +21,8 @@ public class PatientAuth extends ConfigAuth implements IAuthorization {
 	}
 
 	@Override
-	public Response getSessionData(String hospitalID, String docID, String date) {
-		return doctorClient.getSessionData(hospitalID, docID, date);
+	public Response getSessionData(String hospitalID, String docID, String date,String type) {
+		return doctorClient.getSessionData(hospitalID, docID, date,type);
 	}
 
 	@Override
@@ -39,6 +39,16 @@ public class PatientAuth extends ConfigAuth implements IAuthorization {
 	public Response getHospitalNameByID(String hostID) {
 		return DoctorClient.UnAuthorize();
 	}
+	public Response DeleteDocAll(int docID) {
+		// TODO Auto-generated method stub
+		return DoctorClient.UnAuthorize();
+	}
+	@Override
+	public Response UpdateDoc(String docID, DoctorDTO dto) {
+		// TODO Auto-generated method stub
+		return DoctorClient.UnAuthorize();
+	}
+
 
 	@Override
 	public Response InsertIntoUserProfile(UserDTO dto) {
@@ -59,6 +69,58 @@ public class PatientAuth extends ConfigAuth implements IAuthorization {
 	@Override
 	public Response insertIntoAppoiment(AppoinmentDTO dto) {
 		return appointmentClient.insertIntoAppoiment(dto);
+	}
+	
+	@Override
+	public Response getAppointmentByUserID(String userId) {
+		return appointmentClient.getAppointmentByUserID(userId);
+	}
+	
+	@Override
+	public Response UpdateSession(int sessionId, DoctorDTO dto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Response deleteSession(int sessionId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public Response insertIntoSession(DoctorDTO doctorDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response getAppointmentData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response getPaymentPendingList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response SelecthospitalName(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response UpdateAppoinment(AppoinmentDTO appoinmentDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response DeleteAppoinment(int id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

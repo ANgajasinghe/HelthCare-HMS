@@ -13,22 +13,22 @@ public class UserGatewayService {
 	
 	UserHttpCall mycall = new UserHttpCall();
 	
-	@GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public String getDocSpecification(@QueryParam("user") String username, 
-			@QueryParam("pwd") String password) { 
-    	 try {
-    		
-			return mycall.GetSpecdata(username,password);
-		} catch (Exception e) {
-			System.out.println(e);
-			return null;
-		}
-    }
-	
-	@POST
-	@Path("test")
-	public String abc(String x) {
-		return mycall.abcString(x);
-	}
+//	@GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    public String getDocSpecification(@QueryParam("user") String username, 
+//			@QueryParam("pwd") String password) { 
+//    	 try {
+//    		
+//			return mycall.GetSpecdata(username,password);
+//		} catch (Exception e) {
+//			System.out.println(e);
+//			return null;
+//		}
+//    }
+//	
+//	@POST
+//	@Path("test")
+//	public String abc(String x) {
+//		return mycall.abcString(x);
+//	}
 }

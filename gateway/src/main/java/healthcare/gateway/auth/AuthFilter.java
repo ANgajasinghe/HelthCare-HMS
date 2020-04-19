@@ -27,7 +27,7 @@ public class AuthFilter implements ContainerRequestFilter {
 	private List<String> urlSkipper = new ArrayList<String>();
 	AuthClient client = new AuthClient();
 	public static String CurrentAuth = "admin";
-	public static String CurrentAuthUserId = null;
+	public static String CurrentAuthUserId = "0";
 	public static String CuttentAuthUserHospitalId = null;
 	
 	
@@ -52,24 +52,24 @@ public class AuthFilter implements ContainerRequestFilter {
 			return;
 		}
 		
-//		if (true) {
-//			return;
+		if (true) {
+			return;
+		}
+		
+//		String authorizationHeader =
+//                requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
+//
+//		
+//		if (authorizationHeader == null) {
+//			abortWithUnauthorized(requestContext,GMessage.addToken);
 //		}
-		
-		String authorizationHeader =
-                requestContext.getHeaderString(HttpHeaders.AUTHORIZATION);
-
-		
-		if (authorizationHeader == null) {
-			abortWithUnauthorized(requestContext,GMessage.addToken);
-		}
-		else {
-			String token = authorizationHeader
-	                .substring(AUTHENTICATION_SCHEME.length()).trim();
-			
-			System.out.println(token);
-			this.authChecker(token,requestContext);
-		}
+//		else {
+//			String token = authorizationHeader
+//	                .substring(AUTHENTICATION_SCHEME.length()).trim();
+//			
+//			System.out.println(token);
+//			this.authChecker(token,requestContext);
+//		}
 		
 			
 	}
