@@ -21,5 +21,6 @@ public class AppointmentService extends ConfigService {
 		return iAuthorization.insertIntoAppoiment(dto);
 		
 	}
+	
 
 }
