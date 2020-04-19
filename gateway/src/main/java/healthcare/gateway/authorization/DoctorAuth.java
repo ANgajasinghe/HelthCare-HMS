@@ -5,6 +5,7 @@ import javax.ws.rs.core.Response;
 import dto.AppoinmentDTO;
 import dto.DoctorDTO;
 import dto.PatientDto;
+import dto.PaymentDTO;
 import dto.UserDTO;
 import healthcare.gateway.client.DoctorClient;
 
@@ -133,6 +134,36 @@ public class DoctorAuth implements IAuthorization {
 
 	@Override
 	public Response DeleteAppoinment(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response getPaymentData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response InsertIntoPayments(PaymentDTO paymentDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response UpdatePayment(PaymentDTO paymentDTO) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response DeletePayment(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Response deleteToken() {
 		// TODO Auto-generated method stub
 		return null;
 	}
