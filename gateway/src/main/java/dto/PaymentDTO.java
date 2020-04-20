@@ -12,6 +12,15 @@ public class PaymentDTO {
 	private Double hos_fee;
 	private Integer reference_No;
 	private String date_time;
+	private Integer app_id;
+
+	public Integer getApp_id() {
+		return app_id;
+	}
+
+	public void setApp_id(Integer app_id) {
+		this.app_id = app_id;
+	}
 
 	public Integer getPayment_id() {
 		return payment_id;

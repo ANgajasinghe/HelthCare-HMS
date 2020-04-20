@@ -19,6 +19,7 @@ public class PaymentService extends ConfigService {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getPaymentData(){
+		SetAuthorization();
 		//System.out.println("Calling ");
 		return iAuthorization.getPaymentData();
 		
@@ -30,6 +31,7 @@ public class PaymentService extends ConfigService {
 	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response SelecthospitalName(@PathParam("id") String id) {
+		SetAuthorization();
 		System.out.println("calling+"+id);
 		return iAuthorization.SelecthospitalName(id);
 	}
@@ -38,26 +40,28 @@ public class PaymentService extends ConfigService {
 	@POST
 	@Path("add")
 	public Response InsertIntoPayments(PaymentDTO paymentDTO) {
-		System.out.println("calling service");
+		System.out.println("Calling InsertIntoPayments");
+		SetAuthorization();
+		
 		return iAuthorization.InsertIntoPayments(paymentDTO);
 	}
-	
 	
 	
 	@PUT
 	@Path("update/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response UpdatePayment(@PathParam("id")int id,PaymentDTO paymentDTO) {
+		SetAuthorization();
 		paymentDTO.setPayment_id(id);
 		return iAuthorization.UpdatePayment(paymentDTO);
 		
 	}
 	
 	
-	
 	@DELETE
 	@Path("delete/{id}")
 	public Response DeletePayment(@PathParam("id") int id) {
+		SetAuthorization();
 	    return iAuthorization.DeletePayment(id);
 	       
 	    

@@ -15,9 +15,7 @@ import javax.ws.rs.core.MediaType;
 import dto.PatientDto;
 import model.PatientModel;
 
-/**
- * Root resource (exposed at "myresource" path)
- */
+
 @Path("patient")
 public class MyResource {
 
