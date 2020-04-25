@@ -11,7 +11,7 @@ import healthcare.gateway.client.DoctorClient;
 import utility.GMessage;
 import utility.Rcode;
 
-public class DefultAuth implements IAuthorization {
+public class DefultAuth extends ConfigAuth implements IAuthorization {
 
 	DoctorClient doctorClient = new DoctorClient();
 	
@@ -53,7 +53,7 @@ public class DefultAuth implements IAuthorization {
 	
 	@Override
 	public Response InsertIntoPatient(PatientDto dto) {
-		return DoctorClient.UnAuthorize();
+		return patientClient.InsertIntoPatient(dto);
 
 	}
 	

@@ -53,11 +53,13 @@ public class PaymentClient {
 		System.out.println(API);
 		WebTarget service = client.target(API).path("add");
 		try {
-			
-			
+			AppoinmentDTO dt=new AppoinmentDTO();
+			dt.setApp_id(paymentDTO.getApp_id());
+			//cAppointmentClient.UpdateAppoinment(dt);
 			try {
 				System.out.println("ID price:-"+paymentDTO.getApp_id());
 				AppoinmentDTO dto = cAppointmentClient.getPaymentPendingList(paymentDTO.getApp_id()).readEntity(AppoinmentDTO.class);
+				//cAppointmentClient.UpdateAppoinment(dt);
 				System.out.println(dto.getApp_id());
 				
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");

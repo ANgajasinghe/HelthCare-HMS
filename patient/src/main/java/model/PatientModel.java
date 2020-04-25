@@ -24,7 +24,7 @@ public class PatientModel {
 		return true;
 	}
 	
-	public boolean insertIntoPatient(PatientDto dto) {
+	public String insertIntoPatient(PatientDto dto) {
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		if (this.connectionChecker(MYSQLcon)) {
 
@@ -44,6 +44,8 @@ public class PatientModel {
 				PreparedStatement pStatement = MYSQLcon.prepareStatement(queryString);
 				pStatement.setString(1,dto.getFirst_name());
 				pStatement.setString(2,dto.getLast_name());
+				pStatement.setString(1,dto.getFirst_name());
+				pStatement.setString(2,dto.getLast_name());
 				pStatement.setString(3,dto.getNIC());
 				pStatement.setString(4,dto.getDOB());
 				pStatement.setString(5,dto.getPassword());
@@ -52,12 +54,12 @@ public class PatientModel {
 
 				if (!result) {
 					
-					return true;
+					return this.getInsertedRecodeId();
 					
 				//return Messages.doctorSuccess;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				return e.toString();
 			} finally {
 				try {
 					MYSQLcon.close();
@@ -67,7 +69,7 @@ public class PatientModel {
 			}
 
 		}
-		return false;
+		return Messages.connectionER;
 
 	}	
 	

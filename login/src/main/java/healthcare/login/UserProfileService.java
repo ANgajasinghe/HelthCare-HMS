@@ -23,7 +23,7 @@ import utility.LMessage;
 @Path("user")
 public class UserProfileService {
 	
-	//how to redirect 
+	
 		@Context
     	private UriInfo uriInfo;
 		

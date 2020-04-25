@@ -24,12 +24,8 @@ public class MyResource {
     @POST
     @Path("add")
     @Consumes(MediaType.APPLICATION_JSON)
-    public PatientDto insertIntoPatient(PatientDto dto) {
-    	if(repo.insertIntoPatient(dto)) {
-    	return dto;
-    }else {
-    	return dto;
-    }
+    public String InsertIntoPatient(PatientDto dto) {
+    	return repo.insertIntoPatient(dto);
     }
 
 	@GET

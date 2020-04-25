@@ -35,6 +35,7 @@ public class AppointmentClient{
 	
 	public final Response insertIntoAppoiment(AppoinmentDTO dto) {
 		
+		
 		DoctorClient dClient =new DoctorClient();
 		HospitalClient hsClient = new HospitalClient();
 		DoctorDTO doctorDTO = null;
@@ -128,6 +129,7 @@ public class AppointmentClient{
 	public Response UpdateAppoinment(AppoinmentDTO appoinmentDTO) {
 		WebTarget service = client.target(API).path("add");
 		try {
+			System.out.println("Update");
 			Response response = service.request(MediaType.APPLICATION_JSON).put(Entity.json(appoinmentDTO));
 			return response;
 		} catch (ProcessingException e) {

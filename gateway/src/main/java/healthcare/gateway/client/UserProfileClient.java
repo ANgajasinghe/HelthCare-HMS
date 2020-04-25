@@ -42,7 +42,9 @@ public class UserProfileClient {
 	}
 	
 	public Response checkUsernameAndPassword(UserDTO userDTO){
+		
 		API = API+GMessage.path("user");
+		System.out.println(API);
 		WebTarget service = client.target(API).path("check")
 				.queryParam("username", userDTO.getUsername())
 				.queryParam("email", userDTO.getUser_email());

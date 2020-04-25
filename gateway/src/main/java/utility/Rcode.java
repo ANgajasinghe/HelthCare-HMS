@@ -11,7 +11,7 @@ public class Rcode {
 	}
 
 	public static Response Invalide(String message) {
-		return Response.status(Response.Status.NOT_FOUND).entity(GMessage.invalid + message).build();
+		return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity(GMessage.invalid + message).build();
 	}
 
 	public static Response UNAUTHORIZED(String message) {

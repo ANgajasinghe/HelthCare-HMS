@@ -79,7 +79,7 @@ public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO ) {
 		
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return e.toString();
+			return e.getMessage();
 		}
 		
 	return "connectionER";
@@ -139,21 +139,64 @@ public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO ) {
  
  
  ///update
+// public boolean UpdateAppoinment(AppoinmentDTO appoinmentDTO) {
+//		// update 
+//		Connection MYSQLcon = cBuilder.MYSQLConnection();
+//		StringBuilder sBuilder = new StringBuilder();
+//		sBuilder.append("UPDATE appointment \n");
+//		sBuilder.append( "SET \n");
+//		sBuilder.append("app_doc_id= ?,");
+//		sBuilder.append("app_patient_id= ?,");
+//		sBuilder.append("app_session_id=?,");
+//		sBuilder.append("app_patient_name=?,");
+//		sBuilder.append("app_hospital_name=?,");
+//		sBuilder.append("app_book_date=?,");
+//		sBuilder.append("app_patient_contact_no=?,");
+//		sBuilder.append("app_price=?,");
+//		sBuilder.append("app_payment_status=?");
+//		sBuilder.append(" WHERE app_id= ? \n");
+//		
+//
+//		String queryString = sBuilder.toString();
+//
+//		PreparedStatement pStatement;
+//		try {
+//			pStatement = MYSQLcon.prepareStatement(queryString);
+//			pStatement.setInt(1, appoinmentDTO.getApp_doc_id());
+//			pStatement.setInt(2, appoinmentDTO.getApp_patient_id());
+//			pStatement.setInt(3, appoinmentDTO.getApp_session_id());
+//			pStatement.setString(4, appoinmentDTO.getApp_patient_name());
+//			pStatement.setString(5, appoinmentDTO.getApp_hospital_name());
+//			pStatement.setString(6, appoinmentDTO.getApp_book_date());
+//			pStatement.setInt(7, appoinmentDTO.getApp_patient_contact_no());
+//			pStatement.setDouble(8, appoinmentDTO.getApp_price());
+//			pStatement.setString(9, appoinmentDTO.getApp_payment_status());
+//			pStatement.setInt(10, appoinmentDTO.getApp_id());
+//			
+//			boolean result = pStatement.execute();
+//			if (!result) {
+//				return true;
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		} finally {
+//			try {
+//				MYSQLcon.close();
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//
+//		return false;
+//	}
  public boolean UpdateAppoinment(AppoinmentDTO appoinmentDTO) {
 		// update 
+	 System.out.println("Appoinment update is calling");
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		StringBuilder sBuilder = new StringBuilder();
 		sBuilder.append("UPDATE appointment \n");
 		sBuilder.append( "SET \n");
-		sBuilder.append("app_doc_id= ?,");
-		sBuilder.append("app_patient_id= ?,");
-		sBuilder.append("app_session_id=?,");
-		sBuilder.append("app_patient_name=?,");
-		sBuilder.append("app_hospital_name=?,");
-		sBuilder.append("app_book_date=?,");
-		sBuilder.append("app_patient_contact_no=?,");
-		sBuilder.append("app_price=?,");
-		sBuilder.append("app_payment_status=?");
+		sBuilder.append("app_payment_status = ?\n");
 		sBuilder.append(" WHERE app_id= ? \n");
 		
 
@@ -162,16 +205,8 @@ public String InsertIntoAppoinment(AppoinmentDTO appoinmentDTO ) {
 		PreparedStatement pStatement;
 		try {
 			pStatement = MYSQLcon.prepareStatement(queryString);
-			pStatement.setInt(1, appoinmentDTO.getApp_doc_id());
-			pStatement.setInt(2, appoinmentDTO.getApp_patient_id());
-			pStatement.setInt(3, appoinmentDTO.getApp_session_id());
-			pStatement.setString(4, appoinmentDTO.getApp_patient_name());
-			pStatement.setString(5, appoinmentDTO.getApp_hospital_name());
-			pStatement.setString(6, appoinmentDTO.getApp_book_date());
-			pStatement.setInt(7, appoinmentDTO.getApp_patient_contact_no());
-			pStatement.setDouble(8, appoinmentDTO.getApp_price());
-			pStatement.setString(9, appoinmentDTO.getApp_payment_status());
-			pStatement.setInt(10, appoinmentDTO.getApp_id());
+			pStatement.setString(1, "Paid");
+			pStatement.setInt(2,appoinmentDTO.getApp_id());
 			
 			boolean result = pStatement.execute();
 			if (!result) {
@@ -282,6 +317,7 @@ public List<AppoinmentDTO> getAppointmentByUser(int patientId) {
 			ResultSet rs = pStatement.executeQuery();
 			while (rs.next()) {
 				AppoinmentDTO appDTO = new AppoinmentDTO();
+				appDTO.setApp_id(rs.getInt("app_id"));
 				appDTO.setApp_doc_id(rs.getInt("app_doc_id"));
 				appDTO.setApp_patient_id(rs.getInt("app_patient_id"));
 				appDTO.setApp_session_id(rs.getInt("app_session_id"));
@@ -319,9 +355,10 @@ public List<AppoinmentDTO> getAppointmentByUser(int patientId) {
 public AppoinmentDTO getPaymentPendingList(int id) {
 	 System.out.println("getAppointmentData()");
 
-		
+		AppoinmentDTO appoinmentDTO = new AppoinmentDTO();
+		appoinmentDTO.setApp_id(id);
 		//Connection MYSQLcon = cBuilder.MYSQLConnection();
-		
+		this.UpdateAppoinment(appoinmentDTO);
 		Connection MYSQLcon = cBuilder.MYSQLConnection();
 		
 			StringBuilder sBuilder = new StringBuilder();
@@ -354,6 +391,7 @@ public AppoinmentDTO getPaymentPendingList(int id) {
 				appDTO.setApp_patient_contact_no(rs.getInt("app_patient_contact_no"));
 				appDTO.setApp_price(rs.getDouble("app_price"));
 				appDTO.setApp_payment_status(rs.getString("app_payment_status"));
+				
 				return appDTO;
 			
 			}

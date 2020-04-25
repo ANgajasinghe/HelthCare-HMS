@@ -19,7 +19,9 @@ public class PatientService extends ConfigService {
 	@Path("add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response InsertIntoPatient(PatientDto dto) {
+		
 		System.out.println(dto.getUserProfile());
+		
 		this.SetAuthorization();
 		return this.iAuthorization.InsertIntoPatient(dto);
 	}
@@ -34,7 +36,7 @@ public class PatientService extends ConfigService {
 		
 		PatientDto dto2 = new PatientDto();
 		
-		dto2.setFirst_name("nayanaith");
+		//dto2.setFirst_name("nayanaith");
 		dto2.setUserProfile(dto);
 				
 		return dto2;

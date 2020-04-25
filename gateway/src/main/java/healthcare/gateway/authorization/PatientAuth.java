@@ -133,8 +133,7 @@ public class PatientAuth extends ConfigAuth implements IAuthorization {
 
 	@Override
 	public Response InsertIntoPayments(PaymentDTO paymentDTO) {
-		// TODO Auto-generated method stub
-		return null;
+		return paymentClient.InsertIntoPayments(paymentDTO);
 	}
 
 	@Override

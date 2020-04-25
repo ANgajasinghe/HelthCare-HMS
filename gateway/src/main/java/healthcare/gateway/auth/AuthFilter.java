@@ -90,9 +90,9 @@ public class AuthFilter implements ContainerRequestFilter {
 			Token = tokenString;
 			CurrentAuth = arr[0];
 			CurrentAuthUserId =arr[1]; 
-			if (CurrentAuth.equals("hospital")) {
-				CuttentAuthUserHospitalId = this.getHospitalID(arr[1]);
-			}
+//			if (CurrentAuth.equals("hospital")) {
+//				CuttentAuthUserHospitalId = this.getHospitalID(arr[1]);
+//			}
 			System.out.println("calling" + CurrentAuth);
 			return;
 		}
