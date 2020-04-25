@@ -33,7 +33,7 @@ public class PaymentService {
 	
 	
 	@GET
-	@Path("{id}")
+	@Path("id/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String SelecthospitalName(@PathParam("id") String id) {
 		System.out.println("calling+"+id);
