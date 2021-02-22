@@ -1,3 +1,4 @@
+
 # HelthCare Hospital Management System
 
 ## SE methodology/methods
@@ -22,3 +23,16 @@ present the following factors to the customers for better usability
 - Knowing when book a correct Doctor and time
 - Select the Hospital where patient want to meet the doctor.
 - Confirm the payment has done correctly.
+
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/ANgajasinghe/HelthCare-HMS.git
+   ```
+## Usage
+
+Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+
+_For more examples, please refer to the [Documentation](http://u.pc.cd/9LY)_
